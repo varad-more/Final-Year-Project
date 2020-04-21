@@ -1,0 +1,480 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LPL - LPL-ROHINI (NATIONAL REFERENCE 
+
+LAB)
+
+SECTOR - 18, BLOCK -E ROHINI
+
+DELHI 110085
+
+Name        
+
+A/c Status 
+
+Lab No.    
+
+Ref By : 
+
+Gender: Age: 
+
+Report Status    
+
+Reported        
+
+Received            
+
+Collected        
+
+P
+
+:
+
+:
+
+:
+
+:
+
+:
+
+:
+
+: Final
+
+Unknown
+
+20/1/2017  12:00:00AM
+
+20/1/2017  10:29:11AM
+134315810 Unknown
+
+Unknown
+
+   Z390
+
+21/1/2017  10:48:25AM
+
+Test Name Results Units Bio. Ref. Interval
+
+FEVER  PANEL 1
+
+COMPLETE BLOOD COUNT (CBC)
+
+(Electrical Impedance & VCS,Photometry )
+
+Hemoglobin   14.40
+
+Packed Cell Volume (PCV)   43.80
+
+RBC Count   5.27
+
+MCV   83.00
+
+MCH   27.20
+
+MCHC   32.80
+
+Red Cell Distribution Width (RDW)   14.50
+
+Total Leukocyte Count  (TLC)   11.00
+
+Differential Leucocyte Count (DLC)
+
+  Segmented Neutrophils 66.40
+
+  Lymphocytes 24.70
+
+  Monocytes 4.90
+
+  Eosinophils 3.10
+
+  Basophils 0.90
+
+Absolute Leucocyte Count
+
+  Neutrophils 7.30
+
+  Lymphocytes 2.72
+
+  Monocytes 0.54
+
+  Eosinophils 0.34
+
+  Basophils 0.10
+
+Platelet Count   290.0
+
+Note
+
+1. As per the recommendation of International council for Standardization in Hematology, the differential
+
+    leucocyte counts are additionally being reported as absolute numbers of each cell in per unit volume of
+
+    blood  
+
+                    
+
+2. Test conducted on EDTA whole blood
+
+*134315810*
+
+.
+
+Page 1 of 4
+
+
+
+LPL - LPL-ROHINI (NATIONAL REFERENCE 
+
+LAB)
+
+SECTOR - 18, BLOCK -E ROHINI
+
+DELHI 110085
+
+Name        
+
+A/c Status 
+
+Lab No.    
+
+Ref By : 
+
+Gender:Age: 
+
+Report Status    
+
+Reported        
+
+Received            
+
+Collected        
+
+P
+
+:
+
+:
+
+:
+
+:
+
+:
+
+:
+
+: Final
+
+Unknown
+
+20/1/2017  12:00:00AM
+
+20/1/2017  10:29:11AM
+134315810 Unknown
+
+Unknown
+
+   Z390
+
+21/1/2017  10:48:25AM
+
+Test Name Results Units Bio. Ref. Interval
+
+URINE EXAMINATION, ROUTINE; URINE, R/E
+
+(Automated Strip Test, Microscopy)
+
+Physical
+
+Colour Pale yellowLight Yellow
+
+Specific Gravity 1.025
+
+pH 5.0 - 8.06
+
+Chemical
+
+Proteins NilNil
+
+Glucose NilNil
+
+Ketones NilNil
+
+Bilirubin NilNil
+
+Urobilinogen NormalNormal
+
+Leucocyte Esterase NegativeNegative
+
+Nitrite NegativeNegative
+
+Microscopy
+
+R.B.C. NegativeNegative
+
+Pus Cells 0-5 WBC / hpfNegative
+
+Epithelial Cells FewFew
+
+Casts Nil /lpfNil
+
+Crystals NilNil
+
+Others -Nil
+
+PatientReportSCSuperPanel.URINE_EXAMINATION_SC (Version: 6)
+
+*134315810*
+
+.
+
+Page 2 of 4
+
+
+
+LPL - LPL-ROHINI (NATIONAL REFERENCE 
+
+LAB)
+
+SECTOR - 18, BLOCK -E ROHINI
+
+DELHI 110085
+
+Name        
+
+A/c Status 
+
+Lab No.    
+
+Ref By : 
+
+Gender:Age: 
+
+Report Status    
+
+Reported        
+
+Received            
+
+Collected        
+
+P
+
+:
+
+:
+
+:
+
+:
+
+:
+
+:
+
+: Final
+
+Unknown
+
+20/1/2017  12:00:00AM
+
+20/1/2017  10:29:11AM
+134315810 Unknown
+
+Unknown
+
+   Z390
+
+21/1/2017  10:48:25AM
+
+Test Name Results Units Bio. Ref. Interval
+
+ERYTHROCYTE SEDIMENTATION RATE (ESR)
+
+(Capillary photometry)
+
+11
+
+Note
+
+1. C-Reactive Protein (CRP) is the recommended test in acute inflammatory conditions.
+
+2. Test conducted on EDTA whole blood at 37°C.
+
+3. ESR readings  are auto- corrected with respect to Hematocrit (PCV) values.
+
+WIDAL TEST, SERUM
+
+(Slide Agglutination)
+
+Salmonella typhi O (TO) Non Reactive
+
+Salmonella typhi H (TH) Non Reactive
+
+Salmonella paratyphi A, H (AH) Non Reactive
+
+Salmonella paratyphi B, H (BH) Non Reactive
+
+Note: 1. Titres 1:80 and above of “O” antigen & 1:160 and above of “H” antigen are significant 
+
+       2. Rising titres are significant
+
+3. The recommended Widal test is by Tube Agglutination Method
+
+Comments
+
+This test measures somatic O and flagellar H antibodies against Typhoid and Paratyphoid bacilli. The 
+
+agglutinins usually appear at the end of the first week of infection and increase steadily till third / fourth 
+
+week after which the decline starts. A positive Widal test may occur because of typhoid vaccination or 
+
+previous typhoid infection and in certain autoimmune diseases. Non specific febrile disease may cause
+
+this titre to increase (anamnestic reaction). The test may be falsely negative in cases of Enteric fever 
+
+treated with antibiotics in the early stages. The recommended test specially in the first week after infection
+
+is Blood Culture.
+
+PatientReportSCSuperPanel.SP_GENERAL_TEMPLATE01_SC (Version: 7)
+
+*134315810*
+
+.
+
+Page 3 of 4
+
+
+
+LPL - LPL-ROHINI (NATIONAL REFERENCE 
+
+LAB)
+
+SECTOR - 18, BLOCK -E ROHINI
+
+DELHI 110085
+
+Name        
+
+A/c Status 
+
+Lab No.    
+
+Ref By : 
+
+Gender:Age: 
+
+Report Status    
+
+Reported        
+
+Received            
+
+Collected        
+
+P
+
+:
+
+:
+
+:
+
+:
+
+:
+
+:
+
+: Final
+
+Unknown
+
+20/1/2017  12:00:00AM
+
+20/1/2017  10:29:11AM
+134315810 Unknown
+
+Unknown
+
+   Z390
+
+21/1/2017  10:48:25AM
+
+Test Name Results Units Bio. Ref. Interval
+
+No MP seen in smears 
+
+examined.
+
+MALARIA PARASITE / BLOOD PARASITE 
+
+IDENTIFICATION
+
+(Microscopy)
+
+Note:  A Single negative smear does not rule out malaria
+
+Dr. Anil Arora
+
+MD (Pathology)
+
+Consultant Pathologist
+
+Dr Biswadip Hazarika
+
+MD (Pathology)
+
+Consultant Pathologist
+
+Dr. Shalabh Malik
+
+MD (Microbiology)
+
+HOD Micro & Clinical Path
+
+             -------------------------------End of report --------------------------------
+
+PatientReportSCSuperPanel.GENERAL_METHOD_SC (Version: 6)
+
+*134315810*
+
+.
+
+Page 4 of 4
+
+
