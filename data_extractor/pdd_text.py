@@ -14,7 +14,7 @@ from tika import parser
 
 
 def read_pdf():
-    raw = parser.from_file('Z390.pdf')
+    raw = parser.from_file('1.pdf')
     print(raw['content'])
     #print(raw['metadata'])
     file1 = open("myfile.txt","w+")
