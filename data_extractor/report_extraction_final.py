@@ -1,32 +1,51 @@
-#Input from report
-final_report={'Date': '01/02/2020',
-'Name': 'Chavaa', 
-'Gender': 'Female', 
-'Age': '12',
-'Fasting Sugar':'120', 
-'Hemoglobin': '14.40', 
-'Packed Cell Volume (PCV)': '43.80', 
-'MCV': '83.00',
-'RBC Count': '5.27',
-'MCH': '27.20',
-'MCHC': '32.80',
-'Red Cell Distribution Width (RDW)': '14.50', 
-'Total Leukocyte Count (TLC)': '11.00', 
-'Differential Leucocyte Count (DLC)': '', 
-'Segmented Neutrophils': '66.40', 
-'Lymphocytes': '2.72', 
-'Monocytes': '0.54', 
-'Eosinophils': '0.34', 
-'Basophils': '0.10', 
-'Absolute Leucocyte Count': '', 
-'Neutrophils': '7.30', 
-'Platelet Count': '290.0'}
+#Combined Version 
+import pymongo
+import tabula
+import json 
+import numpy
+from datetime import datetime
 
+#Using tabula to read the PDF and extract tables from it.
+df = tabula.read_pdf("10.pdf", pages = 'all', multiple_tables = True, output_format="json")
+
+#Tabula data table can be converted into JSON format. Making extraction easy.
+data =json.loads(json.dumps(df))
+i=0
+
+d1 = numpy.empty(len(data), dtype=object) 
+
+#Dictioanry test
+final_report={}
+for d in data:
+    d1=(d["data"])
+    # print (d1)
+    print ("##############")
+
+#For invidual rows in table
+    d3 = json.loads(json.dumps(d1))
+    l=len(d3)
+
+# Individual value and data extractions as per our needs
+    a=json.loads(json.dumps(d3))
+    report_data=numpy.empty(l,dtype=object) 
+    for i in range (0,l):
+        a=json.loads(json.dumps(d3[i]))
+        b=json.loads(json.dumps(a[0]))
+        c=json.loads(json.dumps(a[1]))
+        report_data[i]=(b["text"]+":"+ c["text"])
+        final_report[b["text"]]=c["text"]
+
+#For individual element
+from datetime import datetime
+date = datetime.strptime(final_report['Date'], '%d/%m/%Y').date()
+# final_report['Date'] = date
+print (final_report)
+print (len(final_report))
 
 #Reference Values for Males
 ref_male={'Fasting Sugar':120,
 'Hemoglobin':{'min':14, 'max':18},
-'RBC Count':{'min_RBC':4.5,'max_RBC':6.4},
+'RBC Count':{'min':4.5,'max':6.4},
 'Packed Cell Volume (PCV)' : {'min':42,'max':52},
 'MCV' :{'min':78,'max':94},
 'MCH': {'min':27,'max':32},
@@ -35,9 +54,9 @@ ref_male={'Fasting Sugar':120,
 'Neutrophils': {'min':60,'max':75},	
 'Lymphocytes': {'min':20,'max':30},	
 'Monocytes'	 : {'min':2,'max':8},
-'Esoinophils': {'min':1,'max':6},
+'Eosinophils': {'min':1,'max':6},
 'Basophils' : {'min':0,'max':1},
-'Platelets' : {'min':15000,'max':450000},
+'Platelet' : {'min':15000,'max':450000},
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' :	4.2, 'max': 7.6},
@@ -48,34 +67,10 @@ ref_male={'Fasting Sugar':120,
 'Routine urine for albumin':	'Nil',
 }
 
-
-# import csv
-# # my_dict = {'1': 'aaa', '2': 'bbb', '3': 'ccc'}
-# with open('test.csv', 'w') as f:
-#     for key in ref_male.keys():
-#         f.write("%s,%s\n"%(key,ref_male[key]))
-
-# #import csv
-# reader = csv.reader(open('test.csv'))
-
-# result = {}
-# for row in reader:
-#     key = row[0]
-#     if key in result:
-#         # implement your duplicate row handling here
-#         pass
-#     result[key] = row[1:]
-# print ('##################RESULT#########################')
-# print(type(result['Hemoglobin']))
-
-# print('######################REF######################')
-# print (type(ref_male['Hemoglobin']))
-
 #Reference Values for Females
 ref_female = { 
     'Hemoglobin':{'min':14, 'max':18},
 }
-
 
 #Final reference variable for comparision
 ref={}
@@ -106,12 +101,10 @@ not_found={}
 #Comparing Parameters and mapping with reference values
 
 def param_cmp():
-    # print ((ref_male["rbc"]))
-# print(type(ref_male["Hemoglobin"]))    
     for i in final_report:
         try :
             if (type(ref[i]) is dict):
-                # print ("Dict#######################")
+                print ("Dict#######################",i)
             
                 # print (ref[i])
                 # print (final_report[i])
@@ -129,7 +122,7 @@ def param_cmp():
                     abnormal[i] = obs
 
             elif (type(ref[i]) is float) | (type(ref[i]) is int)  :
-                # print ("Float~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                print ("Float~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",i)
             
                 print (ref[i])
                 print (final_report[i])
@@ -159,3 +152,24 @@ print('\n ABNORMAL Values', abnormal)
 print ('#############################')
 print('\n Error 404:', not_found)
 
+
+def database_connect():
+	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+	mydb = myclient["test"]
+	print(mydb)
+
+	mycol = mydb["reports"]
+	print (mycol)
+
+	collist = mydb.list_collection_names()
+	if "reports" in collist:
+  		print("The collection exists.")
+
+	name=final_report['Name']
+	gender=final_report['Gender']
+	
+	mydict = { "name": name, "gender": gender, "Date":final_report['Date'],"normal":normal, "abnormalities": abnormal }
+	x = mycol.insert_one(mydict)
+	print (x)
+
+database_connect()

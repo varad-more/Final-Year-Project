@@ -1,11 +1,11 @@
-import pandas as pd
+# import pandas as pd
 import tabula
 import json 
 import numpy
 from datetime import datetime
 
 #Using tabula to read the PDF and extract tables from it.
-df = tabula.read_pdf("11.pdf", pages = 'all', multiple_tables = True, output_format="json")
+df = tabula.read_pdf("10.pdf", pages = 'all', multiple_tables = True, output_format="json")
 
 #Tabula data table can be converted into JSON format. Making extraction easy.
 data =json.loads(json.dumps(df))
@@ -37,7 +37,7 @@ for d in data:
 # Individual value and data extractions as per our needs
     a=json.loads(json.dumps(d3))
     # print (type(a))
-    print (a[1])
+    # print (a[1])
     report_data=numpy.empty(l,dtype=object) 
     for i in range (0,l):
         a=json.loads(json.dumps(d3[i]))
@@ -57,7 +57,14 @@ print (len(final_report))
 
 #For individual element
 # print(final_report[47].split(':'))
-print(final_report['Gender'])
+#print(final_report['Date'])
+
+from datetime import datetime
+date = datetime.strptime(final_report['Date'], '%d/%m/%Y').date()
+final_report['Date'] = date
+print (date)
+
+
 '''
     # print (d)
     d1[i]=(d["data"])
