@@ -6,7 +6,7 @@ import numpy
 from datetime import datetime
 
 #Using tabula to read the PDF and extract tables from it.
-df = tabula.read_pdf("10.pdf", pages = 'all', multiple_tables = True, output_format="json")
+df = tabula.read_pdf("blood_report.pdf", pages = 'all', multiple_tables = True, output_format="json")
 
 #Tabula data table can be converted into JSON format. Making extraction easy.
 data =json.loads(json.dumps(df))
@@ -46,7 +46,7 @@ print (len(final_report))
 ref_female={
 'Hemoglobin':{'min':12, 'max':16.4},
 'Total WBC Count':{'min':4000, 'max':11000},
-'Packed Cell Volume (PCV)' : {'min':37,'max':47},
+'PCV' : {'min':37,'max':47},
 'WBV (Leucocytes)': {'min':4000,'max':11000},	
 'Neutrophils': {'min':60,'max':75},	
 'Lymphocytes': {'min':20,'max':30},	
@@ -59,25 +59,25 @@ ref_female={
 'MCHC'	: {'min':32,'max':38},
 'RDW' :{'min':12.2,'max':16.1},
 'Platelets' : {'min':150000,'max':450000},
-'Reticulocytes':{'min':0.5,'max':1.5}
-'Color Index':{'min':0.85,'max':1.15}
-'ESR':{'min':0,'max':20}
-'Fasting Sugar':120,
+'Reticulocytes':{'min':0.5,'max':1.5},
+'Color Index':{'min':0.85,'max':1.15},
+'Erythrocyte Sedimentation Rate (ESR)':{'min':0,'max':20},
+'Fasting Blood Sugar':120,
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' : 4.2, 'max': 7.6},
-'Blood Urea' :{'min' :	0, 'max': 40} ,
-'BUN-Blood Urea Nitrogen':{'min' :	0, 'max': 18},
+'Blood Urea' :{'min' :	x0, 'max': 40} ,
+'Blood Urea Nitrogen':{'min' :	0, 'max': 18},
 'Serum Uric acid'	:{'min' :3, 'max': 5.7},
 'Serum Creatinine'	:{'min' :0.5, 'max': 1.4},
 'Routine urine for albumin':	'Nil',
 '24 hours albumin in the urine': 150,
-'S.Cholestrol'	:{'min' :150, 'max': 250},
-'S.HDL'	:{'min' :40, 'max': 70},
-'S.LDL'	:{'min' :60, 'max': 160},
-'S.VLDL':{'min' :3, 'max': 35},
-'S.Triglycerides':{'min' :60, 'max': 150},
-'Total Cholestrol/HDL':4.5,
+'S. Cholesterol'	:{'min' :150, 'max': 250},
+'S. HDL'	:{'min' :40, 'max': 70},
+'S. LDL'	:{'min' :60, 'max': 160},
+'S. VLDL':{'min' :3, 'max': 35},
+'S. Triglycerides':{'min' :60, 'max': 150},
+'Total Cholesterol / HDL':4.5,
 'Serum Bilirubin'	:{'min' :0.2, 'max': 1},
 'SGOT'	:{'min' :8, 'max': 40},
 'SGPT'	:{'min' :5, 'max': 35},
@@ -85,17 +85,17 @@ ref_female={
 'Gamma GT'	:{'min' :8, 'max': 37},
 'Serum Mayo globin'	:{'min' :6, 'max': 90},
 'PH Test':{'min':6.0,'max':7.0},
-'R A Factor Test': Nil,
-'S.Sodium':{'min':135,'max':145},
-'S.Potassium':{'min':3.5,'max':5.5},
-'S.Chlorides':{'min':96,'max':106},
-'S.Magnesium':{'min':1.7,'max':2.2},
-'S.Calcium':{'min':9,'max':10.6},
-'S.Phosphorus':{'min':2.5,'max':4.8},
-'S.Amylase':9.5,
-'S.Acid Phosphates':{'min':1,'max':4},
+'R A Factor Test': 'Nil',
+'S. Sodium':{'min':135,'max':145},
+'S. Potassium':{'min':3.5,'max':5.5},
+'S. Chlorides':{'min':96,'max':106},
+'S. Magnesium':{'min':1.7,'max':2.2},
+'S. Calcium':{'min':9,'max':10.6},
+'S. Phosphorus':{'min':2.5,'max':4.8},
+'S. Amylase':9.5,
+'S. Acid Phosphates':{'min':1,'max':4},
 'Prostatis fraction':{'min':0,'max':0.8},
-'S.Proteins total':{'min':6,'max':8},
+'S. Proteins total':{'min':6,'max':8},
 'Albumin':{'min':3.5,'max':5.6},
 'Globulin':{'min':1.3,'max':3.2},
 }
@@ -104,7 +104,7 @@ ref_female={
 ref_male={
 'Hemoglobin':{'min':14, 'max':18},
 'Total WBC Count':{'min':4000, 'max':11000},
-'Packed Cell Volume (PCV)' : {'min':42,'max':52},
+'PCV' : {'min':42,'max':52},
 'WBV (Leucocytes)': {'min':4000,'max':11000},	
 'Neutrophils': {'min':60,'max':75},	
 'Lymphocytes': {'min':20,'max':30},	
@@ -117,10 +117,10 @@ ref_male={
 'MCHC'	: {'min':32,'max':38},
 'RDW' :{'min':11.8,'max':14.5},
 'Platelets' : {'min':150000,'max':450000},
-'Reticulocytes':{'min':0.5,'max':1.5}
-'Color Index':{'min':0.85,'max':1.15}
-'ESR':{'min':0,'max':15}
-'Fasting Sugar':120,
+'Reticulocytes':{'min':0.5,'max':1.5},
+'Color Index':{'min':0.85,'max':1.15},
+'ESR':{'min':0,'max':15},
+'Fasting Blood Sugar':120,
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' : 4.2, 'max': 7.6},
@@ -130,12 +130,12 @@ ref_male={
 'Serum Creatinine'	:{'min' :0.5, 'max': 1.4},
 'Routine urine for albumin':	'Nil',
 '24 hours albumin in the urine': 150,
-'S.Cholestrol'	:{'min' :150, 'max': 250},
-'S.HDL'	:{'min' :30, 'max': 60},
-'S.LDL'	:{'min' :60, 'max': 160},
-'S.VLDL':{'min' :3, 'max': 35},
-'S.Triglycerides':{'min' :60, 'max': 150},
-'Total Cholestrol/HDL':4.5,
+'S. Cholesterol'	:{'min' :150, 'max': 250},
+'S. HDL'	:{'min' :30, 'max': 60},
+'S. LDL'	:{'min' :60, 'max': 160},
+'S. VLDL':{'min' :3, 'max': 35},
+'S. Triglycerides':{'min' :60, 'max': 150},
+'Total Cholesterol / HDL':4.5,
 'Serum Bilirubin'	:{'min' :0.2, 'max': 1},
 'SGOT'	:{'min' :8, 'max': 40},
 'SGPT'	:{'min' :5, 'max': 35},
@@ -143,17 +143,17 @@ ref_male={
 'Gamma GT'	:{'min' :8, 'max': 37},
 'Serum Mayo globin'	:{'min' :6, 'max': 90},
 'PH Test':{'min':6.0,'max':7.0},
-'R A Factor Test': Nil,
-'S.Sodium':{'min':135,'max':145},
-'S.Potassium':{'min':3.5,'max':5.5},
-'S.Chlorides':{'min':96,'max':106},
-'S.Magnesium':{'min':1.7,'max':2.2},
-'S.Calcium':{'min':9,'max':10.6},
-'S.Phosphorus':{'min':2.5,'max':4.8},
-'S.Amylase':9.5,
-'S.Acid Phosphates':{'min':1,'max':4},
+'R A Factor Test': 'Nil',
+'S. Sodium':{'min':135,'max':145},
+'S. Potassium':{'min':3.5,'max':5.5},
+'S. Chlorides':{'min':96,'max':106},
+'S. Magnesium':{'min':1.7,'max':2.2},
+'S. Calcium':{'min':9,'max':10.6},
+'S. Phosphorus':{'min':2.5,'max':4.8},
+'S. Amylase':9.5,
+'S. Acid Phosphates':{'min':1,'max':4},
 'Prostatis fraction':{'min':0,'max':0.8},
-'S.Proteins total':{'min':6,'max':8},
+'S. Proteins total':{'min':6,'max':8},
 'Albumin':{'min':3.5,'max':5.6},
 'Globulin':{'min':1.3,'max':3.2},
 }
@@ -190,7 +190,7 @@ def param_cmp():
     for i in final_report:
         try :
             if (type(ref[i]) is dict):
-                print ("Dict#######################",i)
+                # print ("Dict#######################",i)
             
                 # print (ref[i])
                 # print (final_report[i])
@@ -201,17 +201,17 @@ def param_cmp():
                 # print (max,min)
                 
                 if(obs< max) & (obs>min):
-                    print (i," - Obserserved Normal")
+                    # print (i," - Obserserved Normal")
                     normal [i] = obs
                 else:
-                    print (i," - Abnormalities Obserserved")
+                    # print (i," - Abnormalities Obserserved")
                     abnormal[i] = obs
 
             elif (type(ref[i]) is float) | (type(ref[i]) is int)  :
-                print ("Float~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",i)
+                # print ("Float~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",i)
             
-                print (ref[i])
-                print (final_report[i])
+                # print (ref[i])
+                # print (final_report[i])
                 max = float(ref[i])
                 # max = float(reference[i])
                 # max = float(reference['max'])
@@ -219,10 +219,10 @@ def param_cmp():
                 # print (max,min)
                 
                 if(obs< max):
-                    print (i," - Obserserved Normal")
+                    # print (i," - Obserserved Normal")
                     normal [i] = obs
                 else:
-                    print (i," - Abnormalities Obserserved")
+                    # print (i," - Abnormalities Obserserved")
                     normal [i] = obs         
         
         except:
@@ -236,7 +236,8 @@ print('\n Normal Values', normal)
 print ('#############################')
 print('\n ABNORMAL Values', abnormal)
 print ('#############################')
-print('\n Error 404:', not_found)
+print('\n Error 404:')
+print (json.dumps(not_found,indent=4))
 
 
 def database_connect():
@@ -258,4 +259,4 @@ def database_connect():
 	x = mycol.insert_one(mydict)
 	print (x)
 
-database_connect()
+# database_connect()
