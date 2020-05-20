@@ -44,7 +44,7 @@ print (len(final_report))
 
 #Reference Values for Females
 ref_female={
-'Hemoglobin':{'min':12, 'max':16.4},
+'Haemoglobin':{'min':12, 'max':16.4},
 'Total WBC Count':{'min':4000, 'max':11000},
 'PCV' : {'min':37,'max':47},
 'WBV (Leucocytes)': {'min':4000,'max':11000},	
@@ -53,7 +53,7 @@ ref_female={
 'Monocytes'	 : {'min':2,'max':8},
 'Esoinophils': {'min':1,'max':6},
 'Basophils' : {'min':0,'max':1},
-'RBC Count':{'min_RBC':4.0,'max_RBC':5.4},
+'RBC Count':{'min':4.0,'max':5.4},
 'MCV' :{'min':78,'max':94},
 'MCH': {'min':27,'max':32},
 'MCHC'	: {'min':32,'max':38},
@@ -66,7 +66,7 @@ ref_female={
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' : 4.2, 'max': 7.6},
-'Blood Urea' :{'min' :	x0, 'max': 40} ,
+'Blood Urea' :{'min' :	0, 'max': 40} ,
 'Blood Urea Nitrogen':{'min' :	0, 'max': 18},
 'Serum Uric acid'	:{'min' :3, 'max': 5.7},
 'Serum Creatinine'	:{'min' :0.5, 'max': 1.4},
@@ -98,11 +98,15 @@ ref_female={
 'S. Proteins total':{'min':6,'max':8},
 'Albumin':{'min':3.5,'max':5.6},
 'Globulin':{'min':1.3,'max':3.2},
+'Salmonella typhi O' : 0.0125,
+'Salmonella typhi H' : 0.008333,
+'Salmonella paratyphi A H' : 0.0125,
+'Salmonella paratyphi B H' : 0.00625
 }
 
 #Reference Values for Males
 ref_male={
-'Hemoglobin':{'min':14, 'max':18},
+'Haemoglobin':{'min':14, 'max':18},
 'Total WBC Count':{'min':4000, 'max':11000},
 'PCV' : {'min':42,'max':52},
 'WBV (Leucocytes)': {'min':4000,'max':11000},	
@@ -111,7 +115,7 @@ ref_male={
 'Monocytes'	 : {'min':2,'max':8},
 'Esoinophils': {'min':1,'max':6},
 'Basophils' : {'min':0,'max':1},
-'RBC Count':{'min_RBC':4.0,'max_RBC':6.4},
+'RBC Count':{'min':4.0,'max':6.4},
 'MCV' :{'min':78,'max':94},
 'MCH': {'min':27,'max':32},
 'MCHC'	: {'min':32,'max':38},
@@ -119,13 +123,13 @@ ref_male={
 'Platelets' : {'min':150000,'max':450000},
 'Reticulocytes':{'min':0.5,'max':1.5},
 'Color Index':{'min':0.85,'max':1.15},
-'ESR':{'min':0,'max':15},
+'Erythrocyte Sedimentation Rate (ESR)':{'min':0,'max':15},
 'Fasting Blood Sugar':120,
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' : 4.2, 'max': 7.6},
 'Blood Urea' :{'min' :	0, 'max': 40} ,
-'BUN-Blood Urea Nitrogen':{'min' :	0, 'max': 18},
+'Blood Urea Nitrogen':{'min' :	0, 'max': 18},
 'Serum Uric acid'	:{'min' :3, 'max': 5.7},
 'Serum Creatinine'	:{'min' :0.5, 'max': 1.4},
 'Routine urine for albumin':	'Nil',
@@ -156,6 +160,10 @@ ref_male={
 'S. Proteins total':{'min':6,'max':8},
 'Albumin':{'min':3.5,'max':5.6},
 'Globulin':{'min':1.3,'max':3.2},
+'Salmonella typhi O' : 0.0125,
+'Salmonella typhi H' : 0.008333,
+'Salmonella paratyphi A H' : 0.0125,
+'Salmonella paratyphi B H' : 0.00625
 }
 
 #Final reference variable for comparision
@@ -233,10 +241,12 @@ def param_cmp():
 
 param_cmp()
 print('\n Normal Values', normal)
+print (json.dumps(normal,indent=4))
 print ('#############################')
-print('\n ABNORMAL Values', abnormal)
+print('\n ABNORMAL Values')
+print (json.dumps(abnormal,indent=4))
 print ('#############################')
-print('\n Error 404:')
+print('\n Error 404:'),
 print (json.dumps(not_found,indent=4))
 
 
@@ -259,4 +269,4 @@ def database_connect():
 	x = mycol.insert_one(mydict)
 	print (x)
 
-# database_connect()
+database_connect()
