@@ -1,7 +1,7 @@
 ref_female={
-'Hemoglobin':{'min':12, 'max':16.4},
+'Haemoglobin':{'min':12, 'max':16.4},
 'Total WBC Count':{'min':4000, 'max':11000},
-'Packed Cell Volume (PCV)' : {'min':37,'max':47},
+'PCV' : {'min':37,'max':47},
 'WBV (Leucocytes)': {'min':4000,'max':11000},	
 'Neutrophils': {'min':60,'max':75},	
 'Lymphocytes': {'min':20,'max':30},	
@@ -16,13 +16,13 @@ ref_female={
 'Platelets' : {'min':150000,'max':450000},
 'Reticulocytes':{'min':0.5,'max':1.5}
 'Color Index':{'min':0.85,'max':1.15}
-'ESR':{'min':0,'max':20}
-'Fasting Sugar':120,
+'Erythrocyte Sedimentation Rate(ESR)':{'min':0,'max':20}
+'Fasting Blood Sugar':120,
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' : 4.2, 'max': 7.6},
 'Blood Urea' :{'min' :	0, 'max': 40} ,
-'BUN-Blood Urea Nitrogen':{'min' :	0, 'max': 18},
+'Blood Urea Nitrogen':{'min' :	0, 'max': 18},
 'Serum Uric acid'	:{'min' :3, 'max': 5.7},
 'Serum Creatinine'	:{'min' :0.5, 'max': 1.4},
 'Routine urine for albumin':	'Nil',
@@ -56,9 +56,9 @@ ref_female={
 }
 
 ref_male={
-'Hemoglobin':{'min':14, 'max':18},
+'Haemoglobin':{'min':14, 'max':18},
 'Total WBC Count':{'min':4000, 'max':11000},
-'Packed Cell Volume (PCV)' : {'min':42,'max':52},
+'PCV' : {'min':42,'max':52},
 'WBV (Leucocytes)': {'min':4000,'max':11000},	
 'Neutrophils': {'min':60,'max':75},	
 'Lymphocytes': {'min':20,'max':30},	
@@ -73,13 +73,13 @@ ref_male={
 'Platelets' : {'min':150000,'max':450000},
 'Reticulocytes':{'min':0.5,'max':1.5}
 'Color Index':{'min':0.85,'max':1.15}
-'ESR':{'min':0,'max':15}
-'Fasting Sugar':120,
+'Erythrocyte Sedimentation Rate(ESR)':{'min':0,'max':15}
+'Fasting Blood Sugar':120,
 'Post Prandial (PP) Blood Sugar'	: 120,
 'Blood-Glucose Level Maximum Value'	: 160,
 'Glycosylated Haemoglobin':{'min' : 4.2, 'max': 7.6},
 'Blood Urea' :{'min' :	0, 'max': 40} ,
-'BUN-Blood Urea Nitrogen':{'min' :	0, 'max': 18},
+'Blood Urea Nitrogen':{'min' :	0, 'max': 18},
 'Serum Uric acid'	:{'min' :3, 'max': 5.7},
 'Serum Creatinine'	:{'min' :0.5, 'max': 1.4},
 'Routine urine for albumin':	'Nil',
