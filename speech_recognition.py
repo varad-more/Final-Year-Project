@@ -47,3 +47,4 @@ def connect_database():
     print(x)
     print(4)
     
+connect_database()
