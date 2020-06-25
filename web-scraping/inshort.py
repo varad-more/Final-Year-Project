@@ -11,7 +11,7 @@ soup1= BeautifulSoup(source1,'lxml')
 
 csv_file = open('cms_scrape.csv', 'w')
 csv_writer = csv.writer(csv_file)
-csv_writer.writerow(['headline', 'summary'])
+csv_writer.writerow(['headline', 'summary','link'])
 
 for article in soup.find_all('div',class_='news-card z-depth-1'):
 	
@@ -20,9 +20,16 @@ for article in soup.find_all('div',class_='news-card z-depth-1'):
 	summary=article.select_one("div[itemprop*=articleBody]").text
 	print()
 	print(summary)
+	try:
+		link=article.find('div',class_='read-more')
+		link1=link.a["href"]
+		print(link1)
+	except:
+		link1='https://inshorts.com/en/read'
+		print(link1)
 	print()
 	print()
-	csv_writer.writerow([headline, summary])
+	csv_writer.writerow([headline, summary,link1])
 
 for article1 in soup1.find_all('div',class_='articles'):
 	headline=article1.h2.text
@@ -30,7 +37,10 @@ for article1 in soup1.find_all('div',class_='articles'):
 	summary=article1.p.text
 	print()
 	print(summary)
+	link=article1.a
+	link1=link["href"]
+	print(link1)
 	print()
 	print()
-	csv_writer.writerow([headline, summary])
+	csv_writer.writerow([headline, summary,link1])
 csv_file.close()
