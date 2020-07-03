@@ -18,7 +18,7 @@ d1 = numpy.empty(len(data), dtype=object)
 final_report={}
 for d in data:
     d1=(d["data"])
-    # print (d1)
+    # print (json.dumps(d1,indent=4))
     print ("##############")
 
 #For invidual rows in table
@@ -231,16 +231,17 @@ def param_cmp():
                     normal [i] = obs
                 else:
                     # print (i," - Abnormalities Obserserved")
-                    normal [i] = obs         
+                    abnormal [i] = obs         
         
         except:
-            not_found[i] = final_report[i]
+            # not_found[i] = final_report[i]
             pass
             # print(i," ----    Value not found")
 
 
 param_cmp()
-print('\n Normal Values', normal)
+print('###############################')
+print('\n Normal Values')
 print (json.dumps(normal,indent=4))
 print ('#############################')
 print('\n ABNORMAL Values')
