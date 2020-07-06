@@ -1,0 +1,4 @@
+pymongo
+tabula
+json 
+numpy
