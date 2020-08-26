@@ -4,6 +4,8 @@ import tabula
 import json 
 import numpy
 from datetime import datetime
+import mysql.connector
+
 
 #Using tabula to read the PDF and extract tables from it.
 df = tabula.read_pdf("blood_report.pdf", pages = 'all', multiple_tables = True, output_format="json")
@@ -250,23 +252,56 @@ print('\n Error 404:'),
 print (json.dumps(not_found,indent=4))
 
 
+
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="",
+  database="virtual_managers" # Change as per requirements
+)
+
+mycursor = mydb.cursor()
+
+
 def database_connect():
-	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-	mydb = myclient["test"]
-	print(mydb)
+    
+    #Reading from Database
+    # mycursor.execute("SELECT * FROM reports")
+    # rows = mycursor.fetchall()
+    # print (rows)
 
-	mycol = mydb["reports"]
-	print (mycol)
+    name=final_report['Name']
+    gender=final_report['Gender']
 
-	collist = mydb.list_collection_names()
-	if "reports" in collist:
-  		print("The collection exists.")
+    data = (name, gender,'20', final_report['Date'],normal,abnormal,not_found)
+    #Inserting into Database
+    sql = ("INSERT INTO dashboard_reports (name, gender, age, date, normal, abnormal, notes ) values (%s, %s, %s, %s, %s, %s, %s)") 
+    # data = ("2","abc","def")
+    # data = ('Test','Male','18','2020-02-01','abc', 'xyz','test')
+    mycursor.execute(sql, data)
+    mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
+    print(mycursor.rowcount, "record inserted.")
 
-	name=final_report['Name']
-	gender=final_report['Gender']
+
+
+# def database_connect():
+# 	myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+# 	mydb = myclient["test"]
+# 	print(mydb)
+
+# 	mycol = mydb["reports"]
+# 	print (mycol)
+
+# 	collist = mydb.list_collection_names()
+# 	if "reports" in collist:
+#   		print("The collection exists.")
+
+# 	name=final_report['Name']
+# 	gender=final_report['Gender']
 	
-	mydict = { "name": name, "gender": gender, "Date":final_report['Date'],"normal":normal, "abnormalities": abnormal }
-	x = mycol.insert_one(mydict)
-	print (x)
+# 	mydict = { "name": name, "gender": gender, "Date":final_report['Date'],"normal":normal, "abnormalities": abnormal }
+# 	x = mycol.insert_one(mydict)
+# 	print (x)
 
 database_connect()

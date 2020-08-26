@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 # from dashboard.views import index,report,rep_generatoion,register, pdf_downloader, sec_master
 from dashboard.views import *
@@ -25,4 +28,5 @@ from dashboard.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path ('', index , name ='index'),
-]
+    path ('report',report, name='report')
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
