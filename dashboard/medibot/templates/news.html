@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+
+<body>
+<h1 style="text-align: center;">Scrapped News</h1>
+<table>
+    <tr>
+        <th>Headline</th>
+        <th>Summary</th>
+        <th>Links</th>
+    </tr>
+{% for i in data %}
+
+    <tr>
+        <td>{{ i.headline }}</td>
+        <td>{{ i.summary }}</td>
+        <td>{{ i.links }}</td>
+
+    </tr>
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

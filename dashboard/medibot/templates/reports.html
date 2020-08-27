@@ -7,11 +7,35 @@
 
 
 <body>
-Reports
+<h1 style="text-align: center;" >Reports</h1>
+<br>
 
-{ reports }
+<table>
+
+    <tr>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Date</th>
+        <th>Normal</th>
+        <th>Abnormal</th>
+        <th>Notes</th>
+    </tr>
+
+{% for i in data %}
+<tr>
+    <td>{{ i.name }}</td>
+    <td>{{ i.gender }}</td>
+    <td>{{ i.age }}</td>
+    <td>{{ i.date }}</td>
+    <td>{{ i.normal }}</td>
+    <td>{{ i.abnormal }}</td>
+    <td>{{ i.notes }}</td>
+</tr>
+{% endfor %}
 
 
+</table>
 
 </body>
 

@@ -20,7 +20,7 @@ d1 = numpy.empty(len(data), dtype=object)
 final_report={}
 for d in data:
     d1=(d["data"])
-    # print (d1)
+    print (json.dumps(d1,indent= 2))
     print ("##############")
 
 #For invidual rows in table
@@ -263,17 +263,19 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-
+'''
 def database_connect():
     
     #Reading from Database
-    # mycursor.execute("SELECT * FROM reports")
-    # rows = mycursor.fetchall()
-    # print (rows)
+    mycursor.execute("SELECT * FROM reports")
+    rows = mycursor.fetchall()
+    print (rows)
 
     name=final_report['Name']
     gender=final_report['Gender']
-
+    normal = str (normal)
+    abnormal = str (abnormal)
+    not_found = str (not_found)
     data = (name, gender,'20', final_report['Date'],normal,abnormal,not_found)
     #Inserting into Database
     sql = ("INSERT INTO dashboard_reports (name, gender, age, date, normal, abnormal, notes ) values (%s, %s, %s, %s, %s, %s, %s)") 
@@ -282,6 +284,20 @@ def database_connect():
     mycursor.execute(sql, data)
     mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
     print(mycursor.rowcount, "record inserted.")
+'''
+name=final_report['Name']
+gender=final_report['Gender']
+normal = str (normal)
+abnormal = str (abnormal)
+not_found = str (not_found)
+data = (name, gender,'20', final_report['Date'],normal,abnormal,not_found)
+#Inserting into Database
+sql = ("INSERT INTO dashboard_reports (name, gender, age, date, normal, abnormal, notes ) values (%s, %s, %s, %s, %s, %s, %s)") 
+# data = ("2","abc","def")
+# data = ('Test','Male','18','2020-02-01','abc', 'xyz','test')
+mycursor.execute(sql, data)
+# mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
+print(mycursor.rowcount, "record inserted.")
 
 
 
@@ -304,4 +320,4 @@ def database_connect():
 # 	x = mycol.insert_one(mydict)
 # 	print (x)
 
-database_connect()
+# database_connect()

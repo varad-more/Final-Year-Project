@@ -28,5 +28,6 @@ from dashboard.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path ('', index , name ='index'),
-    path ('report',report, name='report')
+    path ('report',report, name='report'),
+    path ('news',news, name='news'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

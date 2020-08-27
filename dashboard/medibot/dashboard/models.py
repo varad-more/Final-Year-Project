@@ -7,11 +7,15 @@ class reports(models.Model):
     gender = models.CharField(max_length=10)
     age = models.CharField (max_length=3)
     date = models.CharField(max_length=20) 
-    normal = models.CharField(max_length=500)
-    abnormal = models.CharField(max_length=500)
-    notes = models.CharField(max_length=500)
+    normal = models.TextField()
+    abnormal = models.TextField()
+    notes = models.TextField()
     class meta:
         db_table = "reports"
 
-# class scraped_data (models.Model):
-
+class scraped_data (models.Model):
+    headline = models.CharField (max_length=500) 
+    summary = models.CharField (max_length=500)
+    links = models.CharField (max_length=500)
+    class meta:
+        db_table = "scraped_data"
