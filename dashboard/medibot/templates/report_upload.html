@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+
+<body>
+<h1 style="text-align: center;" >Report Uploader Portal</h1>
+<br>
+
+<form id="action-form" method="post" role="form" enctype="multipart/form-data" style="text-align: center;">
+    {% csrf_token %}
+    <div class="form-group" id="action-form">
+        <p>Upload a Report</p>
+        <input type="file" name="report" onchange="loadFile(event)"><br>
+        <!-- <input type="hidden" name="key" value="upworkproject_gururajpotnis" /> -->
+    </div>
+    <!-- <div class="form-group">
+        <input class="form-control input-char-count" id="action-form" name="image_id" placeholder="image_id" type="text" maxlength="10" required>
+    </div> -->
+
+    <!-- <div class=" form-group">
+        <textarea class="form-control input-char-count" id="action-form" type="text" name="text" placeholder="Text" maxlength="1000" rows="5"></textarea>
+    </div>
+
+    <div class=" form-group">
+        <input class="form-control" id="action-form" name="date" placeholder="Date" type="date" required>
+    </div> -->
+    <br>
+    <div class="row">
+        <div class="col-lg-12 form-group">
+            <button id="action-form" id="button_submit" type="submit">Submit</button>
+        </div>
+        <br>
+    </div>
+</form>
+</body>
+
+</html>
