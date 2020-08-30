@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import mysql.connector
 
+start="<p>"
+end="</p>"
+
 # pip3 install mysql-connector-python 
 
 mydb = mysql.connector.connect(
@@ -46,11 +49,9 @@ source1 = requests.get('https://www.medicalnewstoday.com/').text
 soup1= BeautifulSoup(source1,'lxml')
 article=soup1.find('div',{"id":"LATEST NEWS"})
 
-for link in article.find_all('a',class_="css-ni2lnp"):
-    headline=link.text
-    link='https://www.medicalnewstoday.com'+link["href"]
-    summary='none'
-    database_connect()
+# for link in article.find_all('a',class_="css-ni2lnp"):
+#     headline=link.text
+#     link='https://www.medicalnewstoday.com'+link["href"]
 
 def extract_source(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0'}
@@ -59,10 +60,17 @@ def extract_source(url):
           
 source=extract_source('https://www.hindustantimes.com/health/')
 soup= BeautifulSoup(source,'lxml')
-for article in soup.find_all('div',class_="media-heading headingfour"):
+for article in soup.find_all('div',class_="media-body"):
     headline=article.a.text
-    summary='none'
     r=article.a
     link=r['href']
-    database_connect()
+    page=article.p
+    res=str(page)
+    if res.startswith(start):
+        res=res.replace(start,"")
+        res=res.replace(end,"")
+    summary=res
+    if summary!="None":
+        database_connect()
+    # database_connect()
 
