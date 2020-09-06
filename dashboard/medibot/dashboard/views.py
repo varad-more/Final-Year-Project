@@ -1,16 +1,21 @@
 from django.shortcuts import render
 
 # Create your views here.
-from dashboard.models import reports, scraped_data
+from dashboard.models import *
 
 from django.http import HttpResponse
 from twilio.rest import Client
 from django.conf import settings  
-from .forms import UploadFileForm
+from .forms import DocumentForm#UploadFileForm
+from django.core.files.storage import FileSystemStorage
 
 def index(request):
     # return HttpResponse("Hello, world.")
     return render(request,'index.html')
+
+def inner(request):
+    # return HttpResponse("Hello, world.")
+    return render(request,'inner-page.html')
 
 def report (request):
     # return HttpResponse("Hello, world.")
@@ -43,16 +48,43 @@ def news (request):
 #     return render(request,'reports.html', content)
 
 
+# def upload_file(request):
+#     if request.method == 'POST':
+#         form = ModelFormWithFileField(request.POST, request.FILES)
+#         form.save()
+#     #     if form.is_valid():
+#     #         # file is saved
+#     #         form.save()
+#     #         return HttpResponseRedirect('/success/url/')
+#     # else:
+#     #     form = ModelFormWithFileField()
+#     return render(request, 'report_upload.html', {'form': form})
+
+
+# def upload_file(request):
+#     if request.method == 'POST':
+#         form = DocumentForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             print ('Saved')
+#             return redirect('index')
+#     else:
+#         form = DocumentForm()
+#     return render(request, 'report_upload.html', {
+#         'form': form
+#     })
+
 def upload_file(request):
-    if request.method == 'POST':
-        form = ModelFormWithFileField(request.POST, request.FILES)
-        if form.is_valid():
-            # file is saved
-            form.save()
-            return HttpResponseRedirect('/success/url/')
-    else:
-        form = ModelFormWithFileField()
-    return render(request, 'report_upload.html', {'form': form})
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'report_upload.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'report_upload.html')
+
 
 
 def report_upload (request):

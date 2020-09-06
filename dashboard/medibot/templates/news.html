@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 
-<head>
-
-</head>
-
-
-<body>
 <h1 style="text-align: center;">Scrapped News</h1>
-<table>
-    <tr>
+<table >
+    <tr style="text-align: center;">
         <th>Headline</th>
         <th>Summary</th>
         <th>Links</th>
@@ -17,15 +12,13 @@
 {% for i in data %}
 
     <tr>
-        <td>{{ i.headline }}</td>
-        <td>{{ i.summary }}</td>
-        <td>{{ i.links }}</td>
+        <td style="padding:0 15px 0 15px;">{{ i.headline }}</td>
+        <td style="padding:0 15px 0 15px;">{{ i.summary }}</td>
+        <td style="padding:0 15px 0 15px;">{{ i.links }}</td>
 
     </tr>
 {% endfor %}
 
 </table>
 
-</body>
-
-</html>
+{% endblock content %}
