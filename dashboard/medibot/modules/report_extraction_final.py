@@ -8,7 +8,7 @@ import mysql.connector
 
 
 #Using tabula to read the PDF and extract tables from it.
-df = tabula.read_pdf("blood_report.pdf", pages = 'all', multiple_tables = True, output_format="json")
+df = tabula.read_pdf("modules/blood_report.pdf", pages = 'all', multiple_tables = True, output_format="json")
 
 #Tabula data table can be converted into JSON format. Making extraction easy.
 data =json.loads(json.dumps(df))
