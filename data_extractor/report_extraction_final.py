@@ -242,6 +242,8 @@ def param_cmp():
 
 
 param_cmp()
+
+
 print('\n Normal Values', normal)
 print (json.dumps(normal,indent=4))
 print ('#############################')
@@ -251,7 +253,9 @@ print ('#############################')
 print('\n Error 404:'),
 print (json.dumps(not_found,indent=4))
 
-
+normal = json.dumps(normal)
+abnormal = json.dumps(abnormal)
+not_found = json.dumps(not_found)
 
 
 mydb = mysql.connector.connect(
@@ -296,7 +300,7 @@ sql = ("INSERT INTO dashboard_reports (name, gender, age, date, normal, abnormal
 # data = ("2","abc","def")
 # data = ('Test','Male','18','2020-02-01','abc', 'xyz','test')
 mycursor.execute(sql, data)
-# mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
+mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
 print(mycursor.rowcount, "record inserted.")
 
 

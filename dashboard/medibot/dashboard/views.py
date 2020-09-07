@@ -6,7 +6,8 @@ from dashboard.models import *
 from django.http import HttpResponse
 from twilio.rest import Client
 from django.conf import settings  
-from .forms import DocumentForm#UploadFileForm
+import json
+# from .forms import DocumentForm#UploadFileForm
 from django.core.files.storage import FileSystemStorage
 
 def index(request):
@@ -20,11 +21,19 @@ def inner(request):
 def report (request):
     # return HttpResponse("Hello, world.")
     rep = reports.objects.all()
+    # rep = json.dumps(rep)
+    # print (rep.normal)
     content = {
         'data': rep
     }
-    print (content['data'][0].normal)
+    print (content['data'])
+
+    # normal = content['data'][0].normal
     
+    # normal = json.dumps (normal)
+    # normal = json.loads(normal)
+    # print (type(normal))
+    # print (normal['Haemoglobin'])
     # json.dumps (content['data'])
     # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
     # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/

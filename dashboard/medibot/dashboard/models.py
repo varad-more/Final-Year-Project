@@ -1,5 +1,7 @@
 from django.db import models
 
+import jsonfield
+
 # Create your models here.
 
 class reports(models.Model):
@@ -7,11 +9,11 @@ class reports(models.Model):
     gender = models.CharField(max_length=10, blank=True)
     age = models.CharField (max_length=3, blank=True)
     date = models.CharField(max_length=20, blank=True) 
-    normal = models.TextField( blank=True)
-    abnormal = models.TextField( blank=True)
-    notes = models.TextField( blank=True)
-    document = models.FileField(upload_to='documents/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    normal = jsonfield.JSONField( null=True)
+    abnormal = jsonfield.JSONField( null=True)
+    notes = jsonfield.JSONField( null=True)
+    # document = models.FileField(upload_to='documents/')
+    # uploaded_at = models.DateTimeField(auto_now_add=True)
     class meta:
         db_table = "reports"
 

@@ -1,42 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
+    <style>
+        #patients {
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #patients td, #patients th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #patients tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #patients tr:hover {background-color: #ddd;}
+        
+        #patients th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #4CAF50;
+          color: white;
+        }
+    </style>
+        
 </head>
 
 
 <body>
-<h1 style="text-align: center;" >Reports</h1>
-<br>
+    <br>
+    <h1 style="text-align: center;" >Reports</h1>
 
-<table>
 
+    <div style="padding: 70px;">
+{% for i in data %}
+
+<h2>Name: {{ i.name }}</h2>
+<h4>Gender: {{ i.gender }}</h4>
+<h4>Age: {{ i.age }}</h4>
+<h4>Date: {{ i.date }}</h4>
+
+
+<div class="row">
+  <div class="col">
+<table id="patients">
+
+   
     <tr>
         <th>Name</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Date</th>
-        <th>Normal</th>
-        <th>Abnormal</th>
         <th>Notes</th>
     </tr>
 
-{% for i in data %}
+<!-- {{i.normal}} -->
+<h2>Normal observations</h2>
+{% for j,k in i.normal.items %}
 <tr>
-    <td>{{ i.name }}</td>
+    <td>{{j}}</td>
+    <td>{{k}}</td>
+    <!-- <td>{{ i.name }}</td>
     <td>{{ i.gender }}</td>
     <td>{{ i.age }}</td>
     <td>{{ i.date }}</td>
     <td>{{ i.normal }}</td>
     <td>{{ i.abnormal }}</td>
-    <td>{{ i.notes }}</td>
+    <td>{{ i.notes }}</td> -->
 </tr>
+{% endfor %}
+</table>
+</div>
+
+<!-- ---------------------------------------------------- -->
+<div class="col">
+<table id="patients">
+
+   
+  <tr>
+      <th style="background-color:red !important">Name</th>
+      <th style="background-color:red ">Notes</th>
+  </tr>
+
+<!-- {{i.abnormal}} -->
+<h2>Abnormal observations</h2>
+
+{% for j,k in i.abnormal.items %}
+<tr>
+  <td>{{j}}</td>
+  <td>{{k}}</td>
+  <!-- <td>{{ i.name }}</td>
+  <td>{{ i.gender }}</td>
+  <td>{{ i.age }}</td>
+  <td>{{ i.date }}</td>
+  <td>{{ i.normal }}</td>
+  <td>{{ i.abnormal }}</td>
+  <td>{{ i.notes }}</td> -->
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+<br>
+<br>
+<br>
+
 {% endfor %}
 
 
-</table>
+</div>
 
 </body>
 
 </html>
+{% endblock content %}

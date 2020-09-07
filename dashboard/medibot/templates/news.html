@@ -3,7 +3,25 @@
 {% block content %}
 
 <h1 style="text-align: center;">Scrapped News</h1>
-<table >
+
+<section id="why-us" class="why-us">
+    <div class="container">
+
+      <div class="row">
+        {% for i in data %}
+    
+        <div class="col-lg-4 d-flex align-items-stretch" style="padding: 0.5em;">
+          <div class="content" >
+            <h3>{{ i.headline }}</h3>
+            <p>{{ i.summary }}</p>
+            <div class="text-center">
+              <a href="{{ i.links }}" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+<!-- <table style="column-rule: 4px">
     <tr style="text-align: center;">
         <th>Headline</th>
         <th>Summary</th>
@@ -19,6 +37,6 @@
     </tr>
 {% endfor %}
 
-</table>
+</table> -->
 
 {% endblock content %}
