@@ -33,6 +33,9 @@ urlpatterns = [
     path ('report_upload',report_upload, name='report_upload'),
     path ('report',report, name='report'),
     path ('news',news, name='news'),
+    path ('fetch',fetch_news),
+    path ('report_extract',data_extract),
+    
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

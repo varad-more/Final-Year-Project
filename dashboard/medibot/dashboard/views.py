@@ -10,6 +10,7 @@ import json
 # from .forms import DocumentForm#UploadFileForm
 from django.core.files.storage import FileSystemStorage
 
+
 def index(request):
     # return HttpResponse("Hello, world.")
     return render(request,'index.html')
@@ -17,6 +18,18 @@ def index(request):
 def inner(request):
     # return HttpResponse("Hello, world.")
     return render(request,'inner-page.html')
+
+def fetch_news(request):
+    import modules.scrape_final
+
+    # return HttpResponse("News fetched")
+    return render(request,'news_fetched.html')
+
+def data_extract(request):
+    import modules.report_extraction_final
+
+    return HttpResponse("Report Data obtained")
+
 
 def report (request):
     # return HttpResponse("Hello, world.")
@@ -119,11 +132,14 @@ def broadcast_sms(request):
     date_time='3 September 2020, 11:00am'
     message_to_broadcast = ("Your Appointment is Scheduled at:"+date_time)
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    # recipient = '+919967438112'
     # recipient = '+917506454404'
     # recipient = '+918275510613'
+
     #  for recipient in settings.SMS_BROADCAST_TO_NUMBERS:
     #     if recipient:
     client.messages.create(to=recipient,
                            from_=settings.TWILIO_NUMBER,
                            body=message_to_broadcast)
     return HttpResponse("messages sent!", 200)
+

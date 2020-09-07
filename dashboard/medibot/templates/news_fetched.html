@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<h2>News fetched ..... Redirecting to news feeds</h2>
+
+
+<script>
+    function redirect(){
+       window.location.href = "news";
+    }
+
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+
+
+{% endblock content %}

@@ -1,5 +1,5 @@
 #Combined Version 
-import pymongo
+# import pymongo
 import tabula
 import json 
 import numpy
