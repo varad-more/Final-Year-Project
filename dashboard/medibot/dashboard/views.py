@@ -132,7 +132,7 @@ def broadcast_sms(request):
     date_time='3 September 2020, 11:00am'
     message_to_broadcast = ("Your Appointment is Scheduled at:"+date_time)
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    # recipient = '+919967438112'
+    recipient = '+918898630781'
     # recipient = '+917506454404'
     # recipient = '+918275510613'
 
