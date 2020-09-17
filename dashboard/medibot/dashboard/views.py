@@ -1,14 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
+#Twilio - SMS Module
+from twilio.rest import Client
+from django.conf import settings  
+
 
 # Create your views here.
 from dashboard.models import *
 
-from django.http import HttpResponse
-from twilio.rest import Client
-from django.conf import settings  
+#Report Uploader Module
+from modules import report_extraction_final
 import json
-# from .forms import DocumentForm#UploadFileForm
-from django.core.files.storage import FileSystemStorage
+# from werkzeug.utils import secure_filename
+from django.core.files.storage import FileSystemStorage 
+import os
+from .forms import *
+
+
+allowed_file = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4' ,''])
 
 
 def index(request):
@@ -61,71 +71,46 @@ def news (request):
     print (content)
     return render(request,'news.html', content)
 
-# def report(request):
-#     news = scraped_data.objects.all()
-#     content = {
-#         'data': news
-#     }
-#     print (content)
-#     return render(request,'reports.html', content)
 
+def report_upload(request):
+    if request.method == 'POST' and request.FILES['report']:
+        try:
+            file = request.FILES['report']
+            # if file and allowed_file(file.name):
+            #     print ('work')
+                # attachment_file = secure_filename(file.filename)
+            storage = FileSystemStorage(location='media/reports')
+            url = storage.save(file.name, file)
+            print (url)
+            report_extraction_final.main(url)
+            return render(request, 'report_upload.html', {
+            'uploaded_file_url': url
+            })
 
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = ModelFormWithFileField(request.POST, request.FILES)
-#         form.save()
-#     #     if form.is_valid():
-#     #         # file is saved
-#     #         form.save()
-#     #         return HttpResponseRedirect('/success/url/')
-#     # else:
-#     #     form = ModelFormWithFileField()
-#     return render(request, 'report_upload.html', {'form': form})
+        except Exception as e:
+            print("Form without file " + str(e))
 
-
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = DocumentForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             print ('Saved')
-#             return redirect('index')
-#     else:
-#         form = DocumentForm()
-#     return render(request, 'report_upload.html', {
-#         'form': form
-#     })
-
-def upload_file(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = fs.url(filename)
-        return render(request, 'report_upload.html', {
-            'uploaded_file_url': uploaded_file_url
-        })
     return render(request, 'report_upload.html')
 
 
 
-def report_upload (request):
-    if (request.method=='POST'):
-        # report_name = request.form.get('name')
-        try:
-            file = request.file['report'].read()
-            if file:  #and allowed_file(file.filename):
-                filename = (file.filename)
-                print (filename)
-                # file.save(os.path.join(app.config['UPLOAD_FOLDER'], "1ngo", filename))
+# def report_upload (request):
+#     if (request.method=='POST'):
+#         # report_name = request.form.get('name')
+#         try:
+#             file = request.file['report'].read()
+#             if file:  #and allowed_file(file.filename):
+#                 filename = (file.name)
+#                 print (filename)
+#                 # file.save(os.path.join(app.config['UPLOAD_FOLDER'], "1ngo", filename))
 
-            else:
-                filename = request.form.get('file')
-        except Exception as e:
-            print("Form without file " + str(e))
+#             else:
+#                 filename = request.form.get('file')
+#         except Exception as e:
+#             print("Form without file " + str(e))
 
-        # image = str(filename)
-    return render (request,'report_upload.html')
+#         # image = str(filename)
+#     return render (request,'report_upload.html')
 
 
 def broadcast_sms(request):

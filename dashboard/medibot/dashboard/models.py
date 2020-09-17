@@ -11,9 +11,10 @@ class reports(models.Model):
     date = models.CharField(max_length=20, blank=True) 
     normal = jsonfield.JSONField( null=True)
     abnormal = jsonfield.JSONField( null=True)
-    notes = jsonfield.JSONField( null=True)
-    # document = models.FileField(upload_to='documents/')
-    # uploaded_at = models.DateTimeField(auto_now_add=True)
+    # notes = jsonfield.JSONField( null=True)
+    file_path = models.CharField(max_length=100)
+    uploaded_at = models.DateTimeField(auto_now=True)
+
     class meta:
         db_table = "reports"
 

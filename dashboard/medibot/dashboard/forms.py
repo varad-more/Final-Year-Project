@@ -1,8 +1,9 @@
 from django import forms
-from dashboard.models import *
 
-
-class DocumentForm(forms.ModelForm):
-    class Meta:
-        model = reports
-        fields = ('document', )
+class report_uploads(forms.Form):
+    # category = forms.CharField()
+    # title = forms.CharField()
+    # date = forms.DateField()
+    # notes = forms.CharField()
+    report = forms.FileField()
+    # publish = forms.CharField()

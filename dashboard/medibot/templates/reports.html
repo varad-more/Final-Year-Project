@@ -46,7 +46,7 @@
           <li><a href="/">Home</a></li>
           <li class="active"> <a href="report">Reports</a></li>
           <li><a href="news">News</a></li>
-          <li><a href="report_extract">Read Report</a></li>
+          <li><a href="report_upload">Read Report</a></li>
         </ul>
       </nav>
       <!-- .nav-menu -->
@@ -65,7 +65,8 @@
 <h4>Gender: {{ i.gender }}</h4>
 <h4>Age: {{ i.age }}</h4>
 <h4>Date: {{ i.date }}</h4>
-
+{{ i.uploaded_at }}
+<h4><a href="media/reports/{{ i.file_path }}"> <i class="icofont-ebook">View Report </i></a></h4>
 
 <div class="row">
   <div class="col">
