@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<header id="header" class="fixed-top">
+  <div class="container d-flex align-items-center">
+
+    <h1 class="logo mr-auto"><a href="/">Virtual Managers</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo mr-auto"><img src="{% static 'assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li> <a href="report">Reports</a></li>
+        <li  class="active"><a href="news">News</a></li>
+        <li><a href="fetch">Fetch News</a></li>
+      </ul>
+    </nav>
+     <!-- .nav-menu -->
+    </div>
+  </header>
+
+  <br><br><br><br><br><br>
+<div>
+<h1 style="text-align: center;">Scrapped News</h1>
+
+<section id="why-us" class="why-us">
+    <div class="container">
+
+      <div class="row">
+        {% for i in data %}
+    
+        <div class="col-lg-4 d-flex align-items-stretch" style="padding: 0.5em;">
+          <div class="content" >
+            <h3>{{ i.headline }}</h3>
+            <p>{{ i.summary }}</p>
+            <div class="text-center">
+              <a href="{{ i.links }}" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+<!-- <table style="column-rule: 4px">
+    <tr style="text-align: center;">
+        <th>Headline</th>
+        <th>Summary</th>
+        <th>Links</th>
+    </tr>
+{% for i in data %}
+
+    <tr>
+        <td style="padding:0 15px 0 15px;">{{ i.headline }}</td>
+        <td style="padding:0 15px 0 15px;">{{ i.summary }}</td>
+        <td style="padding:0 15px 0 15px;">{{ i.links }}</td>
+
+    </tr>
+{% endfor %}
+
+</table> -->
+</div>
+{% endblock content %}
