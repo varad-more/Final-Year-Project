@@ -29,6 +29,10 @@ def inner(request):
     # return HttpResponse("Hello, world.")
     return render(request,'inner-page.html')
 
+def patient(request):
+    # return HttpResponse("Hello, world.")
+    return render(request,'patient_info.html')
+
 def fetch_news(request):
     import modules.scrape_final
 
