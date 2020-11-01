@@ -46,7 +46,7 @@ def report (request):
     rep = reports.objects.all()
     # rep = json.dumps(rep)
     # print (rep.normal)
-    content = {
+    content = { 
         'data': rep
     }
     print (content['data'])
