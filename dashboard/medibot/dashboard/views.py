@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
+from django.contrib import messages
 #Twilio - SMS Module
 from twilio.rest import Client
 from django.conf import settings  
@@ -8,7 +8,7 @@ from django.conf import settings
 
 # Create your views here.
 from dashboard.models import *
-
+from dashboard.models import patient
 #Report Uploader Module
 from modules import report_extraction_final
 import json
@@ -29,9 +29,26 @@ def inner(request):
     # return HttpResponse("Hello, world.")
     return render(request,'inner-page.html')
 
-def patient(request):
+def patient_add(request):
+    if request.method == "POST":
+        if request.POST.get('name') and request.POST.get('gender') and request.POST.get('age') and request.POST.get('birthday') and request.POST.get('email') and request.POST.get('address') and request.POST.get('pincode'):
+            saverecord = patient()
+            saverecord.name = request.POST.get('name')
+            saverecord.gender = request.POST.get('gender')
+            saverecord.age = request.POST.get('age')
+            saverecord.birthday = request.POST.get('birthday')
+            saverecord.email = request.POST.get('email')
+            saverecord.address = request.POST.get('address')
+            saverecord.pincode = request.POST.get('pincode')
+            saverecord.save()
+            messages.success(request,'Record Saved')
+            return render(request,'patient_addinfo.html')
+    else :
+        return render(request,'patient_addinfo.html')
+
     # return HttpResponse("Hello, world.")
-    return render(request,'patient_info.html')
+    
+
 
 def fetch_news(request):
     import modules.scrape_final
@@ -74,6 +91,17 @@ def news (request):
     }
     print (content)
     return render(request,'news.html', content)
+
+def patient_entry (request):
+    # return HttpResponse("Hello, world.")
+    pat = patient.objects.all()
+    # rep = json.dumps(rep)
+    # print (rep.normal)
+    content = {
+        'data': pat
+    }
+    print (content['data'])
+    return render(request,'patient_info.html', content)
 
 
 def report_upload(request):
