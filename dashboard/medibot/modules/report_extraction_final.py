@@ -4,6 +4,7 @@ import json
 import numpy
 from datetime import datetime
 import mysql.connector
+from dashboard.models import *
 
 def main(url):
 
@@ -264,9 +265,23 @@ def main(url):
       password="",
       database="virtual_managers" # Change as per requirements
     )
+    
+    saverecord = reports()
+
+    saverecord.name = final_report['Name']
+    saverecord.gender=final_report['Gender']
+    saverecord.normal = str (normal)
+    saverecord.abnormal = str (abnormal)
+    # saverecord.not_found = str (not_found)
+    saverecord.file_path = url 
+    from  django.utils import timezone
+    saverecord.uploaded_at = timezone.now()
+
+    
+    saverecord.save()
+
 
     mycursor = mydb.cursor()
-
     name=final_report['Name']
     gender=final_report['Gender']
     normal = str (normal)
@@ -277,6 +292,6 @@ def main(url):
     #Inserting into Database
     sql = ("INSERT INTO dashboard_reports (name, gender, age, date, normal, abnormal, file_path, uploaded_at) values (%s,%s, %s, %s, %s, %s, %s, %s)") 
     mycursor.execute(sql, data)
-    mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
+    # mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
     print(mycursor.rowcount, "record inserted.")
 # main(url)

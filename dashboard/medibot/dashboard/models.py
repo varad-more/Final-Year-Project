@@ -31,6 +31,7 @@ class patient(models.Model):
     age = models.CharField (max_length=3, blank=True)
     birthday = models.CharField (max_length=10, blank=True)
     email = models.CharField (max_length=50, blank=True)
+    phone = models.CharField (max_length=20,blank=True)
     address = models.CharField (max_length=500, blank=True)
     pincode = models.CharField (max_length=10, blank=True)
     

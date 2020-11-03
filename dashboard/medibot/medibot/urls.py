@@ -35,8 +35,13 @@ urlpatterns = [
     path ('news',news, name='news'),
     path ('fetch',fetch_news),
     path ('report_extract',data_extract),
-    path ('patient',patient_entry),
-    path ('addinfo',patient_add)
+    path ('patient',patient_information),
+    path ('addinfo',patient_add),
+    
+    path('register/', registerPage, name="register"),
+	path('login/', loginPage, name="login"),  
+	path('logout/', logoutUser, name="logout")
+
     
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

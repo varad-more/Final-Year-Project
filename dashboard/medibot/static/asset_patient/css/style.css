@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
 /*---------------------------------------
 # Top Bar
 --------------------------------------------------------------*/
-#topbar {
+/* #topbar {
   background: #fff;
   height: 40px;
   font-size: 14px;
@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #topbar .social-links a:first-child {
   border-left: 0;
-}
+} */
 
 /*--------------------------------------------------------------
 
@@ -154,7 +154,7 @@ h1, h2, h3, h4, h5, h6 {
 # Navigation Menu
 --------------------------------------------------------------*/
 /* Desktop Navigation */
-.nav-menu {
+/* .nav-menu {
   padding-top: 30px;
 }
 
@@ -192,9 +192,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-menu a:hover i, .nav-menu .active > a i, .nav-menu li:hover > a i {
   color: #149ddd;
-}
+}*/
 
 /* Mobile Navigation */
+/*
 .mobile-nav-toggle {
   position: fixed;
   right: 15px;
@@ -222,7 +223,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .mobile-nav-active .mobile-nav-toggle i {
   color: #fff;
-}
+} */
 
 /*--------------------------------------------------------------
 # Hero Section

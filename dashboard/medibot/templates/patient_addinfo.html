@@ -4,7 +4,7 @@
 
 <head>
     <title>page</title>
-     <link rel="stylesheet" type="text/css" href="{%static 'assets/css/web7.css' %}">  
+     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/web7.css' %}">  
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
     
 <style>
@@ -75,10 +75,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
   opacity: 0.9;
 }
 /* -----------log in button--------- */
-.btn1:hover {
+/* .btn1:hover {
    color: red;
   opacity: 1;
-}
+} */
 
 
 
@@ -103,9 +103,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
   border-radius: 4px;
 }
 /* scroll to top button */
-#myBtn:hover {
+/* #myBtn:hover {
   background-color: #555;
-}
+} */
 /* ----------------------STYLES FOR SIGN UP PAGE BODY ENDS-----------------------*/
 
 
@@ -141,27 +141,22 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="/">Home</a></li>
+          <li ><a href="/">Home</a></li>
           <li><a href="report">Reports</a></li>
           <li><a href="news">News</a></li>
+          <li ><a href="patient">Patient Information</a></li>
+          <li class = "active"><a href="addinfo">Add Patient</a></li>
+
           <!--<li><a href="patient">Patient</li> -->
-          <li class="drop-down"><a href="">Patient</a>
+          <!-- <li class="drop-down"><a href="">Patient</a>
               <ul>
                 <li><a href="patient">Alex Smith</a></li>
-                <!--<li class="drop-down"><a href="#">Deep Drop Down</a>
-                  <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                    <li><a href="#">Deep Drop Down 2</a></li>
-                    <li><a href="#">Deep Drop Down 3</a></li>
-                    <li><a href="#">Deep Drop Down 4</a></li>
-                    <li><a href="#">Deep Drop Down 5</a></li>
-                  </ul> -->
                 </li>
                 <li><a href="patient">Riya Panmar</a></li>
                 <li><a href="patient">Arya Malhotra</a></li>
                 <li><a href="patient">Anshika Rai</a></li>
               </ul>
-            </li>
+            </li> -->
         </ul>
       </nav>
       <!-- .nav-menu -->
@@ -187,9 +182,12 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
     <label for="age"><b>Age</b></label>
     <input type="text" placeholder="Enter Age" name="age" required>
 
-    <label for="birthday"><b>Birthday</b></label>
-    <input type="text" placeholder="Enter DOB" name="birthday" required>
-    
+    <label for="birthday"><b>Date of Birth</b></label><br>
+    <input type="date" placeholder="Enter DOB" name="birthday" required>
+    <br><br>
+    <label for="phone"><b>Phone Number</b></label> 
+    <input type="text" placeholder="Enter Phone Number" name="phone" required>
+
     <label for="email"><b>Email</b></label> 
     <input type="email" placeholder="Enter Email" name="email" required>
 
