@@ -35,6 +35,7 @@ urlpatterns = [
     path ('news',news, name='news'),
     path ('fetch',fetch_news),
     path ('report_extract',data_extract),
+    path ('patient',patient),
     
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
