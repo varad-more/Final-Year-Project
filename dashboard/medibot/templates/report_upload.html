@@ -1,4 +1,183 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+  <style>
+   @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300);
+
+.frame {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 400px;
+	margin-top: -200px;
+	margin-left: -200px;
+	border-radius: 2px;
+	box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	background: linear-gradient(to top right, rgb(10, 43, 114) 0%, rgb(105, 220, 255) 100%);
+	color: #333;
+	font-family: "Open Sans", Helvetica, sans-serif;
+}
+
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 300px;
+	height: 260px;
+	border-radius: 3px;
+	box-shadow: 8px 10px 15px 0 rgba(0, 0, 0, 0.2);
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	flex-direction: column;
+}
+
+.title {
+	width: 100%;
+	height: 50px;
+	border-bottom: 1px solid #999;
+	text-align: center;
+}
+
+h1 {
+	font-size: 16px;
+	font-weight: 300;
+	color: #666;
+}
+
+.dropzone {
+	width: 100px;
+	height: 80px;
+	border: 1px dashed #999;
+	border-radius: 3px;
+	text-align: center;
+}
+
+.upload-icon {
+	margin: 25px 2px 2px 2px;
+}
+
+.upload-input {
+	position: relative;
+  /*top: -30%;
+  bottom: 50%;*/
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+
+.btn {
+	display: block;
+	width: 140px;
+	height: 40px;
+	background : rgb(10, 43, 114);
+	color: #fff;
+	border-radius: 3px;
+	border: 0;
+	box-shadow: 0 3px 0 0 rgb(105, 220, 255);
+	transition: all 0.3s ease-in-out;
+	font-size: 14px;
+}
+
+.btn:hover {
+	background: rgb(63, 168, 182);
+	box-shadow: 0 3px 0 0 rgb(190, 243, 245);
+}
+
+
+
+
+
+  </style>
+</head>
+<!-- ======= Top Bar ======= -->
+<div id="topbar" class="d-none d-lg-flex align-items-center fixed-top">
+  <div class="container d-flex">
+    <div class="contact-info mr-auto">
+      <!-- <i class="icofont-envelope"></i> <a href="mailto:contact@example.com">contact@example.com</a>
+      <i class="icofont-phone"></i> +1 5589 55488 55
+      <i class="icofont-google-map"></i> A108 Adam Street, NY -->
+      This project is developed by Group 16. 
+    </div>
+    <div class="social-links">
+      <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
+      <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
+      <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
+      <a href="#" class="skype"><i class="icofont-skype"></i></a>
+      <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+  <div class="container d-flex align-items-center">
+
+    <h1 class="logo mr-auto"><a href="/">Virtual Managers</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo mr-auto"><img src="{% static 'assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li ><a href="/">Home</a></li>
+        <li><a href="report">Reports</a></li>
+        <li class="active"><a href="report">Read Report</a></li>
+        <li><a href="news">News</a></li>
+        <li><a href="patient">Patient Information</a></li>
+
+        <!-- <li class="drop-down"><a href="patient">Patient Information</a> -->
+            
+          <!-- <ul>
+              <li><a href="patient">Alex Smith</a></li>
+               <li><a href="patient">Riya Panmar</a></li>
+              <li><a href="patient">Arya Malhotra</a></li>
+              <li><a href="patient">Anshika Rai</a></li>
+            </ul>
+          </li>
+      </ul> -->
+    </nav>
+    <!-- .nav-menu -->
+  </div>
+</header> -->
+<!-- End Header -->
+
+<br>
+<br>
+<br>
+
+<body>
+  
+  <br>
+  <div class="frame">
+    <div class="center">
+      <div class="title">
+        <h1>Upload File to get Results</h1>
+      </div>
+      
+      <div class="dropzone">
+        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+      
+  
+  <form id="main_form"  method="post" role="form"  enctype = "multipart/form-data">{% csrf_token %}
+      <input type="file" name="report" class="upload-input">
+      </div>
+  
+      <button type="submit" class="btn">Upload</button>
+    </form>
+ 
+    {% if uploaded_file_url %}
+      <h1 style="text-align : center;">File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></h1>
+    {% endif %}
+  </div>
+  
+  </body>
+{% endblock content %}
+<!--<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,4 +201,4 @@
 
 </body>
 
-</html>
+</html> -->
