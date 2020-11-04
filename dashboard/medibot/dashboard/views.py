@@ -79,6 +79,8 @@ def report (request):
 def single_report (request, param):
 
     rep = reports.objects.filter(id=param).first()
+    # rep = reports.objects.filter(name=param)
+
     # rep = json.dumps(rep)
     # print (rep.normal)
     content = { 
@@ -96,7 +98,7 @@ def single_report (request, param):
     # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
     # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
 
-    return render(request,'reports.html', content)
+    return render(request,'single_report.html', content)
 
 
 

@@ -59,7 +59,7 @@
 
 
     <div style="padding: 70px;">
-{# for i in data #}
+
 
 <h2>Name: {{data.name }}</h2>
 <h4>Gender: {{data.gender }}</h4>
@@ -109,7 +109,7 @@
 <!-- {{i.abnormal}} -->
 <h2>Abnormal observations</h2>
 
-{% for j,k indata.abnormal.items %}
+{% for j,k in data.abnormal.items %}
 <tr>
   <td>{{j}}</td>
   <td>{{k}}</td>
@@ -129,7 +129,7 @@
 <br>
 <br>
 
-{% endfor %}
+
 
 
 </div>
