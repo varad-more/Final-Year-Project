@@ -76,6 +76,30 @@ def report (request):
 
     return render(request,'reports.html', content)
 
+def single_report (request, param):
+
+    rep = reports.objects.filter(id=param).first()
+    # rep = json.dumps(rep)
+    # print (rep.normal)
+    content = { 
+        'data': rep
+    }
+    print (content['data'])
+
+    # normal = content['data'][0].normal
+    
+    # normal = json.dumps (normal)
+    # normal = json.loads(normal)
+    # print (type(normal))
+    # print (normal['Haemoglobin'])
+    # json.dumps (content['data'])
+    # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
+    # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
+
+    return render(request,'reports.html', content)
+
+
+
 def news (request):
     news = scraped_data.objects.all()
     content = {
