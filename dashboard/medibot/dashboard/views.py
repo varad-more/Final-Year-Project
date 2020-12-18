@@ -37,9 +37,13 @@ def inner(request):
     # return HttpResponse("Hello, world.")
     return render(request,'inner-page.html')
 
-
-    # return HttpResponse("Hello, world.")
-    
+def news (request):
+    news = scraped_data.objects.all()
+    content = {
+        'data': news
+    }
+    print (content)
+    return render(request,'news.html', content)
 
 
 def fetch_news(request):
@@ -101,15 +105,6 @@ def single_report (request, param):
     return render(request,'single_report.html', content)
 
 
-
-def news (request):
-    news = scraped_data.objects.all()
-    content = {
-        'data': news
-    }
-    print (content)
-    return render(request,'news.html', content)
-
 # @login_required(login_url='login')
 # @admin_only
 def patient_add(request):
@@ -134,8 +129,12 @@ def patient_add(request):
 def patient_information (request):
     
     pat = patient.objects.first()
+    if pat == None:
+        pass # condition for entering first entry
+    
     pats = patient.objects.all()
     report = reports.objects.filter(name=pat.name).first()
+    
     if request.method == "POST":
         PatientName = request.POST.get('patientName')
         print (PatientName)
