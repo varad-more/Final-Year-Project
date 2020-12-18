@@ -5,11 +5,15 @@ import numpy
 from datetime import datetime
 import mysql.connector
 from dashboard.models import *
+import os
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main(url):
 
     #Using tabula to read the PDF and extract tables from it.
-    df = tabula.read_pdf("media/reports/"+url, pages = 'all', multiple_tables = True, output_format="json")
+    df = tabula.read_pdf(BASE_DIR+"/media/reports/"+url, pages = 'all', multiple_tables = True, output_format="json")
 
     #Tabula data table can be converted into JSON format. Making extraction easy.
     data =json.loads(json.dumps(df))

@@ -26,6 +26,7 @@ from .decorators import unauthenticated_user, allowed_users, admin_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 allowed_file = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4' ,''])
 
 
@@ -110,6 +111,18 @@ def single_report (request, param):
 def patient_add(request):
     if request.method == "POST":
         if request.POST.get('name') and request.POST.get('gender') and request.POST.get('age') and request.POST.get('birthday') and request.POST.get('email') and request.POST.get('address') and request.POST.get('pincode'):
+            
+            filename='/media/patients/default.jpeg'
+            try:
+                file = request.FILES['img']
+                # if file and allowed_file(file.name):
+                storage = FileSystemStorage(location=BASE_DIR+'/media/patients') 
+                url = storage.save(file.name, file)
+                filename = '/media/patients/'+url
+            except Exception as e:
+                print("Form without file " + str(e)) 
+            print (filename)
+
             saverecord = patient()
             saverecord.name = request.POST.get('name')
             saverecord.gender = request.POST.get('gender')
@@ -119,6 +132,7 @@ def patient_add(request):
             saverecord.phone = request.POST.get('phone')
             saverecord.address = request.POST.get('address')
             saverecord.pincode = request.POST.get('pincode')
+            saverecord.imgpath = filename
             saverecord.save()
             messages.success(request,'Record Saved')
             return render(request,'patient_addinfo.html')
@@ -131,7 +145,7 @@ def patient_information (request):
     pat = patient.objects.first()
     if pat == None:
         pass # condition for entering first entry
-    
+    print (pat.name)
     pats = patient.objects.all()
     report = reports.objects.filter(name=pat.name).first()
     
@@ -158,7 +172,7 @@ def report_upload(request):
             # if file and allowed_file(file.name):
             #     print ('work')
                 # attachment_file = secure_filename(file.filename)
-            storage = FileSystemStorage(location='media/reports')
+            storage = FileSystemStorage(location=BASE_DIR+'/media/reports')
             url = storage.save(file.name, file)
             print (url)
             report_extraction_final.main(url)

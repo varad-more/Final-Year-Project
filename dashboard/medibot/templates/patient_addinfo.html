@@ -168,8 +168,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
 
   <!------------------------------SIGN UP FORM CONTENTS STARTS---------------------------->
 
-  <form  class="container1" method= "POST">
-    {% csrf_token %}
+  <form  class="container1" method= "POST" enctype="multipart/form-data">
+    
     <h2 style="text-align:center;"><strong>Patient Information</strong></h2>
     <br>
 
@@ -177,35 +177,56 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
     <input type="text" placeholder="Enter Name" name="name" required>
     
     <label for="gender"><b>Gender</b></label>
-    <input type="text" placeholder="Enter Gender" name="gender" required>
+    <select id="gender" name="gender">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Others">Others</option>
+    </select>
+    <!-- <input type="text" placeholder="Enter Gender" name="gender" required> -->
+    
+    <br><br>
     
     <label for="age"><b>Age</b></label>
-    <input type="text" placeholder="Enter Age" name="age" required>
+    <input type="number" placeholder="Enter Age (in years)" name="age" min="0" max="99" required>
+    <br><br>
 
     <label for="birthday"><b>Date of Birth</b></label><br>
     <input type="date" placeholder="Enter DOB" name="birthday" required>
     <br><br>
     <label for="phone"><b>Phone Number</b></label> 
-    <input type="text" placeholder="Enter Phone Number" name="phone" required>
+    <input type="text" placeholder="Enter Phone Number" name="phone" pattern="^[789]\d{9}$" required>
 
     <label for="email"><b>Email</b></label> 
-    <input type="email" placeholder="Enter Email" name="email" required>
+    <input type="email" placeholder="Enter Email" name="email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" required>
 
     <label for="address"><b>Address</b></label>
     <input type="text" placeholder="Enter Address" name="address" required>
 
     <label for="pincode"><b>Pincode</b></label>
-    <input type="text" placeholder="Enter Pincode" name="pincode" required>
+    <input type="text" placeholder="Enter Pincode" name="pincode" pattern="^[1-9][0-9]{5}$" title="Please enter pincode" required>
     
-    <label for="pincode"><b>Select Picture</b></label>
-    <input type="file" id="img" name="img" accept="image/*">
-
-    <button type="submit" class="btn"><b>CONTINUE</b></button>
+    <label for="img"><b>Select Picture</b></label>
+    <input type="file" id="img" name="img" accept="image/*" onchange="loadFile(event)"/> 
+    <br>
+    {% csrf_token %}
+    <button type="submit" class="btn"><b>Add Patient</b></button>
 
 
   </form>
 </div>
 <button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+
+<!-- Not working -->
+<script type="text/javascript">
+  var loadFile = function(event) {
+
+      myparent = $(event.target).parent();
+      myparent.find('img').attr("src", URL.createObjectURL(event.target.files[0])).width(150)
+          .height(200)
+  };
+</script>
+
+
 <script>
         // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function() {scrollFunction()};

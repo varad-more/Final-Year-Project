@@ -143,7 +143,7 @@
             <select id="patientName" name="patientName">
               {% for i in pats %}
               <!-- <h1>{{ i.name }}</h1> -->
-              <option value={{ i.name }}>{{ i.name }}</option>
+              <option value="{{ i.name }}">{{ i.name }}</option>
                
              {% endfor %}
             </select>
@@ -159,7 +159,7 @@
 
         <div class="row">
           <div class="col-lg-4" data-aos="fade-right">
-            <img src="{%static 'asset_patient/img/profile-img.jpg' %}" class="img-fluid" style="border:10px;" alt="Patient Image">
+            <img src="{{ data.imgpath }}" class="img-fluid" style="border:10px;" alt="Patient Image">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
             <h3>{{data.name}}</h3>
