@@ -34,6 +34,11 @@ def index(request):
     # return HttpResponse("Hello, world.")
     return render(request,'index.html')
 
+
+def appointments(request):
+    # return HttpResponse("Hello, world.")
+    return render(request,'appointments.html')
+
 def inner(request):
     # return HttpResponse("Hello, world.")
     return render(request,'inner-page.html')
@@ -226,7 +231,9 @@ def registerPage(request):
 	context = {'form':form}
 	return render(request, 'register.html', context)
 
-
+def prescription(request):
+    # return HttpResponse("Hello, world.")
+    return render(request,'prescription.html')
 @unauthenticated_user
 def loginPage(request):
 

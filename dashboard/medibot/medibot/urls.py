@@ -38,7 +38,8 @@ urlpatterns = [
     path ('fetch',fetch_news),
     path ('patient',patient_information),
     path ('addinfo',patient_add),
-    
+    path ('prescription',prescription),
+    path ('appointments',appointments),
     path('register/', registerPage, name="register"),
 	path('login/', loginPage, name="login"),  
 	path('logout/', logoutUser, name="logout")
