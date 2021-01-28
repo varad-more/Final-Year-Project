@@ -27,6 +27,7 @@ def database_connect():
     #Inserting into Database
     sql = ("INSERT INTO dashboard_scraped_data (headline,summary,links ) values (%s, %s, %s)") 
     data = (headline,summary,link)
+    print(data)	
 
     mycursor.execute(sql, data)
     mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
@@ -47,7 +48,7 @@ def extract_source(url):
     source=requests.get(url, headers=headers).text
     return source
           
-source=extract_source('https://www.hindustantimes.com/health/')
+source=extract_source('https://www.hindustantimes.com/lifestyle/health')
 soup= BeautifulSoup(source,'lxml')
 for article in soup.find_all('div',class_="media-body"):
     headline=article.a.text
@@ -61,5 +62,5 @@ for article in soup.find_all('div',class_="media-body"):
     summary=res
     if summary!="None":
         database_connect()
-    # database_connect()
+    database_connect()
 

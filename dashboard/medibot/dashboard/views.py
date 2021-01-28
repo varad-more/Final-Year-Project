@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+
 #Twilio - SMS Module
 from twilio.rest import Client
 from django.conf import settings  
 
-
-# Create your views here.
 from dashboard.models import *
 # from dashboard.models import patient
+
 #Report Uploader Module
 from modules import report_extraction_final
 import json
@@ -82,7 +82,6 @@ def report (request):
     # print (normal['Haemoglobin'])
     # json.dumps (content['data'])
     # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
-    # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
 
     return render(request,'reports.html', content)
 
@@ -105,7 +104,6 @@ def single_report (request, param):
     # print (type(normal))
     # print (normal['Haemoglobin'])
     # json.dumps (content['data'])
-    # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
     # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
 
     return render(request,'single_report.html', content)
@@ -196,7 +194,7 @@ def broadcast_sms(request):
     date_time='3 September 2020, 11:00am'
     message_to_broadcast = ("Your Appointment is Scheduled at:"+date_time)
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    recipient = '+918898630781'
+    # recipient = '+918898630781'
     # recipient = '+917506454404'
     # recipient = '+918275510613'
 
