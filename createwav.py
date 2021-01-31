@@ -158,6 +158,7 @@ def getpastdate(history_line):
   total_days = no_of_days * no_of_days_in_month
   dt = date.today() - timedelta(total_days)
   print('days before Current Date :',dt)
+  return True
 
 
 #audio file to text conversion
@@ -216,7 +217,7 @@ def split(input_path):
   #history command handler
   for data in data_store:
     print(data)
-    if(similarity_index_history(data) >= 0.5):
+    if(similarity_index_history(data) >= 0.8):
         history_line = data_store.index(data)
         print("history command")
         getpastdate(data)
@@ -225,7 +226,7 @@ def split(input_path):
   #prescription command handler
   for data in data_store:
     print(data)
-    if(similarity_index_prescription(data) >= 0.5):
+    if(similarity_index_prescription(data) >= 0.8):
         indx = data_store.index(data)
         print("prescription command")
         for presc in range(indx, length):
