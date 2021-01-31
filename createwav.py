@@ -9,11 +9,20 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from datetime import date, timedelta
+from word2number import w2n
 
 def similarity_index_history(data):
     X =data
-    Y="show previous history"
-    X_list = word_tokenize(X)                                                                                               Y_list = word_tokenize(Y)
+    str2=" "
+    Y=['show previous history', 'past history']
+    for ele in Y:
+      str2 += ele
+    print(str2)
+    Y_list = word_tokenize(str2)
+    print(Y_list)
+    X_list = word_tokenize(X)    
+
     sw = stopwords.words('english')
     l1 =[];l2 =[]
 
@@ -33,25 +42,24 @@ def similarity_index_history(data):
     print("vectorr=", rvector)
 
 #rvector = X_set.union(Y_set)
-    for w in rvector:
+    if len(rvector)== 0:
+      index_val = 0.0
+      return index_val
+    else:
+      for w in rvector:
         if w in X_set: l1.append(1) # create a vector
         else: l1.append(0)
         if w in Y_set: l2.append(1)
         else: l2.append(0)
-    c = 0
-    print(l1)
-    print(l2)
-    
-# cosine formula
-    try:
-        for i in range(len(rvector)):
-            c+= l1[i]*l2[i]
-        cosine = c / float((sum(l1)*sum(l2))**0.5)
-        print("similarity: ", cosine)
-        return cosine
-    except:
-        similarity = 0.0
-        return similarity
+        c = 0
+        print(l1)
+        print(l2)
+   # cosine formula
+      for i in range(len(rvector)):
+                  c+= l1[i]*l2[i]
+      cosine = c / float((sum(l1)*sum(l2))**0.5)
+      print("similarity: ", cosine)
+      return cosine
 
  # Program to measure the similarity between
 # two sentences using cosine similarity.
@@ -70,12 +78,22 @@ def similarity_index_prescription():
 # X = input("Enter first string: ").lower()
 # Y = input("Enter second string: ").lower()
     X =data
-    Y="write prescription"
+    str2=" "
+    Y =['note down prescriptions ', 'write prescription ',  'prescription']
+    for ele in Y:
+      str2 += ele
+    print(str2)
+# tokenization
+    Y_list = word_tokenize(str2)
+    print(Y_list)
+                                                                                                             
+    X_list = word_tokenize(X)
+    print(X_list)
 #Y =['note down prescription ', 'write prescription ', 'make a note of prescription ']
 #Y=["prescription"]
 # tokenization
-    X_list = word_tokenize(X)
-    Y_list = word_tokenize(Y)
+    #X_list = word_tokenize(X)
+    #Y_list = word_tokenize(Y)
 #Y_list = [sub.split() for sub in Y]
 #Y_list = [word for line in Y for word in line.split()]
 #print(orderedsets)#Y_list = [sub.split() for sub in Y]
@@ -94,24 +112,32 @@ def similarity_index_prescription():
 
 # form a set containing keywords of both strings
     rvector = X_set.intersection(Y_set)
-    rvector.add("write")
-    rvector.add("note")
+    
 
 #rvector = X_set.intersection(Y_set)
-    print("vectorr=", rvector)
-
 #rvector = X_set.union(Y_set)
-    for w in rvector:
+    print("vectorr=", rvector)
+    if len(rvector)== 0:
+      index_val = 0.0
+      return index_val
+    else:
+      for w in rvector:
         if w in X_set: l1.append(1) # create a vector
         else: l1.append(0)
         if w in Y_set: l2.append(1)
         else: l2.append(0)
-    c = 0
-    print(l1)
-    print(l2)
+        c = 0
+        print(l1)
+        print(l2)
+   # cosine formula
+      for i in range(len(rvector)):
+                  c+= l1[i]*l2[i]
+      cosine = c / float((sum(l1)*sum(l2))**0.5)
+      print("similarity: ", cosine)
+      return cosine
 
 # cosine formula
-    try:
+    '''try:
         for i in range(len(rvector)):
             c+= l1[i]*l2[i]
         cosine = c / float((sum(l1)*sum(l2))**0.5)
@@ -119,7 +145,19 @@ def similarity_index_prescription():
         return cosine
     except:
         similarity = 0.0
-        return similarity
+        return similarity'''
+
+#get date for retrival of previous history
+def getpastdate(history_line):
+  no_of_days = w2n.word_to_num(history_line)
+  list_words = ["months" , "month"]
+  if any(x in history_line for x in list_words):
+    no_of_days_in_month = 30
+  else:
+    no_of_days_in_month = 1
+  total_days = no_of_days * no_of_days_in_month
+  dt = date.today() - timedelta(total_days)
+  print('days before Current Date :',dt)
 
 
 #audio file to text conversion
@@ -179,8 +217,10 @@ def split(input_path):
   for data in data_store:
     print(data)
     if(similarity_index_history(data) >= 0.5):
-        #indx = data_store.index(data)
+        history_line = data_store.index(data)
         print("history command")
+        getpastdate(data)
+
 
   #prescription command handler
   for data in data_store:
