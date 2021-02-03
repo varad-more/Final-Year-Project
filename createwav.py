@@ -36,7 +36,7 @@ def similarity_index_history(data):
     rvector = X_set.intersection(Y_set)
 
     #rvector.add("give")
-    rvector.add("display")
+    
 
     #rvector = X_set.intersection(Y_set)
     print("vectorr=", rvector)
@@ -52,8 +52,8 @@ def similarity_index_history(data):
         if w in Y_set: l2.append(1)
         else: l2.append(0)
         c = 0
-        print(l1)
-        print(l2)
+        #print(l1)
+        #print(l2)
    # cosine formula
       for i in range(len(rvector)):
                   c+= l1[i]*l2[i]
@@ -127,8 +127,8 @@ def similarity_index_prescription():
         if w in Y_set: l2.append(1)
         else: l2.append(0)
         c = 0
-        print(l1)
-        print(l2)
+        #print(l1)
+        #print(l2)
    # cosine formula
       for i in range(len(rvector)):
                   c+= l1[i]*l2[i]
@@ -150,15 +150,32 @@ def similarity_index_prescription():
 #get date for retrival of previous history
 def getpastdate(history_line):
   no_of_days = w2n.word_to_num(history_line)
-  list_words = ["months" , "month"]
-  if any(x in history_line for x in list_words):
-    no_of_days_in_month = 30
-  else:
-    no_of_days_in_month = 1
-  total_days = no_of_days * no_of_days_in_month
-  dt = date.today() - timedelta(total_days)
-  print('days before Current Date :',dt)
-  return True
+  list_month = ["months" , "month"]
+  list_week =["weeks", "week"]
+  #list_days = ["days", "day"]
+# format for date is year-month-day
+  if any(x in history_line for x in list_month):
+    dt_month = (date.today() - timedelta(no_of_days*365/12)).isoformat()
+    print("date after some months", dt_month)
+    return dt_month
+
+  elif  any(x in history_line for x in list_week):
+    days_in_week = no_of_days *7
+    dt_week = date.today() - timedelta(days_in_week)
+    print("date -weeks", dt_week)
+    return dt_week
+
+  else :
+    dt = date.today() - timedelta(no_of_days)
+    print('days before Current Date :',dt)
+    return dt
+
+
+    
+  #total_days = no_of_days * no_of_days_in_month
+  #dt = date.today() - timedelta(total_days)
+  #print('days before Current Date :',dt)
+  
 
 
 #audio file to text conversion
@@ -220,7 +237,8 @@ def split(input_path):
     if(similarity_index_history(data) >= 0.8):
         history_line = data_store.index(data)
         print("history command")
-        getpastdate(data)
+        dates = getpastdate(data)
+        print(dates)
 
 
   #prescription command handler
