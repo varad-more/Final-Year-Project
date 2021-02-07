@@ -71,9 +71,9 @@ for news in news_list:
 	headline=news.title.text
 	summary=news.pubDate.text
 	link1=news.link.text
-	csv_writer.writerow([headline, summary,link1])
+	csv_writer.writerow([headline, summary,link1])'''
 
 
-csv_file.close()'''
+csv_file.close()
 
 

@@ -32,9 +32,18 @@ urlpatterns = [
     path ('sms', broadcast_sms, name="default"),
     path ('report_upload',report_upload, name='report_upload'),
     path ('report',report, name='report'),
+    path ('single_report/<slug:param>',single_report, name='single_report'),
+    path ('report_extract',data_extract),
     path ('news',news, name='news'),
     path ('fetch',fetch_news),
-    path ('report_extract',data_extract),
+    path ('patient',patient_information),
+    path ('addinfo',patient_add),
+    path ('prescription',prescription),
+    path ('appointments',appointments),
+    path('register/', registerPage, name="register"),
+	path('login/', loginPage, name="login"),  
+	path('logout/', logoutUser, name="logout")
+
     
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

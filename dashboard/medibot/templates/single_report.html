@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        #patients {
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        #patients td, #patients th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #patients tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #patients tr:hover {background-color: #ddd;}
+        
+        #patients th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #4CAF50;
+          color: white;
+        }
+    </style>
+        
+</head>
+
+
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo mr-auto"><a href="/">Virtual Managers</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo mr-auto"><img src="{% static 'assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li class="active"> <a href="report">Reports</a></li>
+          <li ><a href="patient">Patient Information</a></li>
+        <!-- <li ><a href="addinfo">Add Patient</a></li> -->
+          <li><a href="prescription">Current Patient</a></li>
+          <li><a href="appointments">Appointments</a></li>
+
+          <!-- <li><a href="report_upload">Read Report</a></li> -->
+        </ul>
+      </nav>
+      <!-- .nav-menu -->
+    </div>
+  </header>
+
+    <br>
+    <br><br><br><br><br>  
+    <h1 style="text-align: center;" >Reports</h1>
+
+
+    <div style="padding: 70px;">
+
+
+<h2>Name: {{data.name }}</h2>
+<h4>Gender: {{data.gender }}</h4>
+<h4>Age: {{data.age }}</h4>
+<h4>Date: {{data.date }}</h4>
+{{data.uploaded_at }}
+<h4><a href="media/reports/{{data.file_path }}"> <i class="icofont-ebook">View Report </i></a></h4>
+
+<div class="row">
+  <div class="col">
+<table id="patients">
+
+   
+    <tr>
+        <th>Name</th>
+        <th>Notes</th>
+    </tr>
+
+<!-- {{i.normal}} -->
+<h2>Normal observations</h2>
+{% for j,k in data.normal.items %}
+<tr>
+    <td>{{j}}</td>
+    <td>{{k}}</td>
+    <!-- <td>{{dataname }}</td>
+    <td>{{datagender }}</td>
+    <td>{{dataage }}</td>
+    <td>{{datadate }}</td>
+    <td>{{datanormal }}</td>
+    <td>{{dataabnormal }}</td>
+    <td>{{datanotes }}</td> -->
+</tr>
+{% endfor %}
+</table>
+</div>
+
+<!-- ---------------------------------------------------- -->
+<div class="col">
+<table id="patients">
+
+   
+  <tr>
+      <th style="background-color:red !important">Name</th>
+      <th style="background-color:red ">Notes</th>
+  </tr>
+
+<!-- {{i.abnormal}} -->
+<h2>Abnormal observations</h2>
+
+{% for j,k in data.abnormal.items %}
+<tr>
+  <td>{{j}}</td>
+  <td>{{k}}</td>
+  <!-- <td>{{data.name }}</td>
+  <td>{{data.gender }}</td>
+  <td>{{data.age }}</td>
+  <td>{{data.date }}</td>
+  <td>{{data.normal }}</td>
+  <td>{{data.abnormal }}</td>
+  <td>{{data.notes }}</td> -->
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+<br>
+<br>
+<br>
+
+
+
+
+</div>
+
+</body>
+
+</html>
+{% endblock content %}

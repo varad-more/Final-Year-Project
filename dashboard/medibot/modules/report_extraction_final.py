@@ -4,11 +4,16 @@ import json
 import numpy
 from datetime import datetime
 import mysql.connector
+from dashboard.models import *
+import os
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main(url):
 
     #Using tabula to read the PDF and extract tables from it.
-    df = tabula.read_pdf("media/reports/"+url, pages = 'all', multiple_tables = True, output_format="json")
+    df = tabula.read_pdf(BASE_DIR+"/media/reports/"+url, pages = 'all', multiple_tables = True, output_format="json")
 
     #Tabula data table can be converted into JSON format. Making extraction easy.
     data =json.loads(json.dumps(df))
@@ -264,9 +269,23 @@ def main(url):
       password="",
       database="virtual_managers" # Change as per requirements
     )
+    
+    # saverecord = reports()
+
+    # saverecord.name = final_report['Name']
+    # saverecord.gender=final_report['Gender']
+    # saverecord.normal = str (normal)
+    # saverecord.abnormal = str (abnormal)
+    # # saverecord.not_found = str (not_found)
+    # saverecord.file_path = url 
+    # from  django.utils import timezone
+    # saverecord.uploaded_at = timezone.now()
+
+    
+    # saverecord.save()
+
 
     mycursor = mydb.cursor()
-
     name=final_report['Name']
     gender=final_report['Gender']
     normal = str (normal)

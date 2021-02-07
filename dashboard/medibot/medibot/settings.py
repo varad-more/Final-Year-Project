@@ -11,6 +11,18 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
+
+# sentry_sdk.init(
+#     dsn="https://318377cdb44d452ea17a8da7c9574821@o497739.ingest.sentry.io/5574354",
+#     integrations=[DjangoIntegration()],
+#     traces_sample_rate=1.0,
+
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True
+# )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +37,7 @@ SECRET_KEY = '4$5vta+t!+8_13*ya=i80)26gfv3e7j$--co0gbb0&8cmx0vc$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -97,6 +109,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 # }
 # MYSQL
 # django.db.backends.mysql
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -109,7 +122,22 @@ DATABASES = {
             'charset': 'utf8mb4'  # This is the important line
         }
     }
+} 
+''' 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'virtual_managers',
+        'USER': 'admin',
+        'PASSWORD': 'Sakshi2399*',
+        'HOST':'database-1.ctqvk0asvfes.us-east-1.rds.amazonaws.com',
+        'PORT':'3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4'  # This is the important line
+        }
+    }
 }   
+
 
 
 

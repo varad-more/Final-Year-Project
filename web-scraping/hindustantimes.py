@@ -12,8 +12,14 @@ def extract_source(url):
         
 def extract_data(source):
 	soup= BeautifulSoup(source,'lxml')
-	for article in soup.find_all('div',class_="media-body"):
-		link=article.a.text
+	for article in soup.find_all('h2',class_="hdg3"):
+		headline = article.a.text
+		link = article.a
+		link1 = 'https://www.hindustantimes.com/'+link['href']
+		print(headline)
+		print(link1)
+	
+		'''link=article.a.text
 		r=article.a
 		print(link)
 		print(r['href'])
@@ -22,7 +28,7 @@ def extract_data(source):
 		# result = re.search('<p>;</p>', res)
 		if res.startswith(start):
 			res=res.replace(start,"")
-			print(res.replace(end,""),"#######")
+			print(res.replace(end,""),"#######")'''
 		# print()
 		# print(result)
 		# print()
