@@ -109,6 +109,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 # }
 # MYSQL
 # django.db.backends.mysql
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -121,7 +122,22 @@ DATABASES = {
             'charset': 'utf8mb4'  # This is the important line
         }
     }
+} 
+''' 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'virtual_managers',
+        'USER': 'admin',
+        'PASSWORD': 'Sakshi2399*',
+        'HOST':'database-1.ctqvk0asvfes.us-east-1.rds.amazonaws.com',
+        'PORT':'3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4'  # This is the important line
+        }
+    }
 }   
+
 
 
 
