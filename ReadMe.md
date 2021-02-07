@@ -1,22 +1,12 @@
-# Python
-## Required Libraries installations
+# Final-Year-Project
+
+This is our final year project
+
+## Setup Instruction 
+
+Install following dependencies of the project
 ```
-pip3 install SpeechRecognition
-sudo apt-get install ffmpeg libav-tools
-sudo pip3 install pyaudio
-pip3 install pyttsx3
-sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-
-```
-
-## Installation 
-
-
-
-
-# Running Code
-```
-python3 speech.py
-python3 text_to_speech_conversion.py
-
+sudo apt-get install python3-dev default-libmysqlclient-dev build-essential 
+pip install mysqlclient numpy tabula-py django twilio jsonfield mysql-connector sentry_sdk
+sudo apt install default-jre
 ```
