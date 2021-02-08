@@ -27,6 +27,9 @@ from dashboard.views import *
 
 urlpatterns = [
     path ('admin/', admin.site.urls),
+    path ('signin', sign_in , name ='signin'),
+    path ('register', sign_up , name ='signup'),
+
     path ('', index , name ='index'),
     path ('inner', inner , name ='default'),
     path ('sms', broadcast_sms, name="default"),

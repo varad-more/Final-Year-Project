@@ -30,6 +30,133 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 allowed_file = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4' ,''])
 
 
+""" 
+The decorator for checking if user or admin is signed in.
+If user is not logged in is redirected to signin
+
+"""
+def doctor_logged_in(f):
+        def wrap(request, *args, **kwargs):
+                #this check the session if userid key exist, if not it will redirect to login page
+                if 'user_role' not in request.session.keys():
+                    return redirect("signin")
+                
+                elif request.session['user_role'] == 'doctor' :
+                    return f(request, *args, **kwargs)
+        wrap.__doc__=f.__doc__
+        wrap.__name__=f.__name__
+        return wrap
+
+def receptionist_logged_in(f):
+        def wrap(request, *args, **kwargs):
+                #this check the session if userid key exist, if not it will redirect to login page
+                if 'user_role' not in request.session.keys():
+                    return redirect("signin")
+                
+                elif request.session['user_role'] == 'receptionist' :
+                    return f(request, *args, **kwargs)
+        wrap.__doc__=f.__doc__
+        wrap.__name__=f.__name__
+        return wrap
+
+
+def admin_logged_in(f):
+        def wrap(request, *args, **kwargs):
+                #this check the session if userid key exist, if not it will redirect to login page
+                if 'user_role' not in request.session.keys():
+                    return redirect("signin")
+                
+                elif request.session['user_role'] == 'admin' :
+                    return f(request, *args, **kwargs)
+        wrap.__doc__=f.__doc__
+        wrap.__name__=f.__name__
+        return wrap
+
+
+def hash_password (password):
+    import hashlib
+    import os
+
+    # salt = os.urandom(32) # Remember this
+    salt = b'varad'
+    # key = b'\x07\x0fV=<\xe7r\xa7\x85\xe5\xe44H>\\\x13\xad\x18l\xba~\xe4\xb1\x99\x96cz\xb4\x92\x94\x829'
+    # print ('salt', salt)
+    # password = 'password123'
+
+    key = hashlib.pbkdf2_hmac(
+        'sha256', # The hash digest algorithm for HMAC
+        password.encode('utf-8'), # Convert the password to bytes
+        salt, # Provide the salt
+        100000 # It is recommended to use at least 100,000 iterations of SHA-256 
+    )
+
+    return key
+
+
+def sign_in(request):
+    print ('signin')
+    if request.method == 'POST' :
+        print ('POST')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('pass')
+
+        print (email)
+        print (password)
+        # print ()
+        # entered_key = hash_password(password)
+        login_user = user.objects.filter(email=email, password=password).first()
+        print (login_user)
+        if login_user:
+            print(login_user.user_role,'000000')
+            request.session['user_role'] = login_user.user_role
+        
+        else:
+
+            print('Bad Credentials')
+            content = {'error': 'Password Incorrect'}
+            return render (request, 'sign_in.html', content)
+
+    return render (request, 'sign_in.html')
+
+def sign_up(request):
+
+    print ('sign up')
+    if request.method == 'POST' :
+        print ('post')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        phone = request.POST.get('phone')
+        password = request.POST.get('pass')
+        user_role = request.POST.get('user_role')
+
+        print (password)
+        print (email)
+        print (user_role)
+        print (gender)
+
+        new_user = user()
+        new_user.name = request.POST.get('name')
+        new_user.email = request.POST.get('email')
+        new_user.age = request.POST.get('age')
+        new_user.gender = request.POST.get('gender')
+        new_user.phone = request.POST.get('phone')
+        new_user.password = request.POST.get('pass')
+        new_user.user_role = request.POST.get('user_role')
+
+        new_user.save()
+
+        content = {
+            'mssg':"User Saved" 
+        }
+        return render (request, 'sign_up.html', content)
+
+    return render (request, 'sign_up.html')
+
+ 
+
 def index(request):
     # return HttpResponse("Hello, world.")
     return render(request,'index.html')
@@ -57,6 +184,7 @@ def fetch_news(request):
 
     # return HttpResponse("News fetched")
     return render(request,'news_fetched.html')
+
 
 def data_extract(request):
     import modules.report_extraction_final
@@ -142,7 +270,7 @@ def patient_add(request):
     else :
         return render(request,'patient_addinfo.html')
 
-
+@doctor_logged_in
 def patient_information (request):
     
     pat = patient.objects.first()
