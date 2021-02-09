@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_asst.html" %}
 {% load static %}
+{% block report %}active{% endblock report %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -34,24 +35,6 @@
 
 
 <body>
-  <header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
-
-      <h1 class="logo mr-auto"><a href="/">Virtual Managers</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo mr-auto"><img src="{% static 'assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
-      <nav class="nav-menu d-none d-lg-block">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li class="active"> <a href="report">Reports</a></li>
-          <li><a href="news">News</a></li>
-          <li><a href="report_upload">Read Report</a></li>
-        </ul>
-      </nav>
-      <!-- .nav-menu -->
-    </div>
-  </header>
 
     <br>
     <br><br><br><br><br>  

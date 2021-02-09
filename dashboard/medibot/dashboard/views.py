@@ -40,6 +40,7 @@ def doctor_logged_in(f):
         def wrap(request, *args, **kwargs):
                 #this check the session if userid key exist, if not it will redirect to login page
                 if 'user_role' not in request.session.keys():
+                    request.session['error'] = "You are not authorized to view the page. Sign In to view."
                     return redirect("signin")
                 
                 elif request.session['user_role'] == 'doctor' :
@@ -52,6 +53,7 @@ def receptionist_logged_in(f):
         def wrap(request, *args, **kwargs):
                 #this check the session if userid key exist, if not it will redirect to login page
                 if 'user_role' not in request.session.keys():
+                    request.session['error'] = "You are not authorized to view the page. Sign In as Receptionist to view."
                     return redirect("signin")
                 
                 elif request.session['user_role'] == 'receptionist' :
@@ -96,21 +98,26 @@ def hash_password (password):
 
 def sign_in(request):
     print ('signin')
+
     if request.method == 'POST' :
-        print ('POST')
         name = request.POST.get('name')
         email = request.POST.get('email')
         password = request.POST.get('pass')
 
-        print (email)
-        print (password)
-        # print ()
-        # entered_key = hash_password(password)
+        entered_key = hash_password(password)
         login_user = user.objects.filter(email=email, password=password).first()
+
+        # To be hashed
+        login_user1 = user.objects.filter(email=email, password=entered_key).first()
+
         print (login_user)
-        if login_user:
-            print(login_user.user_role,'000000')
+
+        if login_user or login_user1:
             request.session['user_role'] = login_user.user_role
+            request.session['email'] = login_user.email
+            request.session['id'] = login_user.id
+
+            return redirect ('patient_information')
         
         else:
 
@@ -118,60 +125,75 @@ def sign_in(request):
             content = {'error': 'Password Incorrect'}
             return render (request, 'sign_in.html', content)
 
-    return render (request, 'sign_in.html')
+    # if 'error'  in request.session.keys():
+    #     content = { 'error': request.session['error']}
+    #     del request.session['error']
+    content={}
+    return render (request, 'sign_in.html', content)
+
 
 def sign_up(request):
 
     print ('sign up')
     if request.method == 'POST' :
-        print ('post')
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        age = request.POST.get('age')
-        gender = request.POST.get('gender')
-        phone = request.POST.get('phone')
-        password = request.POST.get('pass')
-        user_role = request.POST.get('user_role')
-
-        print (password)
-        print (email)
-        print (user_role)
-        print (gender)
-
+        
+        passd = request.POST.get('pass')
+        
         new_user = user()
         new_user.name = request.POST.get('name')
         new_user.email = request.POST.get('email')
         new_user.age = request.POST.get('age')
         new_user.gender = request.POST.get('gender')
         new_user.phone = request.POST.get('phone')
-        new_user.password = request.POST.get('pass')
+        new_user.password = hash_password(passd)
         new_user.user_role = request.POST.get('user_role')
 
         new_user.save()
 
         content = {
-            'mssg':"User Saved" 
+            'mssg':"User Created" 
         }
         return render (request, 'sign_up.html', content)
 
     return render (request, 'sign_up.html')
 
+def logout(request):
+
+    # Clearing session variables
+    var_list = list(request.session.keys())
+    for key in var_list:
+        print (key,request.session[key])
+        del request.session[key]
+    return redirect('index')
  
 
 def index(request):
-    # return HttpResponse("Hello, world.")
-    return render(request,'index.html')
+    if 'user_role'  in request.session.keys():
+        content = { 'user': request.session['user_role']}
+    content ={'user':''}
+    return render(request,'index.html', content)
 
 
 def appointments(request):
-    
-    # return HttpResponse("Hello, world.")
     return render(request,'appointments.html')
+
+
+def profile(request):
+    email = request.session['email']
+    _id = request.session['id']
+    login_user = user.objects.filter(id=_id).first()
+    print (login_user.email)
+    content = {
+        'user':login_user
+    }
+    return render(request,'user_profile.html', content)
+
 
 def inner(request):
     # return HttpResponse("Hello, world.")
     return render(request,'inner-page.html')
 
+@doctor_logged_in
 def news (request):
     news = scraped_data.objects.all()
     content = {
@@ -196,9 +218,8 @@ def data_extract(request):
 
     return HttpResponse("Report Data obtained")
 
-
+@receptionist_logged_in
 def report (request):
-    # return HttpResponse("Hello, world.")
     rep = reports.objects.all()
     # rep = json.dumps(rep)
     # print (rep.normal)
@@ -218,32 +239,18 @@ def report (request):
 
     return render(request,'reports.html', content)
 
+@doctor_logged_in
 def single_report (request, param):
 
     rep = reports.objects.filter(id=param).first()
-    # rep = reports.objects.filter(name=param)
-
-    # rep = json.dumps(rep)
-    # print (rep.normal)
     content = { 
         'data': rep
     }
     print (content['data'])
 
-    # normal = content['data'][0].normal
-    
-    # normal = json.dumps (normal)
-    # normal = json.loads(normal)
-    # print (type(normal))
-    # print (normal['Haemoglobin'])
-    # json.dumps (content['data'])
-    # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
-
     return render(request,'single_report.html', content)
 
-
-# @login_required(login_url='login')
-# @admin_only
+@receptionist_logged_in
 def patient_add(request):
     if request.method == "POST":
         if request.POST.get('name') and request.POST.get('gender') and request.POST.get('age') and request.POST.get('birthday') and request.POST.get('email') and request.POST.get('address') and request.POST.get('pincode'):
@@ -271,7 +278,11 @@ def patient_add(request):
             saverecord.imgpath = filename
             saverecord.save()
             messages.success(request,'Record Saved')
-            return render(request,'patient_addinfo.html')
+
+            content = {
+            'mssg':"Patient Added to directory" 
+            }
+            return render(request,'patient_addinfo.html', content)
     else :
         return render(request,'patient_addinfo.html')
 #adding appointment
@@ -305,7 +316,7 @@ def patient_information (request):
     print (content['reports'])
     return render(request,'patient_info.html', content)
 
-
+@receptionist_logged_in
 def report_upload(request):
     if request.method == 'POST' and request.FILES['report']:
         try:
@@ -343,10 +354,15 @@ def broadcast_sms(request):
                            body=message_to_broadcast)
     return HttpResponse("messages sent!", 200)
 
+@doctor_logged_in
+def prescription(request):
+    # return HttpResponse("Hello, world.")
+    return render(request,'prescription.html')
 
 
 ############################## User roles
 
+"""
 def registerPage(request):
     
 	form = CreateUserForm()
@@ -367,9 +383,6 @@ def registerPage(request):
 	context = {'form':form}
 	return render(request, 'register.html', context)
 
-def prescription(request):
-    # return HttpResponse("Hello, world.")
-    return render(request,'prescription.html')
 @unauthenticated_user
 def loginPage(request):
 
@@ -388,6 +401,4 @@ def loginPage(request):
 	context = {}
 	return render(request, 'login.html', context)
 
-def logoutUser(request):
-	logout(request)
-	return redirect('login')
+"""

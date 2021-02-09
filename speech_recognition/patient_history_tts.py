@@ -17,30 +17,31 @@ def db_connect():
 	try:
 		# create connection object 
 		con = mysql.connector.connect( 
- 		 host="localhost", user="root", 
-  		password="", database="patient") 
+ 		 host="database-1.ctqvk0asvfes.us-east-1.rds.amazonaws.com",
+  		user="admin",
+ 		password="Sakshi2399*",
+  		database="virtual_managers") 
   
 		# create cursor object 
 		cursor = con.cursor() 
   
 		# assign data query 
-		query2 = """SELECT * FROM patientinfo 
+		query2 = """SELECT * FROM dashboard_patient_history
    		 WHERE
-   		 id = %s AND 
-   		 name = %s AND 
+   		 patient_id = %s AND 
    		 date  
    		 BETWEEN %s AND %s;"""
 
-		ID = 1
-		NAME ="abc"
+		ID = 2
+		#NAME ="abc"
 		previous_date = "2020-9-20"
 		 #= PREVIOUS_DATE.strftime("%Y-%m-%d")
 		CURRENT_DATE =  date.today()
 		current_date = CURRENT_DATE.strftime("%Y-%m-%d")
 		
 
-		# data variable with id, name, previous date, current date
-		data = (ID, NAME ,previous_date, current_date)
+		# data variable with id, previous date, current date
+		data = (ID,previous_date, current_date)
 
 		# executing cursor 
 		cursor.execute(query2,data) 
@@ -52,14 +53,14 @@ def db_connect():
 
 		#check for lenght of content in the table
 		if (len(table)==0):
-			print("data not available for given dates") 
+			print("invalid date or patient information") 
 		else: 
 			#fetch patient id, current dates and previous dates
 			for getcontent in table:
 				#fetch patient id
-				id_patient = str(getcontent[0])
+				id_patient = str(getcontent[1])
 
-				data_of_patient = "patient name is", getcontent[2] ," and has id ", id_patient, " so past history of this patient from ", previous_date," to ", current_date," is as follows\n "
+				data_of_patient =   id_patient, " for given patient past history is from date  ", previous_date," to ", current_date," is as follows\n "
 			
 				#tuple to string conversion
 				data_of_patient =  ''.join(data_of_patient)
@@ -72,13 +73,13 @@ def db_connect():
 			# fetch all columns 
 			for row in table:
 				#get particular date from db
-				get_date_from_db = row[1]
+				get_date_from_db = row[2]
 		
 				#convert date to string
 				dates = get_date_from_db.strftime("%Y-%m-%d")
 		
 				#sentence generation
-				sentence_gen =  dates ," on this date the patient was suffering from symptoms like ", row[3]," and has disease like ", row[4] " for which he was given the prescriptions as ", row[5] ,"\n"
+				sentence_gen =  dates ," on this date the patient was suffering from symptoms like ", row[3], " for which he was given the prescriptions as ", row[4] ,"\n"
 		
 				#tuple to string conversion
 				data_for_patient =  ''.join(sentence_gen)
