@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Sign Up</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="{% static 'css/style_signin.css' %}">
 </head>
 <body>
+    
+    {% if error %}
+    <script>alert("{{ error }}")</script>
+    {% endif %}
 
     <div class="main">
 
@@ -23,7 +27,7 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <!-- <figure><img src="assets/img/blue2.jpgimages/signin-image.jpg" alt="sing up image"></figure> -->
-                        <figure><img src="{% static 'assets/img/blue2.jpg' %}" alt="sing up image"></figure>
+                        <figure><img src="{% static 'assets/img/departments-2.jpg' %}" alt="sing up image"></figure>
                     </div>
 
                     <div class="signin-form">

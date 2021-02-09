@@ -29,6 +29,7 @@ urlpatterns = [
     path ('admin/', admin.site.urls),
     path ('signin', sign_in , name ='signin'),
     path ('register', sign_up , name ='signup'),
+    path ('profile', profile, name ='profile'),
 
     path ('', index , name ='index'),
     path ('inner', inner , name ='default'),
@@ -36,16 +37,16 @@ urlpatterns = [
     path ('report_upload',report_upload, name='report_upload'),
     path ('report',report, name='report'),
     path ('single_report/<slug:param>',single_report, name='single_report'),
-    path ('report_extract',data_extract),
+    path ('report_extract',data_extract, name='report_extract'),
     path ('news',news, name='news'),
-    path ('fetch',fetch_news),
-    path ('patient',patient_information),
+    path ('fetch',fetch_news, name = 'fetch_news'),
+    path ('patient',patient_information, name = 'patient_information'),
     path ('addinfo',patient_add),
     path ('prescription',prescription),
     path ('appointments',appointments),
-    path('register/', registerPage, name="register"),
-	path('login/', loginPage, name="login"),  
-	path('logout/', logoutUser, name="logout")
+    # path('register/', registerPage, name="register"),
+	# path('login/', loginPage, name="login"),  
+	path('logout', logout, name="logout")
 
     
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
