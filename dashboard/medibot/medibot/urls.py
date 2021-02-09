@@ -29,7 +29,7 @@ urlpatterns = [
     path ('admin/', admin.site.urls),
     path ('signin', sign_in , name ='signin'),
     path ('register', sign_up , name ='signup'),
-
+    path ('addappoint',addappoint),
     path ('', index , name ='index'),
     path ('inner', inner , name ='default'),
     path ('sms', broadcast_sms, name="default"),
@@ -44,7 +44,8 @@ urlpatterns = [
     path ('prescription',prescription),
     path ('appointments',appointments),
     path('register/', registerPage, name="register"),
-	path('login/', loginPage, name="login"),  
+	path('login/', loginPage, name="login"), 
+    path('time_slot',time_slot), 
 	path('logout/', logoutUser, name="logout")
 
     

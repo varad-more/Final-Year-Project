@@ -47,11 +47,18 @@ class user(models.Model):
     phone = models.CharField (max_length=20,blank=True)
     password = models.CharField (max_length=200,blank=True)
     user_role = models.CharField (max_length=20,blank=True)
-
+'''
 class appointment(models.Model):
     patient_id = models.CharField(max_length=10, blank=True)
     date = models.CharField(max_length=20, blank=True)
     status = models.CharField(max_length=10, blank=True)
+'''
+class appointment(models.Model):
+    patient_id = models.CharField(max_length=10, blank=True)
+    date = models.CharField(max_length=20, blank=True)
+    mobile = models.CharField (max_length=20,blank=True)
+    timeslot = models.CharField (max_length=20,blank=True)
+      
 
 
 class patient_history (models.Model):

@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 # }
 # MYSQL
 # django.db.backends.mysql
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -123,7 +123,7 @@ DATABASES = {
         }
     }
 } 
-''' 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -136,7 +136,8 @@ DATABASES = {
             'charset': 'utf8mb4'  # This is the important line
         }
     }
-}   
+}  
+''' 
 
 
 

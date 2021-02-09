@@ -35,6 +35,7 @@ The decorator for checking if user or admin is signed in.
 If user is not logged in is redirected to signin
 
 """
+
 def doctor_logged_in(f):
         def wrap(request, *args, **kwargs):
                 #this check the session if userid key exist, if not it will redirect to login page
@@ -163,6 +164,7 @@ def index(request):
 
 
 def appointments(request):
+    
     # return HttpResponse("Hello, world.")
     return render(request,'appointments.html')
 
@@ -177,6 +179,9 @@ def news (request):
     }
     print (content)
     return render(request,'news.html', content)
+
+def time_slot(request):
+    return render(request,'time_slot.html')
 
 
 def fetch_news(request):
@@ -269,6 +274,11 @@ def patient_add(request):
             return render(request,'patient_addinfo.html')
     else :
         return render(request,'patient_addinfo.html')
+#adding appointment
+def addappoint(request):
+    context = {"time_slot": ['9:00','9:20','9:40','10:00','10:20','10:40']}  
+    # athlete_list=['9:00','9:20','9:40','10:00','10:20','10:40']
+    return render(request,'addappoint.html',context)
 
 @doctor_logged_in
 def patient_information (request):
