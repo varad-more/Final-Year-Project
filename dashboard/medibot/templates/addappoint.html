@@ -154,8 +154,8 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
     <label for="appointment_date"><b>Appointment date</b></label><br>
     <input type="date" placeholder="Enter DOB" name="datepicker" id= "datepicker" required>
     <br><br>
-    <label for="phone"><b>Phone Number</b></label> 
-    <input type="text" placeholder="Enter Phone Number" name="phone" pattern="^[789]\d{9}$" required>
+    <!-- <label for="phone"><b>Phone Number</b></label> 
+    <input type="text" placeholder="Enter Phone Number" name="phone" pattern="^[789]\d{9}$" required> -->
 
     <!-- <label for="email"><b>Email</b></label> 
     <input type="email" placeholder="Enter Email" name="email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" required>
@@ -170,9 +170,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
     <input type="file" id="img" name="img" accept="image/*" onchange="loadFile(event)"/> 
     <br> -->
     {% csrf_token %}
-    <button type="submit" class="btn" onclick="window.location.href='/time_slot'"><b>Next</b></button>
+    <button type="submit" class="btn"><b>Next</b></button>
 
-
+<!-- onclick="window.location.href='/time_slot'"-->
   </form>
 </div>
 

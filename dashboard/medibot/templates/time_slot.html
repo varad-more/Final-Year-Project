@@ -120,23 +120,28 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
 
   <!------------------------------SIGN UP FORM CONTENTS STARTS---------------------------->
 
-  <form  class="container1" method= "POST" enctype="multipart/form-data">
+  <form  class="container1" method= "POST" >
     
     <h2 style="text-align:center;"><strong>Time Slots</strong></h2>
     <br>
     <!--9:00,9:20,9:40,10:00,10:20,10:40-->
     <!-- <label for="name"><b>Name</b></label>
     <input type="text" placeholder="Enter Name" name="name" required> -->
+    <!-- pattern="^[1-9][0-9]{5}$" -->
+    <label for="patient_id"><b>Patient ID</b></label>
+    <input type="text" placeholder="Enter Patient ID" name="patient_id"  title="Please enter patient id" required>
+    <label for="phone"><b>Phone Number</b></label> 
+    <input type="text" placeholder="Enter Phone Number" name="mobile" pattern="^[789]\d{9}$" required>
     
- 
     <label for="Time Slot"><b>Time Slot</b></label>
-    <select id="time_slot" name="time_slot">
-      {% for name in time_slot %}  
-      <option value=> {{name}}</option>  
+    <select  name="dropdown">
+      {% for i in timeslot %}  
+      <option value ="{{i}}">{{ i }} </option>  
       {% endfor %} 
       <!-- <option value=>9:00</option> -->
       
     </select> 
+
     <!-- <input type="text" placeholder="Enter Gender" name="gender" required> -->
     <br><br>
     

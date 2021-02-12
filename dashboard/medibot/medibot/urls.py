@@ -44,6 +44,9 @@ urlpatterns = [
     path ('addinfo',patient_add),
     path ('prescription',prescription),
     path ('appointments',appointments),
+    path ('addappoint',addappoint),
+    path ('time_slot',time_slot),
+    path ('time_slot/<slug:param>',time_slot, name = 'time_slot'),
     # path('register/', registerPage, name="register"),
 	# path('login/', loginPage, name="login"),  
 	path('logout', logout, name="logout")

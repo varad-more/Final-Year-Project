@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from datetime import datetime,timedelta
 
+from contextlib import contextmanager
 #Twilio - SMS Module
 from twilio.rest import Client
 from django.conf import settings  
@@ -202,8 +204,7 @@ def news (request):
     print (content)
     return render(request,'news.html', content)
 
-def time_slot(request):
-    return render(request,'time_slot.html')
+
 
 
 def fetch_news(request):
@@ -286,10 +287,95 @@ def patient_add(request):
     else :
         return render(request,'patient_addinfo.html')
 #adding appointment
+# def addappoint(request):
+#     context = {"time_slot": ['9:00','9:20','9:40','10:00','10:20','10:40']}  
+#     # athlete_list=['9:00','9:20','9:40','10:00','10:20','10:40']
+#     if request.method == 'POST':
+#         date = request.POST.get('datepicker')
+#         print(date)
+#         request.session['date'] = date
+#         return redirect  ('time_slot', date)
+
+
+#     return render(request,'addappoint.html',context)
+
+# def time_slot(request):
+#     print (param)
+
+#     test = request.session['date']
+#     print ('sakuuuu', test)
+#     return render(request,'time_slot.html')
+
+
+def get_daily_slots(start, end, slot, date):
+    # combine start time to respective day
+    dt = datetime.combine(date, datetime.strptime(start,"%H:%M").time())
+    slots = [dt]
+    # increment current time by slot till the end time
+    while (dt.time() < datetime.strptime(end,"%H:%M").time()):
+        dt = dt + timedelta(minutes=slot)
+        slots.append(dt)
+    return slots
+
+# Some Dummy values 
+start_time = '9:00'
+end_time = '15:00'
+slot_time = 20
+days = 7
+start_date = datetime.now().date()
+
+unavailable_slot=[]
+for i in range(days):
+    date_required = datetime.now().date() + timedelta(i)
+    list_date_available = get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_required)
+    # print (get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_requir
+print(list_date_available)
+def time_slot(request,param):
+    avail=[]
+    year=int(param[0:4])
+    month=int(param[5:7])
+    day=int(param[8:10])
+    print(type(year))
+    print(list_date_available)
+    for i in list_date_available:
+        if year == i.year and month == i.month and day == i.day:
+           avail.append(str(i.hour)+':'+str(i.minute))
+    context={"timeslot":avail}
+    if request.method == 'POST':
+        print(param)
+        time_taken=request.POST.get('dropdown')
+        hour=int(time_taken[0:2])
+        minute=int(time_taken[3:])
+        print(time_taken)
+        if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
+            print('patient')
+            saverecord = appointment()
+            saverecord.patient_id = request.POST.get('patient_id')
+            saverecord.date = param
+            saverecord.mobile = request.POST.get('mobile')
+            saverecord.timeslot = request.POST.get('dropdown')
+            saverecord.save()
+            messages.success(request,'Record Saved')
+        for i in list_date_available:
+            if i.year == year and i.month== month and i.day== day and i.hour==hour  and i.minute == minute:
+                    list_date_available.remove(i)
+    return render(request,'time_slot.html',context)
+
+
+
+
 def addappoint(request):
-    context = {"time_slot": ['9:00','9:20','9:40','10:00','10:20','10:40']}  
+    # context = {"time_slot": ['9:00','9:20','9:40','10:00','10:20','10:40']}  
     # athlete_list=['9:00','9:20','9:40','10:00','10:20','10:40']
-    return render(request,'addappoint.html',context)
+    if request.method == 'POST':
+        date = request.POST.get('datepicker')
+        print(date)
+        request.session['date'] = date
+        return redirect  ('time_slot', date)
+    return render(request,'addappoint.html')
+
+
+
 
 @doctor_logged_in
 def patient_information (request):
