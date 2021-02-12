@@ -55,9 +55,9 @@ class appointment(models.Model):
 '''
 class appointment(models.Model):
     patient_id = models.CharField(max_length=10, blank=True)
-    date = models.CharField(max_length=20, blank=True)
+    date =  models.DateTimeField(auto_now=False, auto_now_add=False)
     mobile = models.CharField (max_length=20,blank=True)
-    timeslot = models.CharField (max_length=20,blank=True)
+    # timeslot = models.CharField (max_length=20,blank=True)
       
 
 

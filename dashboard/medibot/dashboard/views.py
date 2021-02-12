@@ -286,25 +286,6 @@ def patient_add(request):
             return render(request,'patient_addinfo.html', content)
     else :
         return render(request,'patient_addinfo.html')
-#adding appointment
-# def addappoint(request):
-#     context = {"time_slot": ['9:00','9:20','9:40','10:00','10:20','10:40']}  
-#     # athlete_list=['9:00','9:20','9:40','10:00','10:20','10:40']
-#     if request.method == 'POST':
-#         date = request.POST.get('datepicker')
-#         print(date)
-#         request.session['date'] = date
-#         return redirect  ('time_slot', date)
-
-
-#     return render(request,'addappoint.html',context)
-
-# def time_slot(request):
-#     print (param)
-
-#     test = request.session['date']
-#     print ('sakuuuu', test)
-#     return render(request,'time_slot.html')
 
 
 def get_daily_slots(start, end, slot, date):
@@ -317,56 +298,65 @@ def get_daily_slots(start, end, slot, date):
         slots.append(dt)
     return slots
 
-# Some Dummy values 
-start_time = '9:00'
-end_time = '15:00'
-slot_time = 20
-days = 7
-start_date = datetime.now().date()
 
-unavailable_slot=[]
-for i in range(days):
-    date_required = datetime.now().date() + timedelta(i)
-    list_date_available = get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_required)
-    # print (get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_requir
-print(list_date_available)
 def time_slot(request,param):
-    avail=[]
-    year=int(param[0:4])
-    month=int(param[5:7])
-    day=int(param[8:10])
-    print(type(year))
-    print(list_date_available)
+
+    # Set Appointment slot times 
+    start_time = '9:00'
+    end_time = '15:00'
+    # Avg appointment duration
+    slot_time = 20
+
+    # days = 7
+    # start_date = datetime.now().date()
+    
+    # fetched from database
+    datetime_object_param = datetime.strptime(param, '%Y-%m-%d')
+    
+    date_bookings = appointment.objects.filter(date__gte =param, date__lte= datetime_object_param+timedelta(1))
+    unavailable_slot=[]
+    for i in date_bookings:
+        print (i.date)
+        unavailable_slot.append(i.date.replace(tzinfo=None))
+    # print (unavailable_slot)
+
+    date_required = datetime_object_param  
+    list_date_available = get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_required)
+    
+    list_date_available = [i for i in list_date_available if i not in unavailable_slot] 
+    print('REST:',list_date_available)
+
+    available_timeslots=[]
     for i in list_date_available:
-        if year == i.year and month == i.month and day == i.day:
-           avail.append(str(i.hour)+':'+str(i.minute))
-    context={"timeslot":avail}
+           available_timeslots.append(str("{0:0>2}".format(i.hour))+':'+str("{0:0>2}".format(i.minute)))
+
+    context={"timeslot":available_timeslots}
+
     if request.method == 'POST':
-        print(param)
         time_taken=request.POST.get('dropdown')
-        hour=int(time_taken[0:2])
-        minute=int(time_taken[3:])
-        print(time_taken)
+
+        datetime_object = datetime.strptime(param + ' ' + str(time_taken) , '%Y-%m-%d %H:%M')
+        print (datetime_object)
+
         if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
             print('patient')
             saverecord = appointment()
             saverecord.patient_id = request.POST.get('patient_id')
-            saverecord.date = param
+            saverecord.date = datetime_object
             saverecord.mobile = request.POST.get('mobile')
-            saverecord.timeslot = request.POST.get('dropdown')
             saverecord.save()
             messages.success(request,'Record Saved')
-        for i in list_date_available:
-            if i.year == year and i.month== month and i.day== day and i.hour==hour  and i.minute == minute:
-                    list_date_available.remove(i)
+
+            content = {'mssg': 'Appointment Confirmed'}
+            return render(request,'addappoint.html', content)
+
+        
     return render(request,'time_slot.html',context)
 
 
 
 
 def addappoint(request):
-    # context = {"time_slot": ['9:00','9:20','9:40','10:00','10:20','10:40']}  
-    # athlete_list=['9:00','9:20','9:40','10:00','10:20','10:40']
     if request.method == 'POST':
         date = request.POST.get('datepicker')
         print(date)
