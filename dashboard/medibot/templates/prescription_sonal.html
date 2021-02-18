@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="./assets_presc/styles.css">
+
+  
+    
+     <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+    
+      <h1 class="logo mr-auto"><a href="/">Virtual Managers</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+  <!--   
+      <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li class="{% block home %} {% endblock home %}"><a href="/">Home</a></li>
+        <li style="{% block signin %} {% endblock signin %};"><a href="signin">Sign In</a></li>
+        <li style="{% block register%} {% endblock register %};"><a href="register">Register</a></li>
+        <li style="{% block logout %} {% endblock logout %};" ><a href= "logout">Log Out</a></li>
+      </ul> -->
+    
+    
+      </nav>
+      <!-- .nav-menu -->
+    </div>
+    </header>
+  
+
+    <div class="controls">
+      
+      <button id="recordButton" class="button">Record</button>
+      <button id="pauseButton" class="button" disabled>Pause</button>
+      <button id="stopButton" class="button" disabled>Stop</button>
+    </div>
+
+    <!-- <div id="formats">Format: start recording to see sample rate</div> -->
+    <form  method="POST"> 
+      <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  />
+
+      <input type="submit" id ="formats" class="form_ip" onclick="fun()" value="Submit Recording">
+      <!-- <button id="save" class="form_ip">save</button> -->
+    </form>
+
+  	<p class="para" style=" color: white; font-size: 1.5rem; "><strong >Recordings:</strong></p>
+    <!-- <p class="para"></p> -->
+  	<ol id="recordingsList"></ol>
+
+  <!-- </div> -->
+  <!-- <div id="text-control">
+    <textarea id="textbox" rows="10" class="resizedTextbox" ></textarea>
+  </div> -->
+
+    <div class="mycontainer">
+      <h1 style="text-align: center; color: white;">Prescription</h1>
+  
+          <div class="mywebapp"> 
+              <div class="input">
+                  <textarea id="textbox" rows="10" class="resizedTextbox" ></textarea>
+              </div>         
+              <button id="start-btn" title="Start">Confirm</button>
+              <!-- <p id="instructions">Press the Start button</p> -->
+          </div>
+      </div>
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+  	<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  	<script src="./assets_presc/app.js"></script>
+ 
+{% endblock content %}
