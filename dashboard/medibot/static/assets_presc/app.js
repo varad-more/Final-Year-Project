@@ -35,7 +35,7 @@ function startRecording() {
 
 	recordButton.disabled = true;
 	stopButton.disabled = false;
-	pauseButton.disabled = false
+	pauseButton.disabled = false;
 
 	/*
     	We're using the standard promise based getUserMedia() 
