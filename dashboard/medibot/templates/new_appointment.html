@@ -39,6 +39,7 @@
                 
                 // document.getElementById("warning").disabled = false;
                 // document.getElementById('warning').removeAttribute('disabled');
+                return true;
             }
            
  
@@ -83,7 +84,7 @@
             <th><i class="icon_mobile"></i> Mobile</th>
             <th><i class="icon_cogs"></i> Action</th>
           </tr>
-           <form method="POST">
+           <form method="POST" >
             <input type="hidden" id ="name_text" class="form_ip" name="get_name"  />
             <input type="hidden" id ="mob_text" class="form_ip" name="get_mob"  />
           <tr id="1">
@@ -95,9 +96,10 @@
             <td>
               <!-- <div class="btn-group" > -->
                 <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
-               <button class="icon_plus_alt2" id="active"  onclick="show() " ></button>
-               <button class="icon_check_alt2" id="warning" onclick="show()"></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()" ></button>
+               <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
+               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="www.abc.com"></button>  
+               <button class="icon_check_alt2" id="warning" onclick="return show()" formaction="/action2.php"></button>
+               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="/action2.php"></button>
              
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
@@ -113,9 +115,9 @@
             <td class="dta">9967438112</td>
             <td>
               <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()" ></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()" ></button>
+               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="/action1.php"></button>  
+               <button class="icon_check_alt2" id="warning" onClick="return show()"formaction="/action2.php"></button>
+               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="/action1.php"></button>
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
                 <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
@@ -130,9 +132,9 @@
             <td class="dta">9359935197</td>
             <td>
               <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()" ></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
+                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
+                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
+               <button class="icon_close_alt2" id="absent" onclick="show()"formaction="/action1.php"></button>
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
                 <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
@@ -147,9 +149,9 @@
             <td class="dta">8275510613</td>
             <td>
               <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
+                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
+                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
+               <button class="icon_close_alt2" id="absent" onclick="show()" formaction="/action1.php"></button>
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
                 <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
@@ -164,9 +166,9 @@
             <td class="dta">9228100915</td>
             <td>
               <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
+                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
+                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
+               <button class="icon_close_alt2" id="absent" onclick="show()" formaction="/action1.php"></button>
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
                 <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
@@ -181,9 +183,9 @@
             <td class="dta">9930839833</td>
             <td>
               <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()"></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
+                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
+                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
+               <button class="icon_close_alt2" id="absent" onclick="show()" formaction="/action1.php"></button>
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
                 <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
