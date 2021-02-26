@@ -54,12 +54,19 @@ class appointment(models.Model):
     status = models.CharField(max_length=10, blank=True)
 '''
 class appointment(models.Model):
-    patient_id = models.CharField(max_length=10, blank=True)
+    patient_id = models.ForeignKey('patient',on_delete=models.CASCADE,)
     date =  models.DateTimeField(auto_now=False, auto_now_add=False)
     mobile = models.CharField (max_length=20,blank=True)
+    status = models.CharField(max_length=10, blank=True)
+
     # timeslot = models.CharField (max_length=20,blank=True)
       
 
+    def datepublished(self):
+        return self.date.strftime('%B %d , %Y')
+
+    def timepublished(self):
+        return self.date.strftime('%H : %M : %S')
 
 class patient_history (models.Model):
     patient_id = models.CharField(max_length=10, blank=True)

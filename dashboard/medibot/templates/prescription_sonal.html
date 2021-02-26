@@ -1,31 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% block prescription %} active {% endblock prescription %}
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="./assets_presc/styles.css">
+<head>
+<link href="{%static 'assets_presc/style.css' %}" rel="stylesheet">
 
+    
   
-    
-     <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
-    
-      <h1 class="logo mr-auto"><a href="/">Virtual Managers</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-  <!--   
-      <nav class="nav-menu d-none d-lg-block">
-      <ul>
-        <li class="{% block home %} {% endblock home %}"><a href="/">Home</a></li>
-        <li style="{% block signin %} {% endblock signin %};"><a href="signin">Sign In</a></li>
-        <li style="{% block register%} {% endblock register %};"><a href="register">Register</a></li>
-        <li style="{% block logout %} {% endblock logout %};" ><a href= "logout">Log Out</a></li>
-      </ul> -->
-    
-    
-      </nav>
-      <!-- .nav-menu -->
-    </div>
-    </header>
   
 
     <div class="controls">

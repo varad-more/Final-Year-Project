@@ -1,23 +1,24 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block appointment %} active {% endblock appointment %}
+{% load static %}
+{% block content %}
 <head>
-  <link href="assets_presc/style.css" rel="stylesheet">
-  <!-- <link rel="shortcut icon" href="img/favicon.png"> -->
+  <link href="{%static 'assets_presc/style.css' %}" rel="stylesheet">
+  <link rel="shortcut icon" href="img/favicon.png">
 
   <title>Basic Table | Creative - Bootstrap 3 Responsive Admin Template</title>
 
   <!-- Bootstrap CSS -->
-  <link href="assets_appoint/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{%static 'assets_appoint/css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- bootstrap theme -->
-  <link href="assets_appoint/css/bootstrap-theme.css" rel="stylesheet">
+  <link href="{%static 'assets_appoint/css/bootstrap-theme.css' %}" rel="stylesheet">
   <!--external css-->
   <!-- font icon -->
-  <link href="assets_appoint/css/elegant-icons-style.css" rel="stylesheet" />
-  <link href="assets_appoint/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="{%static 'assets_appoint/css/elegant-icons-style.css' %}" rel="stylesheet" />
+  <link href="{%static 'assets_appoint/css/font-awesome.min.css' %}" rel="stylesheet" />
   <!-- Custom styles -->
-  <link href="assets_appoint/css/style.css" rel="stylesheet">
-  <link href="assets_appoint/css/style-responsive.css" rel="stylesheet" />
-  <!-- <link rel="stylesheet" href= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity= "sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />  -->
-
+  <link href="{%static 'assets_appoint/css/style.css' %}" rel="stylesheet">
+  <link href="{%static 'assets_appoint/css/style-responsive.css' %}" rel="stylesheet" />
   <script>
     
     function show() { 
@@ -88,16 +89,18 @@
             <input type="hidden" id ="name_text" class="form_ip" name="get_name"  />
             <input type="hidden" id ="mob_text" class="form_ip" name="get_mob"  />
           <tr id="1">
-            <td class="dta">Angeline Mcclain</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">dale@chief.info</td>
-            <td class="dta">9:00 am - 9:20 am</td>
-            <td class="dta">7506454404</td>
+            {% for data_appoint in appointment %}  
+            <td class="dta">{{data_appoint.patient_id.name}}</td>
+            <td class="dta">{{data_appoint.datepublished}}</td>
+            <td class="dta">{{data_appoint.patient_id.email}}</td>
+            <td class="dta">{{data_appoint.timepublished}}</td>
+            <td class="dta">{{data_appoint.mobile}}</td>
             <td>
+              
               <!-- <div class="btn-group" > -->
                 <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
                <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
-               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="www.abc.com"></button>  
+               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="prescription"></button>  
                <button class="icon_check_alt2" id="warning" onclick="return show()" formaction="/action2.php"></button>
                <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="/action2.php"></button>
              
@@ -107,160 +110,7 @@
               <!-- </div> -->
             </td>
           </tr>
-          <tr id="2">
-            <td class="dta">Sung Carlson</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">ione.gisela@high.org</td>
-            <td class="dta">9:20 am - 9:40 am</td>
-            <td class="dta">9967438112</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="/action1.php"></button>  
-               <button class="icon_check_alt2" id="warning" onClick="return show()"formaction="/action2.php"></button>
-               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="/action1.php"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="3">
-            <td class="dta">Bryon Osborne</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">sol.raleigh@language.edu</td>
-            <td class="dta">9:40 am - 10:00 am</td>
-            <td class="dta">9359935197</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"formaction="/action1.php"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="4">
-            <td class="dta">Dalia Marquez</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">angeline.frieda@thick.com</td>
-            <td class="dta">10:00 am - 10:20 am</td>
-            <td class="dta">8275510613</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()" formaction="/action1.php"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="5">
-            <td class="dta">Selina Fitzgerald</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">moshe.mikel@parcelpart.info</td>
-            <td class="dta">10:20 am - 10:40 am</td>
-            <td class="dta">9228100915</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()" formaction="/action1.php"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="6">
-            <td class="dta">Abraham Avery</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">harvey.jared@pullpump.org</td>
-            <td class="dta">10:40 am - 11:00 am</td>
-            <td class="dta">9930839833</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()" formaction="/action1.php"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" formaction="/action1.php"></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()" formaction="/action1.php"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="7">
-            <td class="dta">Caren Mcdowell</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">valeria@hookhope.org</td>
-            <td class="dta">11:00 am - 11:20 am</td>
-            <td class="dta">9701475550</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="8">
-            <td class="dta">Owen Bingham</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">thomas.christopher@firstfish.info</td>
-            <td class="dta">11:20 am - 11:40 am</td>
-            <td class="dta">9341186046</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="9">
-            <td class="dta">Ahmed Dean</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">lakesha.geri.allene@recordred.com</td>
-            <td class="dta">11:40 am - 12:00 pm</td>
-            <td class="dta">9987338990</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          <tr id="10">
-            <td class="dta">Mario Norris</td>
-            <td class="dta">2020-12-19</td>
-            <td class="dta">mildred@hour.info</td>
-            <td class="dta">12:00 pm - 12:20 pm</td>
-            <td class="dta">9455475302</td>
-            <td>
-              <!-- <div class="btn-group"> -->
-                <button class="icon_plus_alt2" id="active" onclick="show()"></button>  
-                <button class="icon_check_alt2" id="warning" onClick="show()" ></button>
-               <button class="icon_close_alt2" id="absent" onclick="show()"></button>
-
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
+          {% endfor %}
         </form>
         </tbody>
       </table>
@@ -274,4 +124,5 @@
 <!--main content end-->
 
 
-</html>
+
+{% endblock content %}

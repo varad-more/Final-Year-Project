@@ -107,10 +107,8 @@ def sign_in(request):
         password = request.POST.get('pass')
 
         entered_key = hash_password(password)
-        login_user = user.objects.filter(email=email, password=password).first()
 
-        # To be hashed
-        login_user1 = user.objects.filter(email=email, password=entered_key).first()
+        login_user = user.objects.filter(email=email, password=entered_key).first()
 
         print (login_user)
 
@@ -176,8 +174,6 @@ def index(request):
     return render(request,'index.html', content)
 
 
-def appointments(request):
-    return render(request,'appointments.html')
 
 
 def profile(request):
@@ -341,7 +337,7 @@ def time_slot(request,param):
         if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
             print('patient')
             saverecord = appointment()
-            saverecord.patient_id = request.POST.get('patient_id')
+            saverecord.patient_id_id = request.POST.get('patient_id')
             saverecord.date = datetime_object
             saverecord.mobile = request.POST.get('mobile')
             saverecord.save()
@@ -392,6 +388,20 @@ def patient_information (request):
     print (content['reports'])
     return render(request,'patient_info.html', content)
 
+
+def appointments(request):
+    appoint = appointment.objects.first()
+    pat = patient.objects.all()
+    if appoint == None:
+        pass
+    appoints = appointment.objects.all()
+    content = {
+        'appointment':appoints,
+    }
+    #{'databasename':function-name}
+    return render(request,'new_appointment.html',content)
+
+
 @receptionist_logged_in
 def report_upload(request):
     if request.method == 'POST' and request.FILES['report']:
@@ -433,7 +443,7 @@ def broadcast_sms(request):
 @doctor_logged_in
 def prescription(request):
     # return HttpResponse("Hello, world.")
-    return render(request,'prescription.html')
+    return render(request,'prescription_sonal.html')
 
 
 ############################## User roles
