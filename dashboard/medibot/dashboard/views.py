@@ -107,7 +107,6 @@ def sign_in(request):
         password = request.POST.get('pass')
 
         entered_key = hash_password(password)
-        login_user = user.objects.filter(email=email, password=password).first()
 
         # To be hashed
         login_user = user.objects.filter(email=email, password=entered_key).first()
@@ -174,11 +173,6 @@ def index(request):
         content = { 'user': request.session['user_role']}
     content ={'user':''}
     return render(request,'index.html', content)
-
-
-def appointments(request):
-    return render(request,'new_appointment.html')
-
 
 def profile(request):
     email = request.session['email']
@@ -341,7 +335,7 @@ def time_slot(request,param):
         if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
             # print('patient')
             saverecord = appointment()
-            saverecord.patient_id = request.POST.get('patient_id')
+            saverecord.patient_id_id = request.POST.get('patient_id')
             saverecord.date = datetime_object
             saverecord.mobile = request.POST.get('mobile')
             saverecord.save()
@@ -391,6 +385,20 @@ def patient_information (request):
     }
     print (content['reports'])
     return render(request,'patient_info.html', content)
+
+
+def appointments(request):
+    appoint = appointment.objects.first()
+    pat = patient.objects.all()
+    if appoint == None:
+        pass
+    appoints = appointment.objects.all()
+    content = {
+        'appointment':appoints,
+    }
+    #{'databasename':function-name}
+    return render(request,'new_appointment.html',content)
+
 
 @receptionist_logged_in
 def report_upload(request):
