@@ -430,28 +430,22 @@ def broadcast_sms(request):
                            body=message_to_broadcast)
     return HttpResponse("messages sent!", 200)
 
+
 # @doctor_logged_in
 def prescription(request):
     if request.method == 'POST':
-        print ('post')
-        print (request.POST.get('get_url_address_recording'))
-        print (request.POST.get ('audio_data'))
+        file_name = 'file_name'
+
+        f = open(BASE_DIR+'/media/recordings/'+file_name+'.wav', 'wb')
+        f.write(request.body)
+        f.close()
         
-        import requests
 
-
-        url = request.POST.get('get_url_address_recording').split('b:')[1] 
-        r = requests.get(url, allow_redirects=True)
-        open('testmp3', 'wb').write(r.content)
-
-        file=request.POST.get('get_url_address_recording')
-        storage = FileSystemStorage(location=BASE_DIR+'/media/') 
-        url = storage.save('rec', file)
-        print (url)
-
-
-        # print (request.POST.get['url'])
-        # return ('a')
+        file_loc = BASE_DIR+'/media/'+file_name+'.wav'
+        print (file_loc) 
+        
+        # No repsponse is sent
+        return HttpResponse('audio received')
 
     return render(request,'prescription_sonal.html')
 

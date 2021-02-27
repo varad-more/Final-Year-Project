@@ -3,6 +3,7 @@
 {% block content %}
 <link href="{%static 'assets_presc/style.css' %}" rel="stylesheet">
 <link href="{%static 'assets_presc/styles.css' %}" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
   
     <br><br><br><br><br><br><br>
@@ -11,7 +12,7 @@
     <div class="row">
         <div class="col">
           <div class="controls">
-      
+            {% csrf_token %}
             <button id="recordButton" class="button">Record</button>
             <button id="pauseButton" class="button" disabled>Pause</button>
             <button id="stopButton" class="button" disabled>Stop</button>

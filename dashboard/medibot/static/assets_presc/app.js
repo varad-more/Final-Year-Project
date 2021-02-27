@@ -113,7 +113,33 @@ function stopRecording() {
 	gumStream.getAudioTracks()[0].stop();
 
 	//create the wav blob and pass it on to createDownloadLink
-	rec.exportWAV(createDownloadLink);
+    rec.exportWAV(createDownloadLink);    
+}
+
+function sendData(data) 
+    {
+    // let csrftoken = getCookie('csrftoken');
+    let response=fetch("/voice_request", {
+    method: "post",
+    body: data,
+    headers: { "X-CSRFToken": csrftoken },
+    })
+   }
+
+   function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 function createDownloadLink(blob) {
@@ -147,28 +173,66 @@ function createDownloadLink(blob) {
 
 	urll = url;
 	// //upload link
-	// var upload = document.createElement('a');
-	// upload.href="#";
-	// upload.innerHTML = "Submit the Audio";
-	// upload.addEventListener("click", function(event){
-	// 	  var xhr=new XMLHttpRequest();
-	// 	  xhr.onload=function(e) {
-	// 	      if(this.readyState === 4) {
-	// 	          console.log("Server returned: ",e.target.responseText);
-	// 	      }
-	// 	  };
-	// 	  var fd=new FormData();
-	// 	  fd.append("audio_data",blob, filename);
-	// 	  xhr.open("POST","upload.php",true);
-	// 	  xhr.send(fd);
-	// })
-	// li.appendChild(document.createTextNode (" "))//add a space in between
-	// li.appendChild(upload)//add the upload link to li
+	var upload = document.createElement('a');
+	upload.href="#";
+	upload.innerHTML = "Submit the Audio";
+    upload.addEventListener("click", function(event){
+	// sendData;
+    
+		  var xhr=new XMLHttpRequest();
+		  xhr.onload=function(e) {
+		      if(this.readyState === 4) {
+		          console.log("Server returned: ",e.target.responseText);
+		      }
+		  };
+		
+        // function sendData(blob) {
+            let csrftoken = getCookie('csrftoken');
+            fetch("/prescription", {
+            method: "post",
+            body: blob,
+            headers: { "X-CSRFToken": csrftoken },
+
+            });
+        // }
+
+          //   var fd=new FormData();
+
+
+          var fd = new FormData();
+            
+          // fd.append('fname', 'test.wav');
+            // fd.append('data', blob);
+            // $.ajax({
+            //     type: 'POST',
+            //     url: 'prescription',
+            //     data: fd,
+            //     processData: false,
+            //     contentType: false
+            // }).done(function(data) {
+            //        console.log(data);
+            // });
+		//   fd.append("audio_data",blob, filename);
+		//   xhr.open("POST","prescription",true);
+		//   xhr.send(fd);
+    })
+	li.appendChild(document.createTextNode (" "))//add a space in between
+	li.appendChild(upload)//add the upload link to li
 
 	// //add the li element to the ol
 	recordingsList.appendChild(li);
 }
-function fun(){
-	// var url ="www";
-	 document.getElementById("url").value=urll;
-}
+
+// function sendData(blob) {
+//     // sends data to flask url /messages as a post with data blob - in format for wav file, hopefully. it is a promise
+//     fetch("/prescription", {
+//     method: "post",
+//     body: blob
+//     });
+// }
+
+// function fun(){
+// 	// var url ="www";
+// 	 document.getElementById("url").value=urll;
+// }
+
