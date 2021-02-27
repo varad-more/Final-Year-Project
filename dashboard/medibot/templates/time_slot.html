@@ -7,121 +7,128 @@ active
 
 <head>
     <title>page</title>
-     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/web7.css' %}">  
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-    
-<style>
-body, html {
-  height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-}
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/web7.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 
-* {
-  box-sizing: border-box;
-}
+    <style>
+        body,
+        html {
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-/* ----------------------STYLES FOR SIGN UP PAGE BODY STARTS---------------------------- */ 
+        * {
+            box-sizing: border-box;
+        }
 
-.bg-img {
-  /* -------The image used------- */
-  background-image: url('{% static "assets/img/blue2.jpg"%}');
+        /* ----------------------STYLES FOR SIGN UP PAGE BODY STARTS---------------------------- */
 
-  min-height: 1150px; /*########*/
- 
+        .bg-img {
+            /* -------The image used------- */
+            background-image: url('{% static "assets/img/blue2.jpg"%}');
 
-  /* -------Center and scale the image nicely------ */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
- position: relative;  
-}
+            min-height: 1150px;
+            /*########*/
 
-/* -------Add styles to the form container----- */
-.container1 {
-  position: absolute;
-  right: 30%;
-  top : 30%;
-  margin: 0%;
-  max-width: 40%;
-  padding: 16px; min-height:80%;
-  background-color: white;
-}
 
-/* --------Full-width input fields----------- */
-input[type=text], input[type=password], input[type=email] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
-}
+            /* -------Center and scale the image nicely------ */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus 
- {
-  background-color: #ddd;
-  outline: none;
-}
+        /* -------Add styles to the form container----- */
+        .container1 {
+            position: absolute;
+            right: 30%;
+            top: 30%;
+            margin: 0%;
+            max-width: 40%;
+            padding: 16px;
+            min-height: 80%;
+            background-color: white;
+        }
 
-/* --------Set a style for the continue button------ */
-.btn {
-  background-color: green;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-/* -------------continue button-------- */
-.btn:hover {
-   background-color: red;
-  opacity: 0.9;
-}
-/* -----------log in button--------- */
-/* .btn1:hover {
+        /* --------Full-width input fields----------- */
+        input[type=text],
+        input[type=password],
+        input[type=email] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus,
+        input[type=password]:focus,
+        input[type=email]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* --------Set a style for the continue button------ */
+        .btn {
+            background-color: green;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        /* -------------continue button-------- */
+        .btn:hover {
+            background-color: red;
+            opacity: 0.9;
+        }
+
+        /* -----------log in button--------- */
+        /* .btn1:hover {
    color: red;
   opacity: 1;
 } */
 
 
 
-   body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-}
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+        }
 
-#myBtn {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 99;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  background-color: rgb(55, 158, 172);
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 4px;
-}
-/* scroll to top button */
-/* #myBtn:hover {
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: rgb(55, 158, 172);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        /* scroll to top button */
+        /* #myBtn:hover {
   background-color: #555;
 } */
-/* ----------------------STYLES FOR SIGN UP PAGE BODY ENDS-----------------------*/
-
-
-</style>
+        /* ----------------------STYLES FOR SIGN UP PAGE BODY ENDS-----------------------*/
+    </style>
 
 </head>
-  <br>
-  <br>
+<br>
+<br>
 
-  <!------------------------------SIGN UP FORM CONTENTS STARTS---------------------------->
+<!------------------------------SIGN UP FORM CONTENTS STARTS---------------------------->
 
-  <form  class="container1" method= "POST" >
-    
+<form class="container1" method="POST">
+
     <h2 style="text-align:center;"><strong>Time Slots</strong></h2>
     <br>
     <!--9:00,9:20,9:40,10:00,10:20,10:40-->
@@ -129,69 +136,69 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
     <input type="text" placeholder="Enter Name" name="name" required> -->
     <!-- pattern="^[1-9][0-9]{5}$" -->
     <label for="patient_id"><b>Patient ID</b></label>
-    <input type="text" placeholder="Enter Patient ID" name="patient_id"  title="Please enter patient id" required>
-    <label for="phone"><b>Phone Number</b></label> 
+    <input type="text" placeholder="Enter Patient ID" name="patient_id" title="Please enter patient id" required>
+    <label for="phone"><b>Phone Number</b></label>
     <input type="text" placeholder="Enter Phone Number" name="mobile" pattern="^[789]\d{9}$" required>
-    
+
     <label for="Time Slot"><b>Time Slot</b></label>
-    <select  name="dropdown">
-      {% for i in timeslot %}  
-      <option value ="{{i}}">{{ i }} </option>  
-      {% endfor %} 
-      <!-- <option value=>9:00</option> -->
-      
-    </select> 
+    <select name="dropdown">
+        {% for i in timeslot %}
+        <option value="{{i}}">{{ i }} </option>
+        {% endfor %}
+        <!-- <option value=>9:00</option> -->
+
+    </select>
 
     <!-- <input type="text" placeholder="Enter Gender" name="gender" required> -->
     <br><br>
-    
+
 
     {% csrf_token %}
     <button type="submit" class="btn"><b>Appointment added</b></button>
 
 
-  </form>
+</form>
 </div>
 <button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
 
 <!-- Not working -->
 <script type="text/javascript">
-  var loadFile = function(event) {
+    var loadFile = function (event) {
 
-      myparent = $(event.target).parent();
-      myparent.find('img').attr("src", URL.createObjectURL(event.target.files[0])).width(150)
-          .height(200)
-  };
+        myparent = $(event.target).parent();
+        myparent.find('img').attr("src", URL.createObjectURL(event.target.files[0])).width(150)
+            .height(200)
+    };
 </script>
 
 
 <script>
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
-        
-        function scrollFunction() {
-          if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("myBtn").style.display = "block";
-          } else {
-            document.getElementById("myBtn").style.display = "none";
-          }
-        }
-        
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-        }
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () { scrollFunction() };
 
-</script>        
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("myBtn").style.display = "block";
+        } else {
+            document.getElementById("myBtn").style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+</script>
 <script>
-  $(function() {
-    $("#datepicker").datepicker();
-    $("#datepicker").on("change",function(){
-        var selected = $(this).val();
-        alert(selected);
+    $(function () {
+        $("#datepicker").datepicker();
+        $("#datepicker").on("change", function () {
+            var selected = $(this).val();
+            alert(selected);
+        });
     });
-});
 </script>
 <!--------------------------------------SIGN IN FORM CONTENTS ENDS ---------------------------------->
 </body>

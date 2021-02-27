@@ -172,4 +172,3 @@ function fun(){
 	// var url ="www";
 	 document.getElementById("url").value=urll;
 }
-

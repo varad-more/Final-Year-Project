@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block appointment %} active {% endblock appointment %}
+{% load static %}
+{% block content %}
+
 <head>
   <link href="assets_presc/style.css" rel="stylesheet">
   <!-- <link rel="shortcut icon" href="img/favicon.png"> -->
@@ -83,10 +87,11 @@
             <th><i class="icon_mobile"></i> Mobile</th>
             <th><i class="icon_cogs"></i> Action</th>
           </tr>
-           <form method="POST">
+           <form method="POST" action='test'>
             <input type="hidden" id ="name_text" class="form_ip" name="get_name"  />
             <input type="hidden" id ="mob_text" class="form_ip" name="get_mob"  />
           <tr id="1">
+              {% csrf_token %}
             <td class="dta">Angeline Mcclain</td>
             <td class="dta">2020-12-19</td>
             <td class="dta">dale@chief.info</td>
@@ -271,5 +276,4 @@
 </section>
 <!--main content end-->
 
-
-</html>
+{% endblock content %}

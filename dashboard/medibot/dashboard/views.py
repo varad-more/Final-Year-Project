@@ -110,16 +110,16 @@ def sign_in(request):
         login_user = user.objects.filter(email=email, password=password).first()
 
         # To be hashed
-        login_user1 = user.objects.filter(email=email, password=entered_key).first()
+        login_user = user.objects.filter(email=email, password=entered_key).first()
 
         print (login_user)
 
-        if login_user or login_user1:
+        if login_user:
             request.session['user_role'] = login_user.user_role
             request.session['email'] = login_user.email
             request.session['id'] = login_user.id
 
-            return redirect ('patient_information')
+            return redirect ('appointments')
         
         else:
 
@@ -177,7 +177,7 @@ def index(request):
 
 
 def appointments(request):
-    return render(request,'appointments.html')
+    return render(request,'new_appointment.html')
 
 
 def profile(request):
@@ -339,7 +339,7 @@ def time_slot(request,param):
         print (datetime_object)
 
         if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
-            print('patient')
+            # print('patient')
             saverecord = appointment()
             saverecord.patient_id = request.POST.get('patient_id')
             saverecord.date = datetime_object
@@ -430,10 +430,30 @@ def broadcast_sms(request):
                            body=message_to_broadcast)
     return HttpResponse("messages sent!", 200)
 
-@doctor_logged_in
+# @doctor_logged_in
 def prescription(request):
-    # return HttpResponse("Hello, world.")
-    return render(request,'prescription.html')
+    if request.method == 'POST':
+        print ('post')
+        print (request.POST.get('get_url_address_recording'))
+        print (request.POST.get ('audio_data'))
+        
+        import requests
+
+
+        url = request.POST.get('get_url_address_recording').split('b:')[1] 
+        r = requests.get(url, allow_redirects=True)
+        open('testmp3', 'wb').write(r.content)
+
+        file=request.POST.get('get_url_address_recording')
+        storage = FileSystemStorage(location=BASE_DIR+'/media/') 
+        url = storage.save('rec', file)
+        print (url)
+
+
+        # print (request.POST.get['url'])
+        # return ('a')
+
+    return render(request,'prescription_sonal.html')
 
 
 ############################## User roles

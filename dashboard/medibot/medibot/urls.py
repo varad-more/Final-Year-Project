@@ -43,7 +43,7 @@ urlpatterns = [
     path ('patient',patient_information, name = 'patient_information'),
     path ('addinfo',patient_add),
     path ('prescription',prescription),
-    path ('appointments',appointments),
+    path ('appointments',appointments, name = 'appointments'),
     path ('addappoint',addappoint),
     path ('time_slot',time_slot),
     path ('time_slot/<slug:param>',time_slot, name = 'time_slot'),

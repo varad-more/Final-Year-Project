@@ -12,9 +12,9 @@ button:focus {
  
 .mycontainer {
     height : 50%;
-    max-width: 500px;
-    margin: 500px auto;
-    padding: 150px 100px;
+    /* max-width: 500px; */
+    /* margin: 500px     auto; */
+    /* padding: -150px 100px; */
     text-align: center;
 }
  

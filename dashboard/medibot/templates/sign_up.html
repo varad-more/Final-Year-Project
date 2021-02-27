@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
     <!-- Main css -->
     <link rel="stylesheet" href="{% static 'css/style_signin.css' %}">
 </head>
+
 <body>
 
     <div class="main">
@@ -29,65 +31,71 @@
                             alert("{{mssg}}");
                         </script>
                         {% endif %}
-                        
+
                         <form method="POST" class="register-form" id="register-form" action="register">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name *" required/>
+                                <input type="text" name="name" id="name" placeholder="Your Name *" required />
                             </div>
 
                             <div class="form-group">
                                 <label for="gender"><i class="zmdi zmdi-account"></i><b>Gender: </b></label>
                                 <!-- <br><br><br> -->
 
-                                <select id="gender" name="gender" style="margin-left: 6em; width:100px; text-align: center;">
+                                <select id="gender" name="gender"
+                                    style="margin-left: 6em; width:100px; text-align: center;">
                                     <option value="Male"> Male </option>
                                     <option value="Female"> Female </option>
                                     <option value="Others"> Others </option>
-                                </select>                            
+                                </select>
                             </div>
 
                             <div class="form-group">
-                            <!-- <label for="age"><b>Age</b></label> -->
-                            <input type="number" placeholder="Enter Age (in years)*" name="age" min="0" max="99" required>
+                                <!-- <label for="age"><b>Age</b></label> -->
+                                <input type="number" placeholder="Enter Age (in years)*" name="age" min="0" max="99"
+                                    required>
                             </div>
 
                             <div class="form-group">
-                                <input type="text" placeholder="Enter Phone Number*" name="phone" pattern="^[789]\d{9}$" required>
+                                <input type="text" placeholder="Enter Phone Number*" name="phone" pattern="^[789]\d{9}$"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" oninput="validateemail()" required/>
+                                <input type="email" name="email" id="email" placeholder="Your Email"
+                                    pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" oninput="validateemail()" required />
                             </div>
 
                             <div class="form-group">
-                                <span id="error_email"></span> 
+                                <span id="error_email"></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="pass" id="pass" placeholder="Password" required/>
+                                <input type="password" name="pass" id="pass" placeholder="Password" required />
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" oninput="matchPassword()" required/>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"
+                                    oninput="matchPassword()" required />
                             </div>
-                            
-                            <div class = "form-class">
-                                <span id="error"></span> 
-                            </div>
-                        
-                        <div class="form-group">
-                            <label for="user_role"><i class="zmdi zmdi-account"></i><b>User Role: </b></label>
-                            <!-- <br><br><br> -->
 
-                            <select id="user_role" name="user_role" style="margin-left: 6em; width:100px; text-align: center;">
-                                <option value="doctor"> Doctor </option>
-                                <option value="receptionist"> Receptionist </option>
-                                <option value="admin"> Admin </option>
-                            </select>                            
-                        </div>
+                            <div class="form-class">
+                                <span id="error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="user_role"><i class="zmdi zmdi-account"></i><b>User Role: </b></label>
+                                <!-- <br><br><br> -->
+
+                                <select id="user_role" name="user_role"
+                                    style="margin-left: 6em; width:100px; text-align: center;">
+                                    <option value="doctor"> Doctor </option>
+                                    <option value="receptionist"> Receptionist </option>
+                                    <option value="admin"> Admin </option>
+                                </select>
+                            </div>
 
                             <!-- <div class="form-group">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
@@ -95,7 +103,7 @@
                             </div> -->
                             <div class="form-group form-button">
                                 {% csrf_token %}
-                                <input type="submit" name="signup" id="signup" class="form-submit"  value="Register"/>
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
                             </div>
                         </form>
                         <br>
@@ -118,42 +126,42 @@
             var pw1 = document.getElementById("pass");
             var pw2 = document.getElementById("re_pass");
             var error = document.getElementById("error")
-            
-            if(pw1.value != pw2.value)
-            {	
-            error.textContent = "Password did not matched" 
-            error.style.color = "red" 
-            } 
-            
-            else { 
-            error.textContent = "" 
-            error.style.color = "green" 
+
+            if (pw1.value != pw2.value) {
+                error.textContent = "Password did not matched"
+                error.style.color = "red"
+            }
+
+            else {
+                error.textContent = ""
+                error.style.color = "green"
 
             }
-            
+
         }
 
-        function validateemail(){
+        function validateemail() {
             var email = document.getElementById("email");
             var x = email.value
-            var atposition=x.indexOf("@");
-            var dotposition=x.lastIndexOf(".");
+            var atposition = x.indexOf("@");
+            var dotposition = x.lastIndexOf(".");
             var error = document.getElementById("error_email")
 
-            if (atposition<1 || dotposition<atposition+2  || dotposition+2>=x.length){
-                error.textContent = "Please enter correct Email ID" 
-                error.style.color = "red" 
-            } 
-            
-            else { 
-                error.textContent = "" 
-                error.style.color = "green" 
+            if (atposition < 1 || dotposition < atposition + 2 || dotposition + 2 >= x.length) {
+                error.textContent = "Please enter correct Email ID"
+                error.style.color = "red"
+            }
 
-            }        
+            else {
+                error.textContent = ""
+                error.style.color = "green"
+
+            }
         }
 
-        </script>
+    </script>
 
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
 </html>
