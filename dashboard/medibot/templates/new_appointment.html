@@ -36,7 +36,9 @@
                 // var date = data[1]; 
                 document.getElementById("name_text").value=name;
                 document.getElementById("mob_text").value=mob;
-                // alert("rowid: " + name +" mob: " + mob); 
+                document.getElementById("row_id").value=rowId;
+
+                alert("rowid: " + rowId + "name:" + name +" mob: " + mob); 
                 
                 // document.getElementById("warning").disabled = false;
                 // document.getElementById('warning').removeAttribute('disabled');
@@ -86,9 +88,11 @@
             <th><i class="icon_cogs"></i> Action</th>
           </tr>
            <form method="POST" >
-            <input type="hidden" id ="name_text" class="form_ip" name="get_name"  />
-            <input type="hidden" id ="mob_text" class="form_ip" name="get_mob"  />
-          <tr id="1">
+            <input type="hidden" id ="name_text" class="form_ip" name="name"  />
+            <input type="hidden" id ="mob_text" class="form_ip" name="mob"  />
+            <input type="hidden" id ="row_id" class="form_ip" name="row_id"  />
+
+            <tr id="1">
             {% for data_appoint in appointment %}  
             <td class="dta">{{data_appoint.patient_id.name}}</td>
             <td class="dta">{{data_appoint.datepublished}}</td>
@@ -100,9 +104,10 @@
               <!-- <div class="btn-group" > -->
                 <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
                <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
-               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="prescription"></button>  
-               <button class="icon_check_alt2" id="warning" onclick="return show()" formaction="/action2.php"></button>
-               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="/action2.php"></button>
+               {% csrf_token %}
+               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="start_appointment"></button>  
+               <button class="icon_check_alt2" id="warning" onclick="return show()" formaction="stop_appointment"></button>
+               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="no_show_appointment"></button>
              
                 <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>

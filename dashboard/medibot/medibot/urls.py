@@ -42,12 +42,15 @@ urlpatterns = [
     path ('fetch',fetch_news, name = 'fetch_news'),
     path ('patient',patient_information, name = 'patient_information'),
     path ('addinfo',patient_add),
-    path ('prescription',prescription),
+    path ('prescription',prescription, name = 'prescription'),
     path ('appointments',appointments, name = 'appointments'),
     path ('addappoint',addappoint),
     path ('time_slot',time_slot),
     path ('time_slot/<slug:param>',time_slot, name = 'time_slot'),
 
+    path ('start_appointment',start_appointment, name = 'start_appointment'),
+    path ('stop_appointment',stop_appointment, name = 'stop_appointment'),
+    path ('no_show_appointment',no_show_appointment, name = 'no_show_appointment'),
     # path('register/', registerPage, name="register"),
 	# path('login/', loginPage, name="login"),  
 	path('logout', logout, name="logout")

@@ -12,7 +12,8 @@ from dashboard.models import *
 # from dashboard.models import patient
 
 #Report Uploader Module
-from modules import report_extraction_final
+from modules import report_extraction_final, speech_recognition
+# from modules import *
 import json
 # from werkzeug.utils import secure_filename
 from django.core.files.storage import FileSystemStorage 
@@ -58,7 +59,7 @@ def receptionist_logged_in(f):
                     request.session['error'] = "You are not authorized to view the page. Sign In as Receptionist to view."
                     return redirect("signin")
                 
-                elif request.session['user_role'] == 'receptionist' :
+                elif request.session['user_role'] == 'doctor' :
                     return f(request, *args, **kwargs)
         wrap.__doc__=f.__doc__
         wrap.__name__=f.__name__
@@ -386,10 +387,64 @@ def patient_information (request):
     print (content['reports'])
     return render(request,'patient_info.html', content)
 
+def start_appointment (request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        mob = request.POST.get('mob')
+        row_id = request.POST.get('row_id')
+
+        print (name,mob, row_id, '--------------')
+
+        ongoing_appointment = appointment.objects.all()[int(row_id)-1]
+        
+        # Alternate query 
+        # appoints = appointment.objects.filter(mobile=mob).first()
+
+        # print (appoints[row_id-1])
+        # print (type(ongoing_appointment))
+        # print (ongoing_appointment)
+        # print (ongoing_appointment.mobile)
+    
+        request.session['patient_mobile'] = ongoing_appointment.patient_id.phone
+        request.session['patient_name'] = ongoing_appointment.patient_id.name
+        request.session['patient_id'] = ongoing_appointment.patient_id.id
+        request.session['appointment_id'] = ongoing_appointment.id
+
+        ongoing_appointment.status = 'On going'
+        ongoing_appointment.save()
+
+    return redirect ('prescription')
+
+def stop_appointment  (request):
+    if request.method == 'POST':
+        print (request.session['patient_id'])
+        appointment_id = request.session['appointment_id']
+        ongoing_appointment = appointment.objects.filter(id= appointment_id).first()
+
+        ongoing_appointment.status = 'Completed'
+        ongoing_appointment.save()
+
+        var_list = ['patient_mobile', 'patient_name', 'patient_id', 'appointment_id']
+        for key in var_list:
+            print ('deleted:',key,request.session[key])
+            del request.session[key]
+
+        # print (request.session['patient_id'])        
+    return redirect ('appointments')
+
+
+def no_show_appointment (request):
+    if request.method == 'POST':
+        print ('post')
+
+        # Following should be entered in the database
+        # ongoing_appointment.status = 'Not appeared'
+    
+    return redirect ('appointments')
+
 
 def appointments(request):
     appoint = appointment.objects.first()
-    pat = patient.objects.all()
     if appoint == None:
         pass
     appoints = appointment.objects.all()
@@ -442,17 +497,23 @@ def broadcast_sms(request):
 # @doctor_logged_in
 def prescription(request):
     if request.method == 'POST':
-        file_name = 'file_name'
+
+        patient_name = request.session['patient_name']
+
+        file_name = patient_name
 
         f = open(BASE_DIR+'/media/recordings/'+file_name+'.wav', 'wb')
         f.write(request.body)
         f.close()
         
 
-        file_loc = BASE_DIR+'/media/'+file_name+'.wav'
+        file_loc = BASE_DIR+'/media/recordings/'+file_name+'.wav'
         print (file_loc) 
         
-        # No repsponse is sent
+        text_data = speech_recognition.custom_tts(file_loc)
+        
+
+        # No repsponse is sent (needs rectification)
         return HttpResponse('audio received')
 
     return render(request,'prescription_sonal.html')
