@@ -5,7 +5,6 @@ Alternatively
 
 pip install deepspeech-gpu==0.9.0
 """
-import subprocess
 import os
 import librosa
 import shutil

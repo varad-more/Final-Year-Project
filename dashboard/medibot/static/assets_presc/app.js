@@ -54,7 +54,7 @@ function startRecording() {
 		audioContext = new AudioContext();
 
 		//update the format 
-		document.getElementById("formats").innerHTML="Format: 1 channel pcm @ "+audioContext.sampleRate/1000+"kHz"
+		// document.getElementById("formats").innerHTML="Format: 1 channel pcm @ "+audioContext.sampleRate/1000+"kHz"
 
 		/*  assign to gumStream for later use  */
 		gumStream = stream;
@@ -124,6 +124,7 @@ function sendData(data)
     body: data,
     headers: { "X-CSRFToken": csrftoken },
     })
+    return true
    }
 
    function getCookie(name) {
@@ -192,15 +193,11 @@ function createDownloadLink(blob) {
             method: "post",
             body: blob,
             headers: { "X-CSRFToken": csrftoken },
-
             });
+            
         // }
 
-          //   var fd=new FormData();
-
-
-          var fd = new FormData();
-            
+          //   var fd=new FormData();            
           // fd.append('fname', 'test.wav');
             // fd.append('data', blob);
             // $.ajax({
