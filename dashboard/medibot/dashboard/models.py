@@ -63,7 +63,7 @@ class appointment(models.Model):
       
 
     def datepublished(self):
-        return self.date.strftime('%B %d , %Y')
+        return self.date.strftime('%B %d ,  %Y')
 
     def timepublished(self):
         return self.date.strftime('%H : %M : %S')
