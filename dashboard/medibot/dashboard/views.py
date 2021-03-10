@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from datetime import datetime,timedelta
+from django.utils import timezone
 
 from contextlib import contextmanager
 #Twilio - SMS Module
@@ -28,6 +29,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .decorators import doctor_logged_in,receptionist_logged_in,hash_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 allowed_file = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4' ,''])
@@ -371,7 +373,14 @@ def stop_appointment  (request):
 
 def no_show_appointment (request):
     if request.method == 'POST':
-        print ('post')
+        print (request.session['patient_id'])
+        appointment_id = request.session['appointment_id']
+        ongoing_appointment = appointment.objects.filter(id= appointment_id).first()
+
+        ongoing_appointment.status = 'no_show'
+        ongoing_appointment.save()
+        
+
 
         # Following should be entered in the database
         # ongoing_appointment.status = 'Not appeared'
@@ -383,15 +392,23 @@ def appointments(request):
     appoint = appointment.objects.first()
     if appoint == None:
         pass
-    today_date = datetime.now().date()
+    today_date = (datetime.now())
     print(today_date)
     tomorrow_date = datetime.now() + timedelta(days=1)
+    print(tomorrow_date)
+    appoints = appointment.objects.all()
+    # for i in appoints:
+    #     print(i.date.strftime("%x"))
+    # today_appointment = appointment.objects.filter(date__gte =today_date, date__lt= tomorrow_date)
+    # print(today_appointment)
+    # tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=2))
+
     appoints = appointment.objects.all()
     for i in appoints:
         print(i.date.strftime("%x"))
     
     content = {
-        'appointment':appoints,
+        'appointments':appoints    
     }
     print(content)
     #{'databasename':function-name}

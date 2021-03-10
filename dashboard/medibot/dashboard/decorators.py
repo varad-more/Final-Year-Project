@@ -1,4 +1,4 @@
-
+from django.shortcuts import render, redirect
 """ 
 The decorator for checking if user or admin is signed in.
 If user is not logged in is redirected to signin
