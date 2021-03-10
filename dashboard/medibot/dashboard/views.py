@@ -12,23 +12,19 @@ from django.conf import settings
 from dashboard.models import *
 # from dashboard.models import patient
 
-#Report Uploader Module
-from modules import report_extraction_final, speech_recognition
+# Import refactored modules 
+from modules import report_extraction_final, speech_recognition_google, ner_model
+
 # from modules import *
 import json
+
 # from werkzeug.utils import secure_filename
 from django.core.files.storage import FileSystemStorage 
 import os
 from .forms import *
 
-
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
-from django.contrib.auth.forms import UserCreationForm
 from .decorators import doctor_logged_in,receptionist_logged_in,hash_password
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -65,10 +61,10 @@ def sign_in(request):
             content = {'error': 'Password Incorrect'}
             return render (request, 'sign_in.html', content)
 
-    # if 'error'  in request.session.keys():
-    #     content = { 'error': request.session['error']}
-    #     del request.session['error']
     content={}
+    if 'error'  in request.session.keys():
+        content = { 'error': request.session['error']}
+        del request.session['error']
     return render (request, 'sign_in.html', content)
 
 
@@ -146,11 +142,6 @@ def fetch_news(request):
     # return HttpResponse("News fetched")
     return render(request,'news_fetched.html')
 
-
-def data_extract(request):
-    import modules.report_extraction_final
-
-    return HttpResponse("Report Data obtained")
 
 @receptionist_logged_in
 def report (request):
@@ -471,56 +462,19 @@ def prescription(request):
         file_loc = BASE_DIR+'/media/recordings/'+file_name+'.wav'
         print (file_loc) 
         
-        text_data = speech_recognition.custom_tts(file_loc)
+        text_data = speech_recognition_google.split(file_loc)
         
-        content = {'prescription':''}
+        print ('text', text_data)
+
+        final_output = ner_model.run_model(text_data)
+        print (final_output)
+
+
+
+        content = {'prescription':final_output['medicine']}
 
         # No repsponse is sent (needs rectification)
-        return HttpResponse('audio received')
+        return redirect ("index")
         
 
     return render(request,'prescription_sonal.html',content)
-
-
-############################## User roles
-
-"""
-def registerPage(request):
-    
-	form = CreateUserForm()
-	if request.method == 'POST':
-		form = CreateUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			username = form.cleaned_data.get('username')
-
-			group = Group.objects.get(name='customer')
-			user.groups.add(group)
-
-			messages.success(request, 'Account was created for ' + username)
-
-			return redirect('login')
-		
-
-	context = {'form':form}
-	return render(request, 'register.html', context)
-
-@unauthenticated_user
-def loginPage(request):
-
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password =request.POST.get('password')
-
-		user = authenticate(request, username=username, password=password)
-
-		if user is not None:
-			login(request, user)
-			return redirect('home')
-		else:
-			messages.info(request, 'Username OR password is incorrect')
-
-	context = {}
-	return render(request, 'login.html', context)
-
-"""
