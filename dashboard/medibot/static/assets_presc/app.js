@@ -114,6 +114,7 @@ function stopRecording() {
 
 	//create the wav blob and pass it on to createDownloadLink
     rec.exportWAV(createDownloadLink);    
+    // rec.exportWAV(submit_function);
 }
 
 function sendData(data) 
@@ -142,6 +143,9 @@ function sendData(data)
     }
     return cookieValue;
 }
+
+
+
 
 function createDownloadLink(blob) {
 	
@@ -174,9 +178,20 @@ function createDownloadLink(blob) {
 
 	urll = url;
 	// //upload link
-	var upload = document.createElement('a');
+	// var button = document.createElement('button');
+    // button.onclick = function(){
+    //     let csrftoken = getCookie('csrftoken');
+    //     fetch("/prescription", {
+    //     method: "post",
+    //     body: blob,
+    //     headers: { "X-CSRFToken": csrftoken },
+    //     })
+    //     return 0
+    // }
+	var upload = document.createElement('button');
 	upload.href="#";
 	upload.innerHTML = "Submit the Audio";
+    
     upload.addEventListener("click", function(event){
 	// sendData;
     
@@ -215,9 +230,10 @@ function createDownloadLink(blob) {
     })
 	li.appendChild(document.createTextNode (" "))//add a space in between
 	li.appendChild(upload)//add the upload link to li
-
+    // li.appendChild(button)
 	// //add the li element to the ol
 	recordingsList.appendChild(li);
+    return 0;
 }
 
 // function sendData(blob) {
@@ -228,8 +244,17 @@ function createDownloadLink(blob) {
 //     });
 // }
 
-// function fun(){
-// 	// var url ="www";
-// 	 document.getElementById("url").value=urll;
-// }
+function submit_function(blob)
 
+{
+let csrftoken = getCookie('csrftoken');
+fetch("/prescription", {
+method: "post",
+body: blob,
+headers: { "X-CSRFToken": csrftoken },
+})
+// alert("done")
+// location.reload();
+// return ; 
+
+}

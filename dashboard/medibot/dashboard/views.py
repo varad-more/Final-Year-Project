@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from datetime import datetime,timedelta
 
@@ -457,12 +457,13 @@ def prescription(request):
         final_output = ner_model.run_model(text_data)
         print (final_output)
 
-
-
         content = {'prescription':final_output['medicine']}
+        # content = {'prescription':'Some Tablets!!'}
 
         # No repsponse is sent (needs rectification)
-        return redirect ("index")
-        
+        # return redirect ("index")
+        return render(request,'prescription_sonal.html',content)        
+        # return HttpResponseRedirect('prescription')
+
 
     return render(request,'prescription_sonal.html',content)
