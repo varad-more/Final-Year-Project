@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from datetime import datetime,timedelta
+from django.utils import timezone
 
 from contextlib import contextmanager
 #Twilio - SMS Module
@@ -24,6 +25,7 @@ from .forms import *
 
 from django.contrib import messages
 from .decorators import doctor_logged_in,receptionist_logged_in,hash_password
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 allowed_file = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4' ,''])
@@ -362,7 +364,14 @@ def stop_appointment  (request):
 
 def no_show_appointment (request):
     if request.method == 'POST':
-        print ('post')
+        print (request.session['patient_id'])
+        appointment_id = request.session['appointment_id']
+        ongoing_appointment = appointment.objects.filter(id= appointment_id).first()
+
+        ongoing_appointment.status = 'no_show'
+        ongoing_appointment.save()
+        
+
 
         # Following should be entered in the database
         # ongoing_appointment.status = 'Not appeared'
@@ -371,23 +380,26 @@ def no_show_appointment (request):
 
 
 def appointments(request):
-    
-    today_date = datetime.now().date()
+    appoint = appointment.objects.first()
+    if appoint == None:
+        pass
+    today_date = (datetime.now())
     print(today_date)
     tomorrow_date = datetime.now() + timedelta(days=1)
-
-    today_appointment = appointment.objects.filter(date__gte =today_date, date__lte= tomorrow_date)
-    tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=1))
+    print(tomorrow_date)
+    appoints = appointment.objects.all()
+    # for i in appoints:
+    #     print(i.date.strftime("%x"))
+    # today_appointment = appointment.objects.filter(date__gte =today_date, date__lt= tomorrow_date)
+    # print(today_appointment)
+    # tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=2))
 
     appoints = appointment.objects.all()
     for i in appoints:
         print(i.date.strftime("%x"))
     
     content = {
-        'today_apppointment':today_appointment,
-        'tomorrow_appointment': tomorrow_appointment
-        
-        
+        'appointments':appoints    
     }
     print(content)
     #{'databasename':function-name}
