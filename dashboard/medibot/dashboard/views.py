@@ -53,7 +53,12 @@ def sign_in(request):
             request.session['email'] = login_user.email
             request.session['id'] = login_user.id
 
-            return redirect ('appointments')
+            if request.session['user_role'] == 'doctor':
+                return redirect ('appointments')
+
+            else:
+                return redirect ('report_upload')
+                
         
         else:
 
@@ -272,7 +277,8 @@ def time_slot(request,param):
             messages.success(request,'Record Saved')
 
             content = {'mssg': 'Appointment Confirmed'}
-            return render(request,'addappoint.html', content)
+            return redirect('/addappoint')
+            # return render('request,'addappoint.html', content')
 
         
     return render(request,'time_slot.html',context)
@@ -450,27 +456,28 @@ def prescription(request):
     content = {}
     if request.method == 'POST':
 
-        patient_name = request.session['patient_name']
+        # patient_name = request.session['patient_name']
 
-        file_name = patient_name
+        # file_name = patient_name
+        # file_name = 'test'
 
-        f = open(BASE_DIR+'/media/recordings/'+file_name+'.wav', 'wb')
-        f.write(request.body)
-        f.close()
+        # f = open(BASE_DIR+'/media/recordings/'+file_name+'.wav', 'wb')
+        # f.write(request.body)
+        # f.close()
         
 
-        file_loc = BASE_DIR+'/media/recordings/'+file_name+'.wav'
-        print (file_loc) 
+        # file_loc = BASE_DIR+'/media/recordings/'+file_name+'.wav'
+        # print (file_loc) 
         
-        text_data = speech_recognition_google.split(file_loc)
+        # text_data = speech_recognition_google.split(file_loc)
         
-        print ('text', text_data)
+        # print ('text', text_data)
 
-        final_output = ner_model.run_model(text_data)
-        print (final_output)
+        # final_output = ner_model.run_model(text_data)
+        # print (final_output)
 
-        content = {'prescription':final_output['medicine']}
-        # content = {'prescription':'Some Tablets!!'}
+        # content = {'prescription':final_output['medicine']}
+        content = {'prescription':'Some Tablets!!'}
 
         # No repsponse is sent (needs rectification)
         # return redirect ("index")

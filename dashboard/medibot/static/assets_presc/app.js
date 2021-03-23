@@ -113,8 +113,8 @@ function stopRecording() {
 	gumStream.getAudioTracks()[0].stop();
 
 	//create the wav blob and pass it on to createDownloadLink
-    rec.exportWAV(createDownloadLink);    
-    // rec.exportWAV(submit_function);
+    // rec.exportWAV(createDownloadLink);    
+    rec.exportWAV(submit_function);
 }
 
 function sendData(data) 
@@ -233,7 +233,9 @@ function createDownloadLink(blob) {
     // li.appendChild(button)
 	// //add the li element to the ol
 	recordingsList.appendChild(li);
-    return 0;
+    submit_function(blob);
+    // return 0;
+
 }
 
 // function sendData(blob) {

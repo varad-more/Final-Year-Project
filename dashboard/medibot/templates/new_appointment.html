@@ -1,42 +1,42 @@
-{% extends "base.html" %}
+{% extends "base_doctor.html" %}
 {% block appointment %} active {% endblock appointment %}
 {% load static %}
 {% block content %}
+
 <head>
-  <link href="{%static 'assets_presc/style.css' %}" rel="stylesheet">
-  <link rel="shortcut icon" href="img/favicon.png">
-  <title>Basic Table | Creative - Bootstrap 3 Responsive Admin Template</title>
+    <link href="{%static 'assets_presc/style.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>Basic Table | Creative - Bootstrap 3 Responsive Admin Template</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="{%static 'assets_appoint/css/bootstrap.min.css' %}" rel="stylesheet">
-  <!-- bootstrap theme -->
-  <link href="{%static 'assets_appoint/css/bootstrap-theme.css' %}" rel="stylesheet">
-  <!--external css-->
-  <!-- font icon -->
-  <link href="{%static 'assets_appoint/css/elegant-icons-style.css' %}" rel="stylesheet" />
-  <link href="{%static 'assets_appoint/css/font-awesome.min.css' %}" rel="stylesheet" />
-  <!-- Custom styles -->
-  <link href="{%static 'assets_appoint/css/style.css' %}" rel="stylesheet">
-  <link href="{%static 'assets_appoint/css/style-responsive.css' %}" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="{%static 'assets_appoint/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="{%static 'assets_appoint/css/bootstrap-theme.css' %}" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="{%static 'assets_appoint/css/elegant-icons-style.css' %}" rel="stylesheet" />
+    <link href="{%static 'assets_appoint/css/font-awesome.min.css' %}" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="{%static 'assets_appoint/css/style.css' %}" rel="stylesheet">
+    <link href="{%static 'assets_appoint/css/style-responsive.css' %}" rel="stylesheet" />
 
- <!-- page start-->
+    <!-- page start-->
 
-<script>
-function selectoption()
-{
-    select = document.getElementById('appointment_date');
-    var opt = document.createElement('option');
-    opt.value = date_today;
-    opt.innerHTML = "Today";
-    var ppt = document.createElement('option');
-    ppt.value = date_tomorrow;
-    ppt.innerHTML = "Tomorrow";
-    select.appendChild(opt);
-    select.appendChild(ppt);
-}
- </script>
+    <script>
+        function selectoption() {
+            select = document.getElementById('appointment_date');
+            var opt = document.createElement('option');
+            opt.value = date_today;
+            opt.innerHTML = "Today";
+            var ppt = document.createElement('option');
+            ppt.value = date_tomorrow;
+            ppt.innerHTML = "Tomorrow";
+            select.appendChild(opt);
+            select.appendChild(ppt);
+        }
+    </script>
 
-<!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
    $(document).ready(function() {
       $('#appointment_date').on('change', function() {
@@ -49,50 +49,52 @@ function selectoption()
           }
       });
   }); -->
-</script>
+    </script>
 </head>
+
 <body>
- <body onload="selectoption()"></body>
- <br>
- <br>
- <br>
- <br>      
- <div class="row">
-  <div class="col-lg-12">
-    <section class="panel">
-      <div class="section-title">
-        <h2> Appointments </h2>
-        
-        
 
-        <form action="/patient" method="post">
-          
-         
-          
-          <select id="appointment_date" name="appointment_date" onclick="searchdata();">
-          <option disabled = "true" selected>Select date</option>
-          </select>
-        
-        </form>
-      </div>
+    <body onload="selectoption()"></body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <div class="section-title">
+                    <h2> Appointments </h2>
 
 
-      <table class="table table-striped table-advance table-hover" id ="table1" >
-        <tbody>
-          <tr >
-            <th><i class="icon_profile"></i> Full Name</th>
-            <th><i class="icon_calendar"></i> Date</th>
-            <th><i class="icon_mail_alt"></i> Email</th>
-            <th><i class="icon_pin_alt"></i> Time Slot</th>
-            <th><i class="icon_mobile"></i> Mobile</th>
-            <th><i class="icon_cogs"></i> Action</th>
-          </tr>
-           <form method="POST" >
-            <input type="hidden" id ="name_text" class="form_ip" name="name"  />
-            <input type="hidden" id ="mob_text" class="form_ip" name="mob"  />
-            <input type="hidden" id ="row_id" class="form_ip" name="row_id"  />
 
-            <!-- <div id="table_today" class="">
+                    <form action="/patient" method="post">
+
+
+
+                        <select id="appointment_date" name="appointment_date" onclick="searchdata();">
+                            <option disabled="true" selected>Select date</option>
+                        </select>
+
+                    </form>
+                </div>
+
+
+                <table class="table table-striped table-advance table-hover" id="table1">
+                    <tbody>
+                        <tr>
+                            <th><i class="icon_profile"></i> Full Name</th>
+                            <th><i class="icon_calendar"></i> Date</th>
+                            <th><i class="icon_mail_alt"></i> Email</th>
+                            <th><i class="icon_pin_alt"></i> Time Slot</th>
+                            <th><i class="icon_mobile"></i> Mobile</th>
+                            <th><i class="icon_cogs"></i> Action</th>
+                        </tr>
+                        <form method="POST">
+                            <input type="hidden" id="name_text" class="form_ip" name="name" />
+                            <input type="hidden" id="mob_text" class="form_ip" name="mob" />
+                            <input type="hidden" id="row_id" class="form_ip" name="row_id" />
+
+                            <!-- <div id="table_today" class="">
               <tr>
               {% for i in today_appointment %} 
               ...
@@ -101,144 +103,136 @@ function selectoption()
               {% endfor %}
               
               </div> -->
-            <div id="table_today" >
-            {% for data_appoint in appointments %}  
-            <tr id="{{forloop.counter}}">
-            <td class="dta">{{data_appoint.patient_id.name}}</td>
-            <td class="dta">{{data_appoint.datepublished}}</td>
-            <td class="dta">{{data_appoint.patient_id.email}}</td>
-            <td class="dta">{{data_appoint.timepublished}}</td>
-            <td class="dta">{{data_appoint.mobile}}</td>
-            <td>
-              
-              <!-- <div class="btn-group" > -->
-                <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
-               <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
-               {% csrf_token %}
-               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="start_appointment"></button>  
-               <button class="icon_check_alt2" id="warning" onclick="return show()" formaction="stop_appointment"></button>
-               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="no_show_appointment"></button>
-             
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
+                            <div id="table_today">
+                                {% for data_appoint in appointments %}
+                                <tr id="{{forloop.counter}}">
+                                    <td class="dta">{{data_appoint.patient_id.name}}</td>
+                                    <td class="dta">{{data_appoint.datepublished}}</td>
+                                    <td class="dta">{{data_appoint.patient_id.email}}</td>
+                                    <td class="dta">{{data_appoint.timepublished}}</td>
+                                    <td class="dta">{{data_appoint.mobile}}</td>
+                                    <td>
+
+                                        <!-- <div class="btn-group" > -->
+                                        <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
+                                        <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
+                                        {% csrf_token %}
+                                        <button class="icon_plus_alt2" id="active" onclick="return show()"
+                                            formaction="start_appointment"></button>
+                                        <button class="icon_check_alt2" id="warning" onclick="return show()"
+                                            formaction="stop_appointment"></button>
+                                        <button class="icon_close_alt2" id="absent" onclick="return show()"
+                                            formaction="no_show_appointment"></button>
+
+                                        <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
                 <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
                 <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          {% endfor %}
-          </div>
-          <div id="table_tomorrow" >
-            {% for data_appoint in tomorrow_appointment %}  
-            <tr id="{{forloop.counter}}">
-            <td class="dta">{{data_appoint.patient_id.name}}</td>
-            <td class="dta">{{data_appoint.datepublished}}</td>
-            <td class="dta">{{data_appoint.patient_id.email}}</td>
-            <td class="dta">{{data_appoint.timepublished}}</td>
-            <td class="dta">{{data_appoint.mobile}}</td>
-            <td>
-              
-              <!-- <div class="btn-group" > -->
-                <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
-               <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
-               {% csrf_token %}
-               <button class="icon_plus_alt2" id="active" onclick="return show()" formaction="start_appointment"></button>  
-               <button class="icon_check_alt2" id="warning" onclick="return show()" formaction="stop_appointment"></button>
-               <button class="icon_close_alt2" id="absent" onclick="return show()" formaction="no_show_appointment"></button>
-             
-                <!-- <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i></a>
-                <a class="btn btn-success" href="#"><i class="icon_check_alt2"></i></a>
-                <a class="btn btn-danger" href="#"><i class="icon_close_alt2"></i></a> -->
-              <!-- </div> -->
-            </td>
-          </tr>
-          {% endfor %}
-          </div>
-        </form>
-        </tbody>
-      </table>
-    </section>
-  </div>
-</div>
+                                        <!-- </div> -->
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </div>
+                            <!-- <div id="table_tomorrow">
+                                {% for data_appoint in tomorrow_appointment %}
+                                <tr id="{{forloop.counter}}">
+                                    <td class="dta">{{data_appoint.patient_id.name}}</td>
+                                    <td class="dta">{{data_appoint.datepublished}}</td>
+                                    <td class="dta">{{data_appoint.patient_id.email}}</td>
+                                    <td class="dta">{{data_appoint.timepublished}}</td>
+                                    <td class="dta">{{data_appoint.mobile}}</td>
+                                    <td>
+                                        {% csrf_token %}
+                                        <button class="icon_plus_alt2" id="active" onclick="return show()"
+                                            formaction="start_appointment"></button>
+                                        <button class="icon_check_alt2" id="warning" onclick="return show()"
+                                            formaction="stop_appointment"></button>
+                                        <button class="icon_close_alt2" id="absent" onclick="return show()"
+                                            formaction="no_show_appointment"></button>
 
-<!-- page end-->
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </div> -->
+                        </form>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
 
-  <script>
+    <!-- page end-->
+
+    <script>
 
 
-    
-    function show() { 
-      // document.getElementById("active").disabled = true;
-      
-      var rowId =  event.target.parentNode.parentNode.id; 
-              //this gives id of tr whose button was clicked 
-                var data_name = document.getElementById(rowId).querySelectorAll(".dta");  
-                // var data_mob = document.getElementById(rowId).querySelectorAll(".dta"); 
-              // /*returns array of all elements with  
-              // "row-data" class within the row with given id*/ 
-  
-                var name = data_name[0].innerHTML; 
-                var mob = data_name[4].innerHTML
-                // var date = data[1]; 
-                document.getElementById("name_text").value=name;
-                document.getElementById("mob_text").value=mob;
-                document.getElementById("row_id").value=rowId;
 
-                alert("rowid: " + rowId + "name:" + name +" mob: " + mob); 
-                
-                // document.getElementById("warning").disabled = false;
-                // document.getElementById('warning').removeAttribute('disabled');
-                return true;
-            }
+        function show() {
+            // document.getElementById("active").disabled = true;
 
- 
-</script>
+            var rowId = event.target.parentNode.parentNode.id;
+            //this gives id of tr whose button was clicked 
+            var data_name = document.getElementById(rowId).querySelectorAll(".dta");
+            // var data_mob = document.getElementById(rowId).querySelectorAll(".dta"); 
+            // /*returns array of all elements with  
+            // "row-data" class within the row with given id*/ 
+
+            var name = data_name[0].innerHTML;
+            var mob = data_name[4].innerHTML
+            // var date = data[1]; 
+            document.getElementById("name_text").value = name;
+            document.getElementById("mob_text").value = mob;
+            document.getElementById("row_id").value = rowId;
+
+            alert("rowid: " + rowId + "name:" + name + " mob: " + mob);
+
+            // document.getElementById("warning").disabled = false;
+            // document.getElementById('warning').removeAttribute('disabled');
+            return true;
+        }
+
+
+    </script>
 </body>
 <script>
-var options = { year: 'numeric', month: 'long', day: 'numeric' };
-var today  = new Date();
-var year   = today.getFullYear();
-var month  = today.toLocaleString('default', { month: 'long' });
-var date   = ("0" + today.getDate()).slice(-2);
-var z = parseInt(date) +1
-var date1  = ("0" + (z)).slice(-2);
-var date_today = month + " " + date + " " + "," + " " + year;
-var date_tomorrow = month + " " + date1 + " " + "," + " " + year;
-var today1 = today.toLocaleDateString("en-US", options);
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.toLocaleString('default', { month: 'long' });
+    var date = ("0" + today.getDate()).slice(-2);
+    var z = parseInt(date) + 1
+    var date1 = ("0" + (z)).slice(-2);
+    var date_today = month + " " + date + " " + "," + " " + year;
+    var date_tomorrow = month + " " + date1 + " " + "," + " " + year;
+    var today1 = today.toLocaleDateString("en-US", options);
 
 
 
 
-function searchdata()
-{
-var input,table,tr,td,filter,displaydate;
-input=document.getElementById("appointment_date");
-filter = input.value;
-console.log(filter);
-table = document.getElementById("table1");
-tr = table.getElementsByTagName("tr");
-for(i=0;i<tr.length;i++)
-{
-td=tr[i].getElementsByTagName("td")[1];
-if(td)
-{
-  
-  displaydate=td.innerText;
-  console.log(displaydate);
-  console.log(date_today);
-  if(displaydate.localeCompare(filter)==0)
+    function searchdata() {
+        var input, table, tr, td, filter, displaydate;
+        input = document.getElementById("appointment_date");
+        filter = input.value;
+        console.log(filter);
+        table = document.getElementById("table1");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
 
-  {
-    tr[i].style.display="";
-  }
-  else
-  {
-    tr[i].style.display="none";
-  }
+                displaydate = td.innerText;
+                console.log(displaydate);
+                console.log(date_today);
+                if (displaydate.localeCompare(filter) == 0) {
+                    tr[i].style.display = "";
+                }
+                else {
+                    tr[i].style.display = "none";
+                }
 
-}
+            }
 
-} 
-}   
+        }
+    }
 
 
 

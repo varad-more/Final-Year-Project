@@ -25,7 +25,7 @@ def receptionist_logged_in(f):
                     request.session['error'] = "You are not authorized to view the page. Sign In as Receptionist to view."
                     return redirect("signin")
                 
-                elif request.session['user_role'] == 'doctor' :
+                elif request.session['user_role'] == 'receptionist' :
                     return f(request, *args, **kwargs)
         wrap.__doc__=f.__doc__
         wrap.__name__=f.__name__
