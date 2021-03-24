@@ -4,10 +4,12 @@ import spacy
 from spacy.gold import GoldParse 
 from spacy.language import EntityRecognizer 
   
-nlp = spacy.load('/home/varad/Downloads/Spacy_medical_models/model_full_batch_15000_droupout_mix-20201209T052531Z-001/model_full_batch_15000_droupout_mix') 
-    
+# nlp = spacy.load('/home/varad/Downloads/Spacy_medical_models/model_full_batch_15000_droupout_mix-20201209T052531Z-001/model_full_batch_15000_droupout_mix') 
+
+
 def run_model(sentences):
     # for sentence in sentences:
+        nlp = spacy.load('NER_model/model_full_batch_15000_droupout_mix') 
         doc = nlp(sentences) 
     
         symptom =''
