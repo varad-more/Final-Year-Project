@@ -386,30 +386,41 @@ def no_show_appointment (request):
 
 
 def appointments(request):
-    appoint = appointment.objects.first()
-    if appoint == None:
-        pass
+
     today_date = (datetime.now())
     print(today_date)
     tomorrow_date = datetime.now() + timedelta(days=1)
     print(tomorrow_date)
-    appoints = appointment.objects.all()
+    # appoints = appointment.objects.all()
+    
+    today_appointment = appointment.objects.filter(date__gte =today_date, date__lte= tomorrow_date)
+    tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=1))
+    
+    print (today_appointment, tomorrow_appointment, '))))))))))))')
+    
+    content = {
+        'today_apppointment':today_appointment,
+        'tomorrow_appointment': tomorrow_appointment
+        
+        
+    }
+    
     # for i in appoints:
     #     print(i.date.strftime("%x"))
     # today_appointment = appointment.objects.filter(date__gte =today_date, date__lt= tomorrow_date)
     # print(today_appointment)
     # tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=2))
 
-    appoints = appointment.objects.all()
-    for i in appoints:
-        print(i.date.strftime("%x"))
+    # appoints = appointment.objects.all()
+    # for i in appoints:
+    #     print(i.date.strftime("%x"))
     
-    content = {
-        'appointments':appoints    
-    }
-    print(content)
+    # content = {
+    #     'appointments':appoints    
+    # }
+    # print(content)
     #{'databasename':function-name}
-    return render(request,'new_appointment.html',content)
+    return render(request,'mau_new.html',content)
 
 
 @receptionist_logged_in
