@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta, date
 from django.utils import timezone
 
 from contextlib import contextmanager
@@ -26,24 +26,23 @@ from .forms import *
 from django.contrib import messages
 from .decorators import doctor_logged_in,receptionist_logged_in,hash_password
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 allowed_file = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp4' ,''])
 
 
-
-
 def sign_in(request):
-    print ('signin')
+    """
+    Sign Method to authenticate user 
+    Redirect incase of incorrect bad credentials
+    """
+    content={}
 
     if request.method == 'POST' :
-        name = request.POST.get('name')
         email = request.POST.get('email')
         password = request.POST.get('pass')
 
         entered_key = hash_password(password)
 
-        # To be hashed
         login_user = user.objects.filter(email=email, password=entered_key).first()
 
         print (login_user)
@@ -59,14 +58,12 @@ def sign_in(request):
             else:
                 return redirect ('report_upload')
                 
-        
         else:
-
             print('Bad Credentials')
             content = {'error': 'Password Incorrect'}
             return render (request, 'sign_in.html', content)
 
-    content={}
+    # For displaying occured errors to the users
     if 'error'  in request.session.keys():
         content = { 'error': request.session['error']}
         del request.session['error']
@@ -74,12 +71,16 @@ def sign_in(request):
 
 
 def sign_up(request):
+    """
+    To Register Users with respective user roles
+    """
 
-    print ('sign up')
     if request.method == 'POST' :
         
         passd = request.POST.get('pass')
-        
+
+        # Need to add check condition for duplicate user
+                
         new_user = user()
         new_user.name = request.POST.get('name')
         new_user.email = request.POST.get('email')
@@ -91,6 +92,7 @@ def sign_up(request):
 
         new_user.save()
 
+        # Confirmation on creation of user
         content = {
             'mssg':"User Created" 
         }
@@ -98,23 +100,37 @@ def sign_up(request):
 
     return render (request, 'sign_up.html')
 
+
 def logout(request):
+    """
+    Logout user and clear session variables
+    """
 
     # Clearing session variables
     var_list = list(request.session.keys())
     for key in var_list:
         print (key,request.session[key])
         del request.session[key]
+
     return redirect('index')
  
 
 def index(request):
+    """
+    Default Landing Pages 
+    Checks for signed in user --> for deciding options to display in navbar
+    """
+
     if 'user_role'  in request.session.keys():
         content = { 'user': request.session['user_role']}
     content ={'user':''}
     return render(request,'index.html', content)
 
+
 def profile(request):
+    """
+    Yet to complete profile page for displaying user profile
+    """
     email = request.session['email']
     _id = request.session['id']
     login_user = user.objects.filter(id=_id).first()
@@ -124,10 +140,6 @@ def profile(request):
     }
     return render(request,'user_profile.html', content)
 
-
-def inner(request):
-    # return HttpResponse("Hello, world.")
-    return render(request,'inner-page.html')
 
 @doctor_logged_in
 def news (request):
@@ -147,9 +159,17 @@ def fetch_news(request):
     # return HttpResponse("News fetched")
     return render(request,'news_fetched.html')
 
+"""
+Functions of Seggrated by Roles '@' ---> Autenticated using decorators
+"""
+
 
 @receptionist_logged_in
 def report (request):
+    """
+    Check all uploaded reports in bluck view
+    """
+
     rep = reports.objects.all()
     # rep = json.dumps(rep)
     # print (rep.normal)
@@ -158,19 +178,14 @@ def report (request):
     }
     print (content['data'])
 
-    # normal = content['data'][0].normal
-    
-    # normal = json.dumps (normal)
-    # normal = json.loads(normal)
-    # print (type(normal))
-    # print (normal['Haemoglobin'])
-    # json.dumps (content['data'])
-    # https://www.geeksforgeeks.org/python-convert-dictionary-to-list-of-tuples/
-
     return render(request,'reports.html', content)
+
 
 @doctor_logged_in
 def single_report (request, param):
+    """
+    Individual Report of a patient displayed based on param --> unique report id
+    """
 
     rep = reports.objects.filter(id=param).first()
     content = { 
@@ -180,8 +195,13 @@ def single_report (request, param):
 
     return render(request,'single_report.html', content)
 
+
 @receptionist_logged_in
 def patient_add(request):
+    """
+    Adding new patient to the directory
+    """
+
     if request.method == "POST":
         if request.POST.get('name') and request.POST.get('gender') and request.POST.get('age') and request.POST.get('birthday') and request.POST.get('email') and request.POST.get('address') and request.POST.get('pincode'):
             
@@ -218,6 +238,9 @@ def patient_add(request):
 
 
 def get_daily_slots(start, end, slot, date):
+    """
+    Returns Total Time slots available for a day
+    """
     # combine start time to respective day
     dt = datetime.combine(date, datetime.strptime(start,"%H:%M").time())
     slots = [dt]
@@ -229,14 +252,15 @@ def get_daily_slots(start, end, slot, date):
 
 
 def time_slot(request,param):
-
+    """
+    Book an appointment for selected param --> date 
+    """
     # Set Appointment slot times 
     start_time = '9:00'
     end_time = '15:00'
     # Avg appointment duration
     slot_time = 20
 
-    # days = 7
     # start_date = datetime.now().date()
     
     # fetched from database
@@ -252,6 +276,7 @@ def time_slot(request,param):
     date_required = datetime_object_param  
     list_date_available = get_daily_slots(start=start_time, end=end_time, slot=slot_time, date=date_required)
     
+    # Removing list of booked slots from the list
     list_date_available = [i for i in list_date_available if i not in unavailable_slot] 
     print('REST:',list_date_available)
 
@@ -277,29 +302,35 @@ def time_slot(request,param):
             messages.success(request,'Record Saved')
 
             content = {'mssg': 'Appointment Confirmed'}
-            return redirect('/addappoint')
-            # return render('request,'addappoint.html', content')
-
+            return render (request, 'add_appointment.html', content)
         
     return render(request,'time_slot.html',context)
 
 
 
 
-def addappoint(request):
+def add_appointment(request):
+    """
+    Book an Appointment --> Only Date
+    """
     if request.method == 'POST':
         date = request.POST.get('datepicker')
         print(date)
         request.session['date'] = date
         return redirect  ('time_slot', date)
-    return render(request,'addappoint.html')
+    return render(request,'add_appointment.html')
 
 
 
 
 @doctor_logged_in
 def patient_information (request):
-    
+    """
+    Display information of ongoing appointment patient
+    """
+
+    ####### 
+    # Replace with session varialble
     pat = patient.objects.first()
     if pat == None:
         pass # condition for entering first entry
@@ -312,8 +343,8 @@ def patient_information (request):
         print (PatientName)
         pat = patient.objects.filter(name=PatientName).first()
         report = reports.objects.filter(name=PatientName)
-
-    print (pat.name)
+    ######
+    
     content = {
         'data': pat,
         'pats': pats,
@@ -323,6 +354,9 @@ def patient_information (request):
     return render(request,'patient_info.html', content)
 
 def start_appointment (request):
+    """
+    Marks onset on an appointment and stores required details to session
+    """
     if request.method == 'POST':
         name = request.POST.get('name')
         mob = request.POST.get('mob')
@@ -330,10 +364,10 @@ def start_appointment (request):
 
         print (name,mob, row_id, '--------------')
 
-        ongoing_appointment = appointment.objects.all()[int(row_id)-1]
+        # ongoing_appointment = appointment.objects.all()[int(row_id)-1]
         
         # Alternate query 
-        # appoints = appointment.objects.filter(mobile=mob).first()
+        ongoing_appointment = appointment.objects.filter(mobile=mob).first()
 
         # print (appoints[row_id-1])
         # print (type(ongoing_appointment))
@@ -348,9 +382,12 @@ def start_appointment (request):
         ongoing_appointment.status = 'On going'
         ongoing_appointment.save()
 
-    return redirect ('prescription')
+    return redirect ('current_appointment')
 
 def stop_appointment  (request):
+    """
+    Marks completion of appointment and clears session variables
+    """
     if request.method == 'POST':
         print (request.session['patient_id'])
         appointment_id = request.session['appointment_id']
@@ -369,40 +406,40 @@ def stop_appointment  (request):
 
 
 def no_show_appointment (request):
+    """
+    Marks no show the appointment incase patient misses it.
+    """
     if request.method == 'POST':
         print (request.session['patient_id'])
+        ### Incorrect Code  ---> Need to take appointment id as post not from session
         appointment_id = request.session['appointment_id']
         ongoing_appointment = appointment.objects.filter(id= appointment_id).first()
 
         ongoing_appointment.status = 'no_show'
         ongoing_appointment.save()
-        
-
-
-        # Following should be entered in the database
-        # ongoing_appointment.status = 'Not appeared'
     
     return redirect ('appointments')
 
 
 def appointments(request):
+    """
+    Displays list of booked appointment date wise
+    """
 
-    today_date = (datetime.now())
+    today_date = (date.today())
     print(today_date)
-    tomorrow_date = datetime.now() + timedelta(days=1)
+    tomorrow_date = date.today() + timedelta(days=1)
     print(tomorrow_date)
     # appoints = appointment.objects.all()
     
     today_appointment = appointment.objects.filter(date__gte =today_date, date__lte= tomorrow_date)
-    tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=1))
+    tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= date.today() + timedelta(days=2))
     
     print (today_appointment, tomorrow_appointment, '))))))))))))')
     
     content = {
         'today_apppointment':today_appointment,
-        'tomorrow_appointment': tomorrow_appointment
-        
-        
+        'tomorrow_appointment': tomorrow_appointment        
     }
     
     # for i in appoints:
@@ -420,11 +457,14 @@ def appointments(request):
     # }
     # print(content)
     #{'databasename':function-name}
-    return render(request,'mau_new.html',content)
+    return render(request,'new_appointment.html',content)
 
 
 @receptionist_logged_in
 def report_upload(request):
+    """
+    Upload reports of the patients
+    """
     if request.method == 'POST' and request.FILES['report']:
         try:
             file = request.FILES['report']
@@ -447,6 +487,12 @@ def report_upload(request):
 
 
 def broadcast_sms(request):
+    """"
+    Automated function for sending SMS reminders to the patients, ran by an crontab call
+    """
+    #####
+    # Read list from the database and respective time slots
+    ####
     date_time='3 September 2020, 11:00am'
     message_to_broadcast = ("Your Appointment is Scheduled at:"+date_time)
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -463,7 +509,11 @@ def broadcast_sms(request):
 
 
 # @doctor_logged_in
-def prescription(request):
+def current_appointment(request):
+    """
+    Option for recording and submiting the recording for minutes
+    Returns type prescription for every appointment
+    """
     content = {}
     if request.method == 'POST':
 
@@ -475,7 +525,6 @@ def prescription(request):
         f = open(BASE_DIR+'/media/recordings/'+file_name+'.wav', 'wb')
         f.write(request.body)
         f.close()
-        
 
         file_loc = BASE_DIR+'/media/recordings/'+file_name+'.wav'
         print (file_loc) 
@@ -492,8 +541,21 @@ def prescription(request):
 
         # No repsponse is sent (needs rectification)
         # return redirect ("index")
-        return render(request,'prescription_sonal.html',content)        
+        return render(request,'current_appointment.html',content)        
         # return HttpResponseRedirect('prescription')
 
+    return render(request,'current_appointment.html',content)
 
-    return render(request,'prescription_sonal.html',content)
+
+def confirmed_prescription(request):
+    """
+    Function for updating the stored prescription
+    """
+    patient_id = request.session['patient_id']
+    appointment_id = request.session['appointment_id']
+
+    if request.method == "POST":
+        print ('*')
+
+
+    return redirect ('appointments')

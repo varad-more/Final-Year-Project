@@ -113,7 +113,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'virtual_managers',
+        'NAME': 'vm',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',

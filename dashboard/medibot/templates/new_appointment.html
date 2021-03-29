@@ -6,7 +6,7 @@
 <head>
     <link href="{%static 'assets_presc/style.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.png">
-    <title>Basic Table | Creative - Bootstrap 3 Responsive Admin Template</title>
+    <title>Appointments</title>
 
     <!-- Bootstrap CSS -->
     <link href="{%static 'assets_appoint/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -22,7 +22,7 @@
 
     <!-- page start-->
 
-    <style>
+    <!-- <style>
         .show {
             display: block;
         }
@@ -30,7 +30,7 @@
         .hide {
             display: none;
         }
-    </style>
+    </style> -->
 
 </head>
 
@@ -47,8 +47,8 @@
 
 
                 <select id='appointment_date'>
-                    <option value="0">Today</option>
-                    <option value="1">Tomorrow</option>
+                    <option value="1">Today</option>
+                    <option value="0">Tomorrow</option>
                 </select>
 
             </div>
@@ -82,12 +82,12 @@
                                     <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
                                     <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
                                     {% csrf_token %}
-                                    <button class="icon_plus_alt2" id="active" onclick="return show()"
+                                    <button class="icon_plus_alt2" id="active" onclick="return send_data()"
                                         formaction="start_appointment"></button>
-                                    <button class="icon_check_alt2" id="warning" onclick="return show()"
+                                    <button class="icon_check_alt2" id="warning" onclick="return send_data()"
                                         formaction="stop_appointment"></button>
-                                    <button class="icon_close_alt2" id="absent" onclick="return show()"
-                                        formaction="no_show_appointment"></button>
+                                    <button class="btn btn-danger" id="absent" onclick="return send_data()"
+                                        formaction="no_show_appointment"><i class="icon_close_alt2" ></i></button>
 
                                     <!-- </div> -->
                                 </td>
@@ -127,11 +127,11 @@
                                 <td>
 
                                     {% csrf_token %}
-                                    <button class="icon_plus_alt2" id="active" onclick="return show()"
+                                    <button class="icon_plus_alt2" id="active" onclick="return send_data()"
                                         formaction="start_appointment"></button>
-                                    <button class="icon_check_alt2" id="warning" onclick="return show()"
+                                    <button class="icon_check_alt2" id="warning" onclick="return send_data()"
                                         formaction="stop_appointment"></button>
-                                    <button class="icon_close_alt2" id="absent" onclick="return show()"
+                                    <button class="icon_close_alt2" id="absent" onclick="return send_data()"
                                         formaction="no_show_appointment"></button>
 
                                 </td>
@@ -154,10 +154,6 @@
 
 <script src="{% static 'js/jquery-input-char-count.js' %}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
 
@@ -175,5 +171,35 @@
     });
 </script>
 
+<script>
+
+
+
+    function send_data() {
+        // document.getElementById("active").disabled = true;
+
+        var rowId = event.target.parentNode.parentNode.id;
+        //this gives id of tr whose button was clicked 
+        var data_name = document.getElementById(rowId).querySelectorAll(".dta");
+        // var data_mob = document.getElementById(rowId).querySelectorAll(".dta"); 
+        // /*returns array of all elements with  
+        // "row-data" class within the row with given id*/ 
+
+        var name = data_name[0].innerHTML;
+        var mob = data_name[4].innerHTML
+        // var date = data[1]; 
+        document.getElementById("name_text").value = name;
+        document.getElementById("mob_text").value = mob;
+        document.getElementById("row_id").value = rowId;
+
+        alert("rowid: " + rowId + "name:" + name + " mob: " + mob);
+
+        // document.getElementById("warning").disabled = false;
+        // document.getElementById('warning').removeAttribute('disabled');
+        return true;
+    }
+
+
+</script>
 <!--main content end-->
 {% endblock content %}

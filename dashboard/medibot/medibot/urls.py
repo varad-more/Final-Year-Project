@@ -13,49 +13,48 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path
-from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 # from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-# from dashboard.views import index,report,rep_generatoion,register, pdf_downloader, sec_master
 from dashboard.views import *
-# from .router import router
 
 
 urlpatterns = [
-    path ('admin/', admin.site.urls),
+    # path ('admin/', admin.site.urls),
+    
+    # User Roles
     path ('signin', sign_in , name ='signin'),
     path ('register', sign_up , name ='signup'),
     path ('profile', profile, name ='profile'),
+	path('logout', logout, name="logout"),
 
+    # Generic functional URLs
     path ('', index , name ='index'),
-    path ('inner', inner , name ='default'),
     path ('sms', broadcast_sms, name="default"),
-    path ('report_upload',report_upload, name='report_upload'),
-    path ('report',report, name='report'),
-    path ('single_report/<slug:param>',single_report, name='single_report'),
-    path ('news',news, name='news'),
     path ('fetch',fetch_news, name = 'fetch_news'),
-    path ('patient',patient_information, name = 'patient_information'),
-    path ('addinfo',patient_add),
-    path ('prescription',prescription, name = 'prescription'),
-    path ('appointments',appointments, name = 'appointments'),
-    path ('addappoint',addappoint),
-    path ('time_slot',time_slot),
+
+    # Receptionist user URLs
+    path ('report',report, name='report'),
+    path ('report_upload',report_upload, name='report_upload'),
+    path ('add_appointment',add_appointment),
+    path ('add_patient',patient_add),
     path ('time_slot/<slug:param>',time_slot, name = 'time_slot'),
 
+    # Doctor user URLs
+    path ('single_report/<slug:param>',single_report, name='single_report'),
+    path ('news',news, name='news'),
+    path ('patient_information',patient_information, name = 'patient_information'),
+    path ('current_appointment',current_appointment, name = 'current_appointment'),
+    path ('appointments',appointments, name = 'appointments'),
+
+    # Appointment Management Features
     path ('start_appointment',start_appointment, name = 'start_appointment'),
     path ('stop_appointment',stop_appointment, name = 'stop_appointment'),
-    path ('no_show_appointment',no_show_appointment, name = 'no_show_appointment'),
-    # path('register/', registerPage, name="register"),
-	# path('login/', loginPage, name="login"),  
-	path('logout', logout, name="logout")
-
+    path ('no_show_appointment',no_show_appointment, name = 'no_show_appointment')
     
 ] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
