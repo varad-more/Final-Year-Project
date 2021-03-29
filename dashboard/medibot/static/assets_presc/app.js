@@ -113,8 +113,8 @@ function stopRecording() {
 	gumStream.getAudioTracks()[0].stop();
 
 	//create the wav blob and pass it on to createDownloadLink
-    // rec.exportWAV(createDownloadLink);    
-    rec.exportWAV(submit_function);
+    rec.exportWAV(createDownloadLink);    
+    // rec.exportWAV(submit_function);
 }
 
 function sendData(data) 
@@ -178,23 +178,23 @@ function createDownloadLink(blob) {
 
 	urll = url;
 	// //upload link
-	// var button = document.createElement('button');
-    // button.onclick = function(){
-    //     let csrftoken = getCookie('csrftoken');
-    //     fetch("/prescription", {
-    //     method: "post",
-    //     body: blob,
-    //     headers: { "X-CSRFToken": csrftoken },
-    //     })
-    //     return 0
-    // }
+	var button = document.createElement('button');
+    button.onclick = function(){
+        let csrftoken = getCookie('csrftoken');
+        fetch("/prescription", {
+        method: "post",
+        body: blob,
+        headers: { "X-CSRFToken": csrftoken },
+        })
+        return 0
+    }
 	var upload = document.createElement('button');
-	upload.href="#";
+	// upload.href="#";
 	upload.innerHTML = "Submit the Audio";
     
     upload.addEventListener("click", function(event){
 	// sendData;
-    
+    var test;
 		  var xhr=new XMLHttpRequest();
 		  xhr.onload=function(e) {
 		      if(this.readyState === 4) {
@@ -204,59 +204,35 @@ function createDownloadLink(blob) {
 		
         // function sendData(blob) {
             let csrftoken = getCookie('csrftoken');
-            fetch("/prescription", {
+            fetch("/current_appointment", {
             method: "post",
             body: blob,
             headers: { "X-CSRFToken": csrftoken },
-            });
-            
-        // }
+            // redirect: error
+        })
+        .then(response => response.json())
+        // .then (data =>console.log(data))
+        .then(data => document.getElementById("textbox").value = data.prescription);
+ 
 
-          //   var fd=new FormData();            
-          // fd.append('fname', 'test.wav');
-            // fd.append('data', blob);
-            // $.ajax({
-            //     type: 'POST',
-            //     url: 'prescription',
-            //     data: fd,
-            //     processData: false,
-            //     contentType: false
-            // }).done(function(data) {
-            //        console.log(data);
-            // });
-		//   fd.append("audio_data",blob, filename);
-		//   xhr.open("POST","prescription",true);
-		//   xhr.send(fd);
     })
 	li.appendChild(document.createTextNode (" "))//add a space in between
 	li.appendChild(upload)//add the upload link to li
     // li.appendChild(button)
 	// //add the li element to the ol
 	recordingsList.appendChild(li);
-    submit_function(blob);
-    // return 0;
-
+    // submit_function(blob);
 }
 
-// function sendData(blob) {
-//     // sends data to flask url /messages as a post with data blob - in format for wav file, hopefully. it is a promise
-//     fetch("/prescription", {
-//     method: "post",
-//     body: blob
-//     });
-// }
 
 function submit_function(blob)
 
 {
 let csrftoken = getCookie('csrftoken');
-fetch("/prescription", {
+fetch("/current_appointment", {
 method: "post",
 body: blob,
 headers: { "X-CSRFToken": csrftoken },
 })
-// alert("done")
-// location.reload();
-// return ; 
 
 }

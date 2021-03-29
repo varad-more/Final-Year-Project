@@ -113,7 +113,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vm',
+        'NAME': 'virtual_managers',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',
@@ -128,9 +128,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'virtual_managers',
-        'USER': 'admin',
-        'PASSWORD': 'Sakshi2399*',
-        'HOST':'database-1.ctqvk0asvfes.us-east-1.rds.amazonaws.com',
+        'USER': 'root',
+        'PASSWORD': 'test@123',
+        'HOST':'3.86.178.171',
         'PORT':'3306',
         'OPTIONS': {
             'charset': 'utf8mb4'  # This is the important line
@@ -138,6 +138,7 @@ DATABASES = {
     }
 }  
 ''' 
+
 
 
 

@@ -536,13 +536,11 @@ def current_appointment(request):
         final_output = ner_model.run_model(text_data)
         print (final_output)
 
-        # content = {'prescription':final_output['medicine']}
-        content = {'prescription':'Some Tablets!!'}
+        content = {'prescription':final_output['medicine']+final_output['dosage']}
+        # content = {'prescription':'Some Tablets!!'}
 
-        # No repsponse is sent (needs rectification)
-        # return redirect ("index")
-        return render(request,'current_appointment.html',content)        
-        # return HttpResponseRedirect('prescription')
+        return HttpResponse(json.dumps(content), content_type="application/json")
+        # return render(request,'current_appointment.html',content)        
 
     return render(request,'current_appointment.html',content)
 
