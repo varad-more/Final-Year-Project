@@ -32,6 +32,41 @@
         }
     </style> -->
 
+    <script>
+                document.getElementById("name_text").value=name;
+                document.getElementById("mob_text").value=mob;
+                // alert("rowid: " + name +" mob: " + mob); 
+                document.getElementById("row_id").value=rowId;
+
+                alert("rowid: " + rowId + "name:" + name +" mob: " + mob);
+
+
+      function send_data() {
+          // document.getElementById("active").disabled = true;
+  
+          var rowId = event.target.parentNode.parentNode.id;
+          //this gives id of tr whose button was clicked 
+          var data_name = document.getElementById(rowId).querySelectorAll(".dta");
+          // var data_mob = document.getElementById(rowId).querySelectorAll(".dta"); 
+          // /*returns array of all elements with  
+          // "row-data" class within the row with given id*/ 
+  
+          var name = data_name[0].innerHTML;
+          var mob = data_name[4].innerHTML
+          // var date = data[1]; 
+          document.getElementById("name_text").value = name;
+          document.getElementById("mob_text").value = mob;
+          document.getElementById("row_id").value = rowId;
+  
+          alert("rowid: " + rowId + "name:" + name + " mob: " + mob);
+  
+          // document.getElementById("warning").disabled = false;
+          // document.getElementById('warning').removeAttribute('disabled');
+          return true;
+      }
+  
+  
+  </script>
 </head>
 
 <br>
@@ -83,7 +118,7 @@
                                     <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
                                     {% csrf_token %}
                                     <button class="icon_plus_alt2" id="active" onclick="return send_data()"
-                                        formaction="start_appointment"></button>
+                                        formaction="/start_appointment"></button>
                                     <button class="icon_check_alt2" id="warning" onclick="return send_data()"
                                         formaction="stop_appointment"></button>
                                     <button class="btn btn-danger" id="absent" onclick="return send_data()"
@@ -110,7 +145,7 @@
                             <th><i class="icon_mail_alt"></i> Email</th>
                             <th><i class="icon_pin_alt"></i> Time Slot</th>
                             <th><i class="icon_mobile"></i> Mobile</th>
-                            <th><i class="icon_cogs"></i> Action</th>
+                            <!-- <th><i class="icon_cogs"></i> Action</th> -->
                         </tr>
                         <form method="POST">
                             <input type="hidden" id="name_text" class="form_ip" name="name" />
@@ -124,7 +159,7 @@
                                 <td class="dta">{{data_appoint.patient_id.email}}</td>
                                 <td class="dta">{{data_appoint.timepublished}}</td>
                                 <td class="dta">{{data_appoint.mobile}}</td>
-                                <td>
+                                <!-- <td>
 
                                     {% csrf_token %}
                                     <button class="icon_plus_alt2" id="active" onclick="return send_data()"
@@ -134,7 +169,7 @@
                                     <button class="icon_close_alt2" id="absent" onclick="return send_data()"
                                         formaction="no_show_appointment"></button>
 
-                                </td>
+                                </td> -->
                             </tr>
                             {% endfor %}
 
@@ -158,6 +193,7 @@
 
 
 <script>
+$("#table_tomorrow").hide();
     $(document).ready(function () {
         $('#appointment_date').on('change', function () {
             if (this.value == "1") {
@@ -171,35 +207,5 @@
     });
 </script>
 
-<script>
-
-
-
-    function send_data() {
-        // document.getElementById("active").disabled = true;
-
-        var rowId = event.target.parentNode.parentNode.id;
-        //this gives id of tr whose button was clicked 
-        var data_name = document.getElementById(rowId).querySelectorAll(".dta");
-        // var data_mob = document.getElementById(rowId).querySelectorAll(".dta"); 
-        // /*returns array of all elements with  
-        // "row-data" class within the row with given id*/ 
-
-        var name = data_name[0].innerHTML;
-        var mob = data_name[4].innerHTML
-        // var date = data[1]; 
-        document.getElementById("name_text").value = name;
-        document.getElementById("mob_text").value = mob;
-        document.getElementById("row_id").value = rowId;
-
-        alert("rowid: " + rowId + "name:" + name + " mob: " + mob);
-
-        // document.getElementById("warning").disabled = false;
-        // document.getElementById('warning').removeAttribute('disabled');
-        return true;
-    }
-
-
-</script>
 <!--main content end-->
 {% endblock content %}

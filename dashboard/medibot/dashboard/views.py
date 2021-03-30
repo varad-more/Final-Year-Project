@@ -363,12 +363,15 @@ def start_appointment (request):
         row_id = request.POST.get('row_id')
 
         print (name,mob, row_id, '--------------')
-
+        print(row_id)
         # ongoing_appointment = appointment.objects.all()[int(row_id)-1]
-        
+        today_date = (date.today())
+        tomorrow_date = date.today() + timedelta(days=1)
+      
         # Alternate query 
-        ongoing_appointment = appointment.objects.filter(mobile=mob).first()
+        ongoing_appointment = appointment.objects.filter(mobile=mob,date__gte =today_date, date__lte= tomorrow_date).first()
 
+        print(ongoing_appointment)
         # print (appoints[row_id-1])
         # print (type(ongoing_appointment))
         # print (ongoing_appointment)
@@ -409,12 +412,16 @@ def no_show_appointment (request):
     """
     Marks no show the appointment incase patient misses it.
     """
+    today_date = (date.today())
+    tomorrow_date = date.today() + timedelta(days=1)
     if request.method == 'POST':
-        print (request.session['patient_id'])
-        ### Incorrect Code  ---> Need to take appointment id as post not from session
-        appointment_id = request.session['appointment_id']
-        ongoing_appointment = appointment.objects.filter(id= appointment_id).first()
+        name = request.POST.get('name')
+        mob = request.POST.get('mob')
+        row_id = request.POST.get('row_id')
 
+        ### Incorrect Code  ---> Need to take appointment id as post not from session
+        ongoing_appointment = appointment.objects.filter(mobile=mob,date__gte =today_date, date__lte= tomorrow_date).first()
+        print(ongoing_appointment) 
         ongoing_appointment.status = 'no_show'
         ongoing_appointment.save()
     
