@@ -302,17 +302,16 @@
                 <li>alice.barkley@example.com</li>
               </ul> -->
             </div> 
-
+            {% for i in history %}
             <h3 class="resume-title">Previous History</h3>
             <div class="resume-item">
               <h4>Cough</h4>
               <h5>4 May 2019</h5>
-              <p><em>Symptomps:</em>Cough,Fever 101,Slight Headache</p>
-              <p><em>Prescriptions:</em>Meftal,Cyclopam</p>
-              <p>The patient recovered in 3 days.Improvemenet was seen 
-                after day 1 when prescriptions where changed. </p>
+              <p><em>Symptomps:</em>{{ i.symptom }}</p>
+              <p><em>Prescriptions:</em>{{ i.prescription }}</p>
             </div>
-            <div class="resume-item">
+            {% endfor %}
+            <!-- <div class="resume-item">
                 <h4>Allergy</h4>
                 <h5>4 July 2019</h5>
                 <p><em>Symptomps:</em>Rash on hand</p>
@@ -322,8 +321,8 @@
           
           </div> 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Hospitalizations</h3>
-            <div class="resume-item">
+            <h3 class="resume-title">Hospitalizations</h3> -->
+            <!-- <div class="resume-item">
                 <h4>Dengue</h4>
                 <h5>4 December 2019</h5>
                 <p><em>Symptomps:</em>Headache,Fever,Bodypain</p>
@@ -336,14 +335,14 @@
                 <p><em>Symptomps:</em>Minor Symptomps</p>
                 <p><em>Prescriptions:</em>Covid tablets</p>
                 <p>Quarantined for 14 days.Recovered in 7 days </p>
-            </div>
-            <div class="resume-item">
+            </div> -->
+            <!-- <div class="resume-item">
                 <h4>Allergy</h4>
                 <h5>4 July 2019</h5>
                 <p><em>Symptomps:</em>Rash on hand</p>
                 <p><em>Prescriptions:</em>Antiallergy tablets</p>
                 <p>The patient recovered in 1 day. Medicines was prescribed for 3 times. </p>
-            </div>
+            </div> -->
         
             <!--<div class="resume-item">
               <h4>Senior graphic design specialist</h4>

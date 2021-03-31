@@ -39,4 +39,3 @@ def run_model(sentences):
     
         print (content)
         return content
-    

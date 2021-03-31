@@ -329,8 +329,8 @@ def patient_information (request):
     Display information of ongoing appointment patient
     """
 
-    ####### 
-    # Replace with session varialble
+    ##condition for selection of patient
+    '''
     pat = patient.objects.first()
     if pat == None:
         pass # condition for entering first entry
@@ -343,14 +343,24 @@ def patient_information (request):
         print (PatientName)
         pat = patient.objects.filter(name=PatientName).first()
         report = reports.objects.filter(name=PatientName)
-    ######
+        history= patient_history.objects.filter(patient_id_id=pat.id)
+    '''
+    patient_id = request.session.get('patient_id')
+    print (patient_id)
+    pat = patient.objects.filter(id= patient_id).first()
+    report = reports.objects.filter(name= pat.name)
+    history= patient_history.objects.filter(patient_id_id=pat.id)
+
+
+ 
     
     content = {
         'data': pat,
-        'pats': pats,
-        'reports': report
+        # 'pats': pats,
+        'reports': report,
+        'history':history   
     }
-    print (content['reports'])
+    # print (content['reports'])
     return render(request,'patient_info.html', content)
 
 def start_appointment (request):
@@ -419,7 +429,6 @@ def no_show_appointment (request):
         mob = request.POST.get('mob')
         row_id = request.POST.get('row_id')
 
-        ### Incorrect Code  ---> Need to take appointment id as post not from session
         ongoing_appointment = appointment.objects.filter(mobile=mob,date__gte =today_date, date__lte= tomorrow_date).first()
         print(ongoing_appointment) 
         ongoing_appointment.status = 'no_show'
@@ -525,7 +534,8 @@ def current_appointment(request):
     if request.method == 'POST':
 
         patient_name = request.session['patient_name']
-
+        patient_id = request.session['patient_id']
+        appointment_id = request.session['appointment_id']
         file_name = patient_name
         # file_name = 'test'
 
@@ -541,10 +551,13 @@ def current_appointment(request):
         print ('text', text_data)
 
         final_output = ner_model.run_model(text_data)
-        print (final_output)
+        print (final_output['symptom'])
+        p = patient_history(patient_id_id = patient_id, symptom = final_output['symptom'],prescription=final_output['medicine']+' , '+final_output['dosage'],appointment_id_id=appointment_id)
+        p.save()
 
         content = {'prescription':final_output['medicine']+final_output['dosage']}
         # content = {'prescription':'Some Tablets!!'}
+        # p = patient_history('symptom':'symptom')
 
         return HttpResponse(json.dumps(content), content_type="application/json")
         # return render(request,'current_appointment.html',content)        
