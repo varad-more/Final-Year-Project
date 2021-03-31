@@ -49,7 +49,6 @@ function startRecording() {
 			create an audio context after getUserMedia is called
 			sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
 			the sampleRate defaults to the one set in your OS for your playback device
-
 		*/
 		audioContext = new AudioContext();
 
@@ -178,23 +177,14 @@ function createDownloadLink(blob) {
 
 	urll = url;
 	// //upload link
-	var button = document.createElement('button');
-    button.onclick = function(){
-        let csrftoken = getCookie('csrftoken');
-        fetch("/prescription", {
-        method: "post",
-        body: blob,
-        headers: { "X-CSRFToken": csrftoken },
-        })
-        return 0
-    }
-	var upload = document.createElement('button');
-	// upload.href="#";
-	upload.innerHTML = "Submit the Audio";
+
+	// var upload = document.createElement('button');
+	// // upload.href="#";
+	// upload.innerHTML = "Submit the Audio";
     
-    upload.addEventListener("click", function(event){
-	// sendData;
-    var test;
+    // upload.addEventListener("click", function(event){
+	// // sendData;
+    // var test;
 		  var xhr=new XMLHttpRequest();
 		  xhr.onload=function(e) {
 		      if(this.readyState === 4) {
@@ -215,24 +205,24 @@ function createDownloadLink(blob) {
         .then(data => document.getElementById("textbox").value = data.prescription);
  
 
-    })
-	li.appendChild(document.createTextNode (" "))//add a space in between
-	li.appendChild(upload)//add the upload link to li
-    // li.appendChild(button)
-	// //add the li element to the ol
-	recordingsList.appendChild(li);
+    // })
+	// li.appendChild(document.createTextNode (" "))//add a space in between
+	// li.appendChild(upload)//add the upload link to li
+    // // li.appendChild(button)
+	// // //add the li element to the ol
+	// recordingsList.appendChild(li);
     // submit_function(blob);
 }
 
 
-function submit_function(blob)
+// function submit_function(blob)
 
-{
-let csrftoken = getCookie('csrftoken');
-fetch("/current_appointment", {
-method: "post",
-body: blob,
-headers: { "X-CSRFToken": csrftoken },
-})
+// {
+// let csrftoken = getCookie('csrftoken');
+// fetch("/current_appointment", {
+// method: "post",
+// body: blob,
+// headers: { "X-CSRFToken": csrftoken },
+// })
 
-}
+// }
