@@ -42,9 +42,12 @@
             
                     <div class="mywebapp"> 
                         <div class="input">
+                            <form method="POST" action="confirmed_prescription">
                             <textarea id="textbox" rows="10" class="resizedTextbox" >{{prescription}}</textarea>
-                        </div>         
-                        <button id="start-btn" title="Start">Confirm</button>
+                        </div>
+                        {% csrf_token %}
+                        <button id="start-btn" >Confirm</button>
+                    </form>
                         <!-- <p id="instructions">Press the Start button</p> -->
                     </div>
                 </div>

@@ -79,7 +79,7 @@ def sign_up(request):
         
         passd = request.POST.get('pass')
 
-        # Need to add check condition for duplicate user
+        #### Need to add check condition for duplicate user
                 
         new_user = user()
         new_user.name = request.POST.get('name')
@@ -93,10 +93,8 @@ def sign_up(request):
         new_user.save()
 
         # Confirmation on creation of user
-        content = {
-            'mssg':"User Created" 
-        }
-        return render (request, 'sign_up.html', content)
+        request.session['error']= "User Created" 
+        return redirect ('signin')
 
     return render (request, 'sign_up.html')
 
@@ -301,8 +299,9 @@ def time_slot(request,param):
             saverecord.save()
             messages.success(request,'Record Saved')
 
-            content = {'mssg': 'Appointment Confirmed'}
-            return render (request, 'add_appointment.html', content)
+            request.session['mssg'] = 'Appointment Confirmed'
+
+            return redirect ('add_appointment')
         
     return render(request,'time_slot.html',context)
 
@@ -318,7 +317,13 @@ def add_appointment(request):
         print(date)
         request.session['date'] = date
         return redirect  ('time_slot', date)
-    return render(request,'add_appointment.html')
+    content ={}    
+
+    if 'mssg'  in request.session.keys():
+        content = { 'mssg': request.session['mssg']}
+        del request.session['mssg']
+
+    return render(request,'add_appointment.html', content)
 
 
 
@@ -506,21 +511,30 @@ def broadcast_sms(request):
     """"
     Automated function for sending SMS reminders to the patients, ran by an crontab call
     """
-    #####
-    # Read list from the database and respective time slots
-    ####
-    date_time='3 September 2020, 11:00am'
-    message_to_broadcast = ("Your Appointment is Scheduled at:"+date_time)
-    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    # recipient = '+918898630781'
-    # recipient = '+917506454404'
-    # recipient = '+918275510613'
+    
+    today_date = (date.today())
+    tomorrow_date = date.today() + timedelta(days=1)
 
-    #  for recipient in settings.SMS_BROADCAST_TO_NUMBERS:
-    #     if recipient:
-    client.messages.create(to=recipient,
-                           from_=settings.TWILIO_NUMBER,
-                           body=message_to_broadcast)
+    today_appointment = appointment.objects.filter(date__gte =today_date, date__lte= tomorrow_date)
+
+    for appoint in today_appointment:
+        print (appoint.patient_id.name, appoint.patient_id.phone, appoint.date)
+
+        message_to_broadcast = (f"Hello, {appoint.patient_id.name} \n Your Appointment is Scheduled for today at: "+ str(appoint.date.strftime("%H:%M:%S")))
+        print (message_to_broadcast)
+        client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+        recipient = '+91'+appoint.mobile #appoint.patient_id.phone
+        # recipient = '+918898630781'
+        # recipient = '+917506454404'
+        # recipient = '+918275510613'
+        try:
+            client.messages.create(to=recipient,
+                                   from_=settings.TWILIO_NUMBER,
+                                   body=message_to_broadcast)
+
+        except Exception as e:
+            print (e)
+
     return HttpResponse("messages sent!", 200)
 
 
@@ -552,7 +566,7 @@ def current_appointment(request):
 
         final_output = ner_model.run_model(text_data)
         print (final_output['symptom'])
-        p = patient_history(patient_id_id = patient_id, symptom = final_output['symptom'],prescription=final_output['medicine']+' , '+final_output['dosage'],appointment_id_id=appointment_id)
+        p = patient_history(patient_id_id = patient_id, appointment_id_id=appointment_id, symptom = final_output['symptom'],prescription=final_output['medicine']+' , '+final_output['dosage'])
         p.save()
 
         content = {'prescription':final_output['medicine']+final_output['dosage']}
@@ -569,11 +583,12 @@ def confirmed_prescription(request):
     """
     Function for updating the stored prescription
     """
-    patient_id = request.session['patient_id']
-    appointment_id = request.session['appointment_id']
-
     if request.method == "POST":
-        print ('*')
-
+        print (request.POST.get('prescription'))
+        patient_id = request.session['patient_id']
+        appointment_id = request.session['appointment_id']
+        p = patient_history.objects.filter(patient_id_id = patient_id, appointment_id_id=appointment_id).first()
+        p.prescription = 'test'
+        p.save()
 
     return redirect ('appointments')
