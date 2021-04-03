@@ -37,7 +37,7 @@ urlpatterns = [
     # Receptionist user URLs
     path ('report',report, name='report'),
     path ('report_upload',report_upload, name='report_upload'),
-    path ('add_appointment',add_appointment),
+    path ('add_appointment',add_appointment, name='add_appointment'),
     path ('add_patient',patient_add),
     path ('time_slot/<slug:param>',time_slot, name = 'time_slot'),
 
@@ -47,6 +47,7 @@ urlpatterns = [
     path ('patient_information',patient_information, name = 'patient_information'),
     path ('current_appointment',current_appointment, name = 'current_appointment'),
     path ('appointments',appointments, name = 'appointments'),
+    path ('confirmed_prescription', confirmed_prescription, name='confirmed_prescription'),
 
     # Appointment Management Features
     path ('start_appointment',start_appointment, name = 'start_appointment'),

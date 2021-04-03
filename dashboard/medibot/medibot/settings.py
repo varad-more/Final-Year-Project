@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 # }
 # MYSQL
 # django.db.backends.mysql
-
+''' 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -137,7 +137,6 @@ DATABASES = {
         }
     }
 }  
-''' 
 
 
 
