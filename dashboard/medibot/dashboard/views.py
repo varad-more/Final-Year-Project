@@ -281,8 +281,9 @@ def time_slot(request,param):
     available_timeslots=[]
     for i in list_date_available:
            available_timeslots.append(str("{0:0>2}".format(i.hour))+':'+str("{0:0>2}".format(i.minute)))
-
-    context={"timeslot":available_timeslots}
+    var = request.session.get('patient_id')
+    pat = patient.objects.filter(id = var).first()
+    context={"timeslot":available_timeslots,"pat":pat}
 
     if request.method == 'POST':
         time_taken=request.POST.get('dropdown')
@@ -290,12 +291,14 @@ def time_slot(request,param):
         datetime_object = datetime.strptime(param + ' ' + str(time_taken) , '%Y-%m-%d %H:%M')
         print (datetime_object)
 
-        if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
+        if  request.POST.get('dropdown'):
             # print('patient')
+            
             saverecord = appointment()
-            saverecord.patient_id_id = request.POST.get('patient_id')
+            saverecord.patient_id_id = request.session.get('patient_id')
             saverecord.date = datetime_object
-            saverecord.mobile = request.POST.get('mobile')
+            print(pat.phone)
+            saverecord.mobile = pat.phone
             saverecord.save()
             messages.success(request,'Record Saved')
 
@@ -314,8 +317,10 @@ def add_appointment(request):
     """
     if request.method == 'POST':
         date = request.POST.get('datepicker')
+        patient_id = request.POST.get('patient_id')
         print(date)
         request.session['date'] = date
+        request.session['patient_id'] = patient_id
         return redirect  ('time_slot', date)
     content ={}    
 
