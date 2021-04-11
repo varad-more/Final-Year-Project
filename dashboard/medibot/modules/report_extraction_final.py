@@ -261,39 +261,55 @@ def main(url):
     abnormal = json.dumps(abnormal)
     not_found = json.dumps(not_found)
 
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="virtual_managers"  # Change as per requirements
-    )
+    # mydb = mysql.connector.connect(
+    #     host="localhost",
+    #     user="root",
+    #     password="",
+    #     database="virtual_managers"  # Change as per requirements
+    # )
 
-    # saverecord = reports()
+    name = final_report['Name']
 
-    # saverecord.name = final_report['Name']
-    # saverecord.gender=final_report['Gender']
-    # saverecord.normal = str (normal)
-    # saverecord.abnormal = str (abnormal)
-    # # saverecord.not_found = str (not_found)
-    # saverecord.file_path = url
+    pat = patient.objects.filter(name= name).first()
+    
+    if pat:
+        pass
+    else:
+        name = 'Pat1' # default patient
+        pat = patient.objects.filter(name= name).first()
+        
+    saverecord = reports()
+    saverecord.patient_id = pat.id
+    saverecord.name = final_report['Name']
+    saverecord.gender=final_report['Gender']
+    saverecord.age = '20'
+    saverecord.date = final_report['Date']
+    saverecord.normal = str (normal)
+    saverecord.abnormal = str (abnormal)
+    # saverecord.not_found = str (not_found)
+    saverecord.file_path = url
     # from  django.utils import timezone
     # saverecord.uploaded_at = timezone.now()
 
-    # saverecord.save()
+    saverecord.save()
 
-    mycursor = mydb.cursor()
-    name = final_report['Name']
-    gender = final_report['Gender']
-    normal = str(normal)
-    abnormal = str(abnormal)
-    not_found = str(not_found)
-    from django.utils import timezone
-    data = (name, gender, '20',
-            final_report['Date'], normal, abnormal, url, timezone.now())
-    # Inserting into Database
-    sql = ("INSERT INTO dashboard_reports (name, gender, age, date, normal, abnormal, file_path, uploaded_at) values (%s,%s, %s, %s, %s, %s, %s, %s)")
-    mycursor.execute(sql, data)
-    # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
-    mydb.commit()
-    print(mycursor.rowcount, "record inserted.")
+    # mycursor = mydb.cursor()
+    # gender = final_report['Gender']
+    # normal = str(normal)
+    # abnormal = str(abnormal)
+    # not_found = str(not_found)
+    # from django.utils import timezone
+
+    # name ='Pat1'
+    # # rep = reports()
+    # data = (pat.id, name, gender, '20',
+    #         final_report['Date'], normal, abnormal, url, timezone.now())
+    # print (name)
+
+    # # Inserting into Database
+    # sql = ("INSERT INTO dashboard_reports (patient_id, name, gender, age, date, normal, abnormal, file_path, uploaded_at) values (%s, %s,%s, %s, %s, %s, %s, %s, %s)")
+    # mycursor.execute(sql, data)
+    # # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
+    # mydb.commit()
+    # print(mycursor.rowcount, "record inserted.")
 # main(url)

@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'medibot.wsgi.application'
 # }
 # MYSQL
 # django.db.backends.mysql
-    
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -138,14 +138,6 @@ DATABASES = {
     }
 }  
 '''
-
-
-
-
-
-# Mongo
-# https://www.freecodecamp.org/news/using-django-with-mongodb-by-adding-just-one-line-of-code-c386a298e179/
-# DATABASES = {   ‘default’: {      ‘ENGINE’: ‘djongo’,      ‘NAME’: ‘your-db-name’,   }}
 
 
 # Password validation

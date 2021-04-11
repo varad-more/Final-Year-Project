@@ -30,7 +30,7 @@
         .hide {
             display: none;
         } */
-
+        /* 
         .strikethrough {
             background: repeating-linear-gradient(180deg,
                     black 0%,
@@ -38,7 +38,7 @@
             background-size: 100% 2px;
             background-position: center;
             background-repeat: no-repeat;
-        }
+        } */
     </style>
 
     <script>
@@ -122,26 +122,28 @@
                                 <td class="dta" style="display: none;">{{data_appoint.id}}</td>
 
 
-                                    {% if data_appoint.status == 'Completed' or data_appoint.status == 'No Show' %}
-                                    <td class="dta">{{data_appoint.status}}</td>
-                                    {% elif data_appoint.status == 'On Going' %}
-                                    <td>
-                                        {% csrf_token %}
-                                        <button class="icon_check_alt2" id="warning" onclick="return send_data()"
-                                            formaction="stop_appointment"></button>
-                                    </td>
+                                {% if data_appoint.status == 'Completed' or data_appoint.status == 'No Show' %}
+                                <td class="dta">{{data_appoint.status}}</td>
+                                {% elif data_appoint.status == 'On Going' %}
+                                <td>
+                                    {% csrf_token %}
+                                    <button class="icon_check_alt2" id="warning" onclick="return send_data()"
+                                        formaction="stop_appointment" title="Completed Appointment"></button>
+                                </td>
 
-                                    {% elif appointment %}
-                                    <td> -- </td>   
-                                    {% else %}
-                                    <td>
-                                        {% csrf_token %}
-                                        <button class="icon_plus_alt2" id="active" onclick="return send_data()"
-                                            formaction="/start_appointment"></button>
-                                        <button class="icon_close_alt2" id="absent" onclick="return send_data()"
-                                            formaction="no_show_appointment"></button>
-                                    </td>
-                                    {% endif %}
+                                {% elif appointment %}
+                                <td> -- </td>
+                                {% else %}
+                                <td>
+                                    {% csrf_token %}
+                                    <button class="icon_plus_alt2" id="active" onclick="return send_data()"
+                                        formaction="/start_appointment" title="Start Appointment"></button>
+                                        <!-- <span class="tooltiptext">Tooltip text</span> -->
+
+                                    <button class="icon_close_alt2" id="absent" onclick="return send_data()"
+                                        formaction="no_show_appointment" title="No Show"></button>
+                                </td>
+                                {% endif %}
 
                             </tr>
                             {% endfor %}

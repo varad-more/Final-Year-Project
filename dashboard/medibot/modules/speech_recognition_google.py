@@ -35,10 +35,11 @@ def split(input_path):
         print(names)
         files.append(names)
         r = sr.Recognizer()
+
         with sr.AudioFile(names) as source:
             audio_text = r.listen(source)
+        
         try:
-
             # using google speech recognition
             text = r.recognize_google(audio_text)
             print('Converting audio transcripts into text ...')
@@ -52,19 +53,19 @@ def split(input_path):
                 print("The file does not exist")
 
         except:
+            if os.path.exists(names):
+                os.remove(names)
             print('Sorry.. run again...')
             continue
         i = i+1
 
-        print (files)
-        data_store.append(text)
-       # print("name", dir + name + '_' + str(count))
+        print ('file',files)
+        ## Incase there is error in file deletion
+        # for file in files:
+        #     os.remove(file)
+
     print('There are splited into {number} files'.format(number=i + 1))
     print("resultant array is==", data_store)
 
     resultant = ' '
     return resultant.join(data_store)
-    # return data_store
-
-#   os.remove(output.wav)
-#   return i + 1

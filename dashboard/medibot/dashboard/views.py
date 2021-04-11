@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
@@ -17,6 +18,7 @@ from modules import report_extraction_final, speech_recognition_google, ner_mode
 
 # from modules import *
 import json
+import math
 
 # from werkzeug.utils import secure_filename
 from django.core.files.storage import FileSystemStorage 
@@ -56,7 +58,7 @@ def sign_in(request):
                 return redirect ('appointments')
 
             else:
-                return redirect ('report_upload')
+                return redirect ('add_appointment')
                 
         else:
             print('Bad Credentials')
@@ -119,9 +121,9 @@ def index(request):
     Checks for signed in user --> for deciding options to display in navbar
     """
 
+    content ={'user':''}
     if 'user_role'  in request.session.keys():
         content = { 'user': request.session['user_role']}
-    content ={'user':''}
     return render(request,'index.html', content)
 
 
@@ -358,19 +360,19 @@ def patient_information (request):
     patient_id = request.session.get('patient_id')
     print (patient_id)
     pat = patient.objects.filter(id= patient_id).first()
-    report = reports.objects.filter(name= pat.name)
+    report = reports.objects.filter(patient_id = pat.id)
     history= patient_history.objects.filter(patient_id_id=pat.id)
 
-
+    half_list = math.ceil(len(history)/2)
  
-    
     content = {
         'data': pat,
         # 'pats': pats,
         'reports': report,
-        'history':history   
+        'history':history,   
+        'half_list': half_list
     }
-    # print (content['reports'])
+    print (content['reports'])
     return render(request,'patient_info.html', content)
 
 def start_appointment (request):
@@ -552,8 +554,6 @@ def current_appointment(request):
         p.save()
 
         content = {'prescription':final_output['medicine']+final_output['dosage']}
-        # content = {'prescription':'Some Tablets!!'}
-        # p = patient_history('symptom':'symptom')
 
         return HttpResponse(json.dumps(content), content_type="application/json")
         # return render(request,'current_appointment.html',content)        
@@ -566,11 +566,12 @@ def confirmed_prescription(request):
     Function for updating the stored prescription
     """
     if request.method == "POST":
-        print (request.POST.get('prescription'))
+        conf_prescription = request.POST.get('prescription')
+        print (conf_prescription)
         patient_id = request.session['patient_id']
         appointment_id = request.session['appointment_id']
         p = patient_history.objects.filter(patient_id_id = patient_id, appointment_id_id=appointment_id).first()
-        p.prescription = 'test'
+        p.prescription = conf_prescription 
         p.save()
 
     return redirect ('appointments')

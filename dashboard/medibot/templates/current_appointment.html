@@ -43,7 +43,7 @@
                     <div class="mywebapp"> 
                         <div class="input">
                             <form method="POST" action="confirmed_prescription">
-                            <textarea id="textbox" rows="10" class="resizedTextbox" >{{prescription}}</textarea>
+                            <textarea id="textbox" rows="10" class="resizedTextbox" name="prescription">{{prescription}}</textarea>
                         </div>
                         {% csrf_token %}
                         <button id="start-btn" >Confirm</button>
