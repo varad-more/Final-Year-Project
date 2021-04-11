@@ -548,10 +548,12 @@ def current_appointment(request):
 
         final_output = ner_model.run_model(text_data)
         print (final_output['symptom'])
-        p = patient_history(patient_id_id = patient_id, appointment_id_id=appointment_id, symptom = final_output['symptom'],prescription=final_output['medicine']+' , '+final_output['dosage'])
+
+        final_output['medicine'] = ner_model.run_medacy(text_data)
+        p = patient_history(patient_id_id = patient_id, appointment_id_id=appointment_id, symptom = final_output['symptom'],prescription=final_output['medicine'])
         p.save()
 
-        content = {'prescription':final_output['medicine']+final_output['dosage']}
+        content = {'prescription':final_output['medicine']}
         # content = {'prescription':'Some Tablets!!'}
         # p = patient_history('symptom':'symptom')
 
