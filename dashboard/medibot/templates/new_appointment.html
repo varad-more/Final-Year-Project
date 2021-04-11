@@ -22,51 +22,58 @@
 
     <!-- page start-->
 
-    <!-- <style>
-        .show {
+    <style>
+        /* .show {
             display: block;
         }
 
         .hide {
             display: none;
+        } */
+
+        .strikethrough {
+            background: repeating-linear-gradient(180deg,
+                    black 0%,
+                    black 100%);
+            background-size: 100% 2px;
+            background-position: center;
+            background-repeat: no-repeat;
         }
-    </style> -->
+    </style>
 
     <script>
-                document.getElementById("name_text").value=name;
-                document.getElementById("mob_text").value=mob;
-                // alert("rowid: " + name +" mob: " + mob); 
-                document.getElementById("row_id").value=rowId;
+        // document.getElementById("name_text").value = name;
+        // document.getElementById("mob_text").value = mob;
+        // // alert("rowid: " + name +" mob: " + mob); 
+        // document.getElementById("row_id").value = rowId;
 
-                alert("rowid: " + rowId + "name:" + name +" mob: " + mob);
+        // alert("rowid: " + rowId + "name:" + name + " mob: " + mob+ " test: "+id_);
 
 
-      function send_data() {
-          // document.getElementById("active").disabled = true;
-  
-          var rowId = event.target.parentNode.parentNode.id;
-          //this gives id of tr whose button was clicked 
-          var data_name = document.getElementById(rowId).querySelectorAll(".dta");
-          // var data_mob = document.getElementById(rowId).querySelectorAll(".dta"); 
-          // /*returns array of all elements with  
-          // "row-data" class within the row with given id*/ 
-  
-          var name = data_name[0].innerHTML;
-          var mob = data_name[4].innerHTML
-          // var date = data[1]; 
-          document.getElementById("name_text").value = name;
-          document.getElementById("mob_text").value = mob;
-          document.getElementById("row_id").value = rowId;
-  
-          alert("rowid: " + rowId + "name:" + name + " mob: " + mob);
-  
-          // document.getElementById("warning").disabled = false;
-          // document.getElementById('warning').removeAttribute('disabled');
-          return true;
-      }
-  
-  
-  </script>
+        function send_data() {
+            // document.getElementById("active").disabled = true;
+
+            var rowId = event.target.parentNode.parentNode.id;
+            //this gives id of tr whose button was clicked 
+            var data_name = document.getElementById(rowId).querySelectorAll(".dta");
+            // /*returns array of all elements with  
+            // "row-data" class within the row with given id*/ 
+
+            var name = data_name[0].innerHTML;
+            var mob = data_name[4].innerHTML;
+            var id_ = data_name[5].innerHTML;
+            // var date = data[1]; 
+            document.getElementById("name_text").value = name;
+            document.getElementById("mob_text").value = mob;
+            document.getElementById("row_id").value = rowId;
+            document.getElementById("appt_id").value = id_;
+
+            // alert("rowid: " + rowId + "name:" + name + " mob: " + mob+ 'appt: '+id_);
+            return true;
+        }
+
+
+    </script>
 </head>
 
 <br>
@@ -103,6 +110,7 @@
                             <input type="hidden" id="name_text" class="form_ip" name="name" />
                             <input type="hidden" id="mob_text" class="form_ip" name="mob" />
                             <input type="hidden" id="row_id" class="form_ip" name="row_id" />
+                            <input type="hidden" id="appt_id" class="form_ip" name="appt_id" />
 
                             {% for data_appoint in today_apppointment %}
                             <tr id="{{forloop.counter}}">
@@ -111,21 +119,30 @@
                                 <td class="dta">{{data_appoint.patient_id.email}}</td>
                                 <td class="dta">{{data_appoint.timepublished}}</td>
                                 <td class="dta">{{data_appoint.mobile}}</td>
-                                <td>
+                                <td class="dta" style="display: none;">{{data_appoint.id}}</td>
 
-                                    <!-- <div class="btn-group" > -->
-                                    <!-- <input type="hidden" id ="url" class="form_ip" name="get_url_address_recording"  /> -->
-                                    <!-- <input  id="active" type="submit" onclick="return show() " formaction="/action1.php" ></input> -->
-                                    {% csrf_token %}
-                                    <button class="icon_plus_alt2" id="active" onclick="return send_data()"
-                                        formaction="/start_appointment"></button>
-                                    <button class="icon_check_alt2" id="warning" onclick="return send_data()"
-                                        formaction="stop_appointment"></button>
-                                    <button class="icon_close_alt2" id="absent" onclick="return send_data()"
-                                        formaction="no_show_appointment"></button>
 
-                                    <!-- </div> -->
-                                </td>
+                                    {% if data_appoint.status == 'Completed' or data_appoint.status == 'No Show' %}
+                                    <td class="dta">{{data_appoint.status}}</td>
+                                    {% elif data_appoint.status == 'On Going' %}
+                                    <td>
+                                        {% csrf_token %}
+                                        <button class="icon_check_alt2" id="warning" onclick="return send_data()"
+                                            formaction="stop_appointment"></button>
+                                    </td>
+
+                                    {% elif appointment %}
+                                    <td> -- </td>   
+                                    {% else %}
+                                    <td>
+                                        {% csrf_token %}
+                                        <button class="icon_plus_alt2" id="active" onclick="return send_data()"
+                                            formaction="/start_appointment"></button>
+                                        <button class="icon_close_alt2" id="absent" onclick="return send_data()"
+                                            formaction="no_show_appointment"></button>
+                                    </td>
+                                    {% endif %}
+
                             </tr>
                             {% endfor %}
                             <!-- </div> -->
@@ -193,7 +210,7 @@
 
 
 <script>
-$("#table_tomorrow").hide();
+    $("#table_tomorrow").hide();
     $(document).ready(function () {
         $('#appointment_date').on('change', function () {
             if (this.value == "1") {

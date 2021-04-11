@@ -281,8 +281,9 @@ def time_slot(request,param):
     available_timeslots=[]
     for i in list_date_available:
            available_timeslots.append(str("{0:0>2}".format(i.hour))+':'+str("{0:0>2}".format(i.minute)))
-
-    context={"timeslot":available_timeslots}
+    var = request.session.get('patient_id')
+    pat = patient.objects.filter(id = var).first()
+    context={"timeslot":available_timeslots,"pat":pat}
 
     if request.method == 'POST':
         time_taken=request.POST.get('dropdown')
@@ -290,12 +291,14 @@ def time_slot(request,param):
         datetime_object = datetime.strptime(param + ' ' + str(time_taken) , '%Y-%m-%d %H:%M')
         print (datetime_object)
 
-        if request.POST.get('patient_id') and request.POST.get('mobile') and request.POST.get('dropdown'):
+        if  request.POST.get('dropdown'):
             # print('patient')
+            
             saverecord = appointment()
-            saverecord.patient_id_id = request.POST.get('patient_id')
+            saverecord.patient_id_id = request.session.get('patient_id')
             saverecord.date = datetime_object
-            saverecord.mobile = request.POST.get('mobile')
+            print(pat.phone)
+            saverecord.mobile = pat.phone
             saverecord.save()
             messages.success(request,'Record Saved')
 
@@ -314,8 +317,10 @@ def add_appointment(request):
     """
     if request.method == 'POST':
         date = request.POST.get('datepicker')
+        patient_id = request.POST.get('patient_id')
         print(date)
         request.session['date'] = date
+        request.session['patient_id'] = patient_id
         return redirect  ('time_slot', date)
     content ={}    
 
@@ -376,28 +381,21 @@ def start_appointment (request):
         name = request.POST.get('name')
         mob = request.POST.get('mob')
         row_id = request.POST.get('row_id')
+        appt_id = request.POST.get('appt_id')
 
-        print (name,mob, row_id, '--------------')
-        print(row_id)
-        # ongoing_appointment = appointment.objects.all()[int(row_id)-1]
-        today_date = (date.today())
-        tomorrow_date = date.today() + timedelta(days=1)
-      
-        # Alternate query 
-        ongoing_appointment = appointment.objects.filter(mobile=mob,date__gte =today_date, date__lte= tomorrow_date).first()
+        print (name,mob, row_id, appt_id, '--------------')
+        print(appt_id)
+        
+        ongoing_appointment = appointment.objects.filter(id=appt_id).first()
 
         print(ongoing_appointment)
-        # print (appoints[row_id-1])
-        # print (type(ongoing_appointment))
-        # print (ongoing_appointment)
-        # print (ongoing_appointment.mobile)
     
         request.session['patient_mobile'] = ongoing_appointment.patient_id.phone
         request.session['patient_name'] = ongoing_appointment.patient_id.name
         request.session['patient_id'] = ongoing_appointment.patient_id.id
         request.session['appointment_id'] = ongoing_appointment.id
 
-        ongoing_appointment.status = 'On going'
+        ongoing_appointment.status = 'On Going'
         ongoing_appointment.save()
 
     return redirect ('current_appointment')
@@ -419,7 +417,6 @@ def stop_appointment  (request):
             print ('deleted:',key,request.session[key])
             del request.session[key]
 
-        # print (request.session['patient_id'])        
     return redirect ('appointments')
 
 
@@ -430,13 +427,11 @@ def no_show_appointment (request):
     today_date = (date.today())
     tomorrow_date = date.today() + timedelta(days=1)
     if request.method == 'POST':
-        name = request.POST.get('name')
-        mob = request.POST.get('mob')
-        row_id = request.POST.get('row_id')
+        appt_id = request.POST.get('appt_id')
 
-        ongoing_appointment = appointment.objects.filter(mobile=mob,date__gte =today_date, date__lte= tomorrow_date).first()
+        ongoing_appointment = appointment.objects.filter(id=appt_id).first()
         print(ongoing_appointment) 
-        ongoing_appointment.status = 'no_show'
+        ongoing_appointment.status = 'No Show'
         ongoing_appointment.save()
     
     return redirect ('appointments')
@@ -463,21 +458,8 @@ def appointments(request):
         'tomorrow_appointment': tomorrow_appointment        
     }
     
-    # for i in appoints:
-    #     print(i.date.strftime("%x"))
-    # today_appointment = appointment.objects.filter(date__gte =today_date, date__lt= tomorrow_date)
-    # print(today_appointment)
-    # tomorrow_appointment = appointment.objects.filter(date__gte =tomorrow_date, date__lte= datetime.now() + timedelta(days=2))
-
-    # appoints = appointment.objects.all()
-    # for i in appoints:
-    #     print(i.date.strftime("%x"))
-    
-    # content = {
-    #     'appointments':appoints    
-    # }
-    # print(content)
-    #{'databasename':function-name}
+    if request.session.get('appointment_id') :
+        content['appointment'] = 'yes' 
     return render(request,'new_appointment.html',content)
 
 
