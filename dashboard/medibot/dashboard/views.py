@@ -555,13 +555,9 @@ def current_appointment(request):
         p = patient_history(patient_id_id = patient_id, appointment_id_id=appointment_id, symptom = final_output['symptom'],prescription=final_output['medicine'])
         p.save()
 
-<<<<<<< HEAD
-        content = {'prescription':final_output['medicine']+final_output['dosage']}
-=======
         content = {'prescription':final_output['medicine']}
         # content = {'prescription':'Some Tablets!!'}
         # p = patient_history('symptom':'symptom')
->>>>>>> 2b5887f873c53d5f0650d27c5aeb87b3b74081e9
 
         return HttpResponse(json.dumps(content), content_type="application/json")
         # return render(request,'current_appointment.html',content)        
