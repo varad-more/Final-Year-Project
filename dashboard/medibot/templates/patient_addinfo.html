@@ -134,13 +134,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
       <option value="Others">Others</option>
     </select>
     <!-- <input type="text" placeholder="Enter Gender" name="gender" required> -->
-    
-    <br><br>
-    
-    <label for="age"><b>Age</b></label>
-    <!-- <input type="number" placeholder="Enter Age (in years)" name="age" min="0" max="99"  id="agee" required> -->
-    <input type="number" placeholder="Age (in years)" name="age" id="agee" disabled>
-    <input type="number" placeholder="Age (in years)" name="age" id="ageee" hidden>
     <br><br>
 
     <label for="birthday"><b>Date of Birth</b></label><br>
@@ -148,6 +141,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=email]:focus
     <input type="date" placeholder="Enter DOB" name="birthday" id="DOB" onchange="ageCalculator()" min="1920-01-01"  required>
     <!-- <button type="submit" class="submitage" onclick="get_date()">Calculate age</button> -->
     <br><br>
+
+    <label for="age"><b>Age</b></label>
+    <!-- <input type="number" placeholder="Enter Age (in years)" name="age" min="0" max="99"  id="agee" required> -->
+    <input type="number" placeholder="Age (in years)" name="age" id="agee" disabled>
+    <input type="number" placeholder="Age (in years)" name="age" id="ageee" hidden>
+    <br><br>
+
     <label for="phone"><b>Phone Number</b></label> 
     <input type="text" placeholder="Enter Phone Number" name="phone" pattern="^[789]\d{9}$" required>
 
@@ -232,8 +232,8 @@ function ageCalculator() {
       const now = new Date(); 
       const diff = Math.abs(now - dob );
       const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); 
-      return document.getElementById("agee").value = age;
-      return document.getElementById("agee").value = age;
+      document.getElementById("agee").value = age;
+      document.getElementById("ageee").value = age;
     }  
 }  
         </script>
