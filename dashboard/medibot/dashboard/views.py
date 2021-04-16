@@ -14,7 +14,7 @@ from dashboard.models import *
 # from dashboard.models import patient
 
 # Import refactored modules 
-from modules import report_extraction_final, speech_recognition_google, ner_model
+from modules import report_extraction_final, speech_recognition_google #, ner_model
 
 # from modules import *
 import json
@@ -204,7 +204,6 @@ def patient_add(request):
 
     if request.method == "POST":
         if request.POST.get('name') and request.POST.get('gender') and request.POST.get('age') and request.POST.get('birthday') and request.POST.get('email') and request.POST.get('address') and request.POST.get('pincode'):
-            
             filename='/media/patients/default.jpeg'
             try:
                 file = request.FILES['img']
@@ -250,7 +249,7 @@ def get_daily_slots(start, end, slot, date):
         slots.append(dt)
     return slots
 
-
+@receptionist_logged_in
 def time_slot(request,param):
     """
     Book an appointment for selected param --> date 
@@ -312,7 +311,7 @@ def time_slot(request,param):
 
 
 
-
+@receptionist_logged_in
 def add_appointment(request):
     """
     Book an Appointment --> Only Date
@@ -438,7 +437,7 @@ def no_show_appointment (request):
     
     return redirect ('appointments')
 
-
+@doctor_logged_in
 def appointments(request):
     """
     Displays list of booked appointment date wise
@@ -522,7 +521,7 @@ def broadcast_sms(request):
     return HttpResponse("messages sent!", 200)
 
 
-# @doctor_logged_in
+@doctor_logged_in
 def current_appointment(request):
     """
     Option for recording and submiting the recording for minutes
@@ -564,7 +563,7 @@ def current_appointment(request):
 
     return render(request,'current_appointment.html',content)
 
-
+@doctor_logged_in
 def confirmed_prescription(request):
     """
     Function for updating the stored prescription
