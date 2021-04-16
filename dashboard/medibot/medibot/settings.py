@@ -38,8 +38,9 @@ SECRET_KEY = '4$5vta+t!+8_13*ya=i80)26gfv3e7j$--co0gbb0&8cmx0vc$'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
+# HOST = "http://100.26.9.94"
+HOST = "localhost:8000"
+passd = "**"
 
 # TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 # TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")

@@ -14,7 +14,7 @@ from dashboard.models import *
 # from dashboard.models import patient
 
 # Import refactored modules 
-from modules import report_extraction_final, speech_recognition_google #, ner_model
+from modules import report_extraction_final, speech_recognition_google, ner_model, mailer
 
 # from modules import *
 import json
@@ -45,7 +45,7 @@ def sign_in(request):
 
         entered_key = hash_password(password)
 
-        login_user = user.objects.filter(email=email, password=entered_key).first()
+        login_user = user.objects.filter(email=email, password=entered_key, verification = 'verified').first()
 
         print (login_user)
 
@@ -62,7 +62,7 @@ def sign_in(request):
                 
         else:
             print('Bad Credentials')
-            content = {'error': 'Password Incorrect'}
+            content = {'error': 'Password Incorrect / Complete E-mail Verification'}
             return render (request, 'sign_in.html', content)
 
     # For displaying occured errors to the users
@@ -80,12 +80,18 @@ def sign_up(request):
     if request.method == 'POST' :
         
         passd = request.POST.get('pass')
-
-        #### Need to add check condition for duplicate user
-                
+        email = request.POST.get('email')
+        name = request.POST.get('name')
+        # Check condition for duplicate user
+        login_user = user.objects.filter(email=email).first()
+        
+        if login_user:
+            context = {"mssg": "User Already Exists"}
+            return render (request, 'sign_up.html', context)
+            
         new_user = user()
-        new_user.name = request.POST.get('name')
-        new_user.email = request.POST.get('email')
+        new_user.name = name 
+        new_user.email = email
         new_user.age = request.POST.get('age')
         new_user.gender = request.POST.get('gender')
         new_user.phone = request.POST.get('phone')
@@ -94,8 +100,10 @@ def sign_up(request):
 
         new_user.save()
 
+        mailer.send_mail(name, email)
+
         # Confirmation on creation of user
-        request.session['error']= "User Created" 
+        request.session['error']= "User Created, Check Inbox and verify mail before login" 
         return redirect ('signin')
 
     return render (request, 'sign_up.html')
@@ -563,6 +571,7 @@ def current_appointment(request):
 
     return render(request,'current_appointment.html',content)
 
+
 @doctor_logged_in
 def confirmed_prescription(request):
     """
@@ -578,3 +587,29 @@ def confirmed_prescription(request):
         p.save()
 
     return redirect ('appointments')
+
+
+def verify(request, user_id, verification_code):
+    verify_profile = user.objects.filter(id=user_id, verification = verification_code).first()
+    content={}
+    if verify_profile:
+        verify_profile.verification = 'verified'
+        verify_profile.save()
+
+        content = {
+            'mssg': 'E-Mail Successfully Verified. Now you can login.'
+        }
+
+    else :
+        verified_profile = user.objects.filter(id=user_id, verification = 'verified').first()
+
+        if verified_profile:
+            content = {
+            'mssg': 'E-Mail is already Verified. Now you can login.'
+            }
+
+        else:
+            content = {
+            'mssg': "Cannot verify E-Mail, contact Admin"
+            }
+    return render (request, 'email_verification.html', content)

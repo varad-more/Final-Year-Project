@@ -33,7 +33,8 @@ urlpatterns = [
     path ('', index , name ='index'),
     path ('sms', broadcast_sms, name="default"),
     path ('fetch',fetch_news, name = 'fetch_news'),
-
+    path ('verify/<str:user_id>/<str:verification_code>',verify, name = 'verify'),
+    
     # Receptionist user URLs
     path ('report',report, name='report'),
     path ('report_upload',report_upload, name='report_upload'),

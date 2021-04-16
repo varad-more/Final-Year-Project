@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block register1 %}display:none{% endblock register1 %}
+
+
+
+{% if mssg %}
+
+<script>
+    alert("{{mssg}}");
+    window.location.href="{% url 'signin' %}";
+</script>";
+
+{% endif %}
+
+{% endblock content %}

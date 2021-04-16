@@ -2,11 +2,10 @@
 # from dashboard.views import prescription
 import spacy 
 from spacy.gold import GoldParse 
-from spacy.language import EntityRecognizer 
+# from spacy.language import EntityRecognizer 
+from spacy.pipeline import EntityRecognizer
 from medacy.model.model import Model
  
-# nlp = spacy.load('/home/varad/Downloads/Spacy_medical_models/model_full_batch_15000_droupout_mix-20201209T052531Z-001/model_full_batch_15000_droupout_mix') 
-
 
 def run_model(sentences):
     # for sentence in sentences:
@@ -40,6 +39,7 @@ def run_model(sentences):
     
         print (content)
         return content
+
 
 def run_medacy(sentences):      
     model = Model.load_external('medacy_model_clinical_notes')

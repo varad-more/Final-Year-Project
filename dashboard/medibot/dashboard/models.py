@@ -51,6 +51,7 @@ class user(models.Model):
     phone = models.CharField (max_length=20,blank=True)
     password = models.CharField (max_length=200,blank=True)
     user_role = models.CharField (max_length=20,blank=True)
+    verification = models.CharField (max_length=30,blank=True)
 
 
 class appointment(models.Model):
@@ -58,9 +59,6 @@ class appointment(models.Model):
     date =  models.DateTimeField(auto_now=False, auto_now_add=False)
     mobile = models.CharField (max_length=20,blank=True)
     status = models.CharField(max_length=10, blank=True)
-
-    # timeslot = models.CharField (max_length=20,blank=True)
-      
 
     def datepublished(self):
         return self.date.strftime('%B %d ,  %Y')
