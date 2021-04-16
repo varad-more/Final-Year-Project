@@ -364,6 +364,12 @@ def patient_information (request):
         report = reports.objects.filter(name=PatientName)
         history= patient_history.objects.filter(patient_id_id=pat.id)
     '''
+
+    if 'patient_id' not in request.session.keys():
+        content = {"mssg": "Select Patient First"}
+        return  render (request, "new_appointment.html", content)
+
+    
     patient_id = request.session.get('patient_id')
     print (patient_id)
     pat = patient.objects.filter(id= patient_id).first()
@@ -535,6 +541,11 @@ def current_appointment(request):
     Option for recording and submiting the recording for minutes
     Returns type prescription for every appointment
     """
+    if 'patient_id'  not in request.session.keys():
+        content = {"mssg": "Select Patient First"}
+        return  render (request, "new_appointment.html", content)
+
+
     content = {}
     if request.method == 'POST':
 

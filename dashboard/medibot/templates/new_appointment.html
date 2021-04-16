@@ -21,34 +21,16 @@
     <link href="{%static 'assets_appoint/css/style-responsive.css' %}" rel="stylesheet" />
 
     <!-- page start-->
-
-    <style>
-        /* .show {
-            display: block;
-        }
-
-        .hide {
-            display: none;
-        } */
-        /* 
-        .strikethrough {
-            background: repeating-linear-gradient(180deg,
-                    black 0%,
-                    black 100%);
-            background-size: 100% 2px;
-            background-position: center;
-            background-repeat: no-repeat;
-        } */
-    </style>
+    {% if mssg %}
 
     <script>
-        // document.getElementById("name_text").value = name;
-        // document.getElementById("mob_text").value = mob;
-        // // alert("rowid: " + name +" mob: " + mob); 
-        // document.getElementById("row_id").value = rowId;
+        alert("{{mssg}}");
+    </script>";
 
-        // alert("rowid: " + rowId + "name:" + name + " mob: " + mob+ " test: "+id_);
+    {% endif %}
 
+
+    <script>
 
         function send_data() {
             // document.getElementById("active").disabled = true;

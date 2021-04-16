@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
+import os, sys
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -38,8 +38,8 @@ SECRET_KEY = '4$5vta+t!+8_13*ya=i80)26gfv3e7j$--co0gbb0&8cmx0vc$'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-# HOST = "http://100.26.9.94"
-HOST = "localhost:8000"
+# HOST = "http://ec2-3-224-78-221.compute-1.amazonaws.com"
+# HOST = "localhost:8000"
 passd = "**"
 
 # TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
@@ -139,7 +139,6 @@ DATABASES = {
     }
 }  
 '''
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

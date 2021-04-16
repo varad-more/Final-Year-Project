@@ -82,7 +82,7 @@
                     <li class="{% block prescription %} {% endblock prescription %}"><a href="{% url 'current_appointment' %}">Current Patient</a></li>
                     <li class="{% block appointment %} {% endblock appointment %}"><a href="{% url 'appointments' %}">Appointments</a></li>
                     <!-- <li class="{% block signin %} {% endblock signin %}"><a href="signin">Sign In</a></li> -->
-                    <li class="{% block logout %} {% endblock logout %}" class=""><a href="logout">Log Out</a></li>
+                    <li class="{% block logout %} {% endblock logout %}" ><a href="{% url 'logout' %}">Log Out</a></li>
 
                     <!-- <li class="drop-down"><a href="patient">Patient Information</a> -->
                 </ul>
