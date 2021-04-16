@@ -301,7 +301,7 @@
 
                 <h3 class="resume-title">Previous History</h3>
                 {% for i in history %}
-                {% if forloop.counter < half_list %}
+                {% if forloop.counter <= half_list %}
                 <div class="resume-item">
                     <!-- <h4>Cough</h4> -->
                     <h5>{{ i.appointment_id.date }}</h5>

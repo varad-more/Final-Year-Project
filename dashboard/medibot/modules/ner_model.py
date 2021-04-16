@@ -5,11 +5,14 @@ from spacy.gold import GoldParse
 # from spacy.language import EntityRecognizer 
 from spacy.pipeline import EntityRecognizer
 from medacy.model.model import Model
- 
+import os 
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 def run_model(sentences):
     # for sentence in sentences:
-        nlp = spacy.load('NER_model/model_full_batch_15000_droupout_mix') 
+        nlp = spacy.load(BASE_DIR+'/NER_model/model_full_batch_15000_droupout_mix') 
         doc = nlp(sentences) 
     
         symptom =''

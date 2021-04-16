@@ -39,7 +39,7 @@ urlpatterns = [
     path ('report',report, name='report'),
     path ('report_upload',report_upload, name='report_upload'),
     path ('add_appointment',add_appointment, name='add_appointment'),
-    path ('add_patient',patient_add),
+    path ('add_patient',patient_add, name='add_patient'),
     path ('time_slot/<slug:param>',time_slot, name = 'time_slot'),
 
     # Doctor user URLs

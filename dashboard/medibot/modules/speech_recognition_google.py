@@ -5,6 +5,7 @@ import os
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def split(input_path):
     print("Start cutting")
@@ -28,10 +29,10 @@ def split(input_path):
 
     files = []
     for i, chunk in enumerate(chunks):
-        chunk.export("{name}{count}.wav".format(
+        chunk.export(BASE_DIR+"/media/{name}{count}.wav".format(
             name=filename,
             count=i), format="wav")
-        names = filename + str(i) + '.wav'
+        names = BASE_DIR + "/media/" + filename + str(i) + '.wav'
         print(names)
         files.append(names)
         r = sr.Recognizer()
