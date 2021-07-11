@@ -27,21 +27,26 @@ def database_connect():
     #Inserting into Database
     sql = ("INSERT INTO dashboard_scraped_data (headline,summary,links ) values (%s, %s, %s)") 
     data = (headline,summary,link)
-    print(data)	
+    # print(data)	
+    print (headline)
 
-    mycursor.execute(sql, data)
-    mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
-    print(mycursor.rowcount, "record inserted.")
+    # mycursor.execute(sql, data)
+    # mydb.commit()  # Changes are not commited until you put this, so testing ke liye nikal ke try kar sakte ho.
+    # print(mycursor.rowcount, "record inserted.")
 
 
 
 source1 = requests.get('https://www.medicalnewstoday.com/').text
 soup1= BeautifulSoup(source1,'lxml')
-article=soup1.find('div',{"id":"LATEST NEWS"})
-
-# for link in article.find_all('a',class_="css-ni2lnp"):
-#     headline=link.text
-#     link='https://www.medicalnewstoday.com'+link["href"]
+print (soup1)
+article=soup1.find('div',{"id":"latest-news"})
+print ('article:', article)
+for link in article.find_all('a',class_="css-ni2lnp"):
+    headline=link.text
+    link='https://www.medicalnewstoday.com'+link["href"]
+    print ('medical_news:',headline)
+    print ('______________________________')
+    print ('______________________________')
 
 def extract_source(url):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0'}
